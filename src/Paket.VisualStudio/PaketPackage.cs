@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Runtime.InteropServices;
 using Clide;
 using Microsoft.VisualStudio.Shell;
@@ -6,6 +8,16 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Paket.VisualStudio
 {
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public class ShellExport
+    {
+        [Export]
+        public IShellPackage Shell
+        {
+            get { return (IShellPackage)ServiceProvider.GlobalProvider.GetLoadedPackage(new Guid(Guids.PackageGuid)); }
+        }
+    }
+
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]

@@ -1,7 +1,4 @@
-﻿// Guids.cs
-// MUST match guids.h
-
-using System;
+﻿using System;
 
 namespace Paket.VisualStudio
 {
