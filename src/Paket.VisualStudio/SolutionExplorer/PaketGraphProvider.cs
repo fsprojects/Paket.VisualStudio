@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.GraphModel.Schemas;
-using NuGet.VisualStudio;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -118,7 +116,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         }
 
 
-        private void AddPackageNodes(IGraphContext context, Func<GraphNode> parentNode, IEnumerable<IVsPackageMetadata> installedPackages)
+        private void AddPackageNodes(IGraphContext context, Func<GraphNode> parentNode, IEnumerable<PaketMetadata> installedPackages)
         {
             var allPackages = installedPackages.ToList();
 
@@ -134,7 +132,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void CreateNode(IGraphContext context, GraphNode parent, IVsPackageMetadata metadata)
+        private void CreateNode(IGraphContext context, GraphNode parent, PaketMetadata metadata)
         {
             var parentId = parent.GetValue<GraphNodeId>("Id");
             var nodeId = GraphNodeId.GetNested(
@@ -159,21 +157,21 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private IEnumerable<IVsPackageMetadata> GetDependenciesFromReferencesFile(string paketReferencesFile)
+        private IEnumerable<PaketMetadata> GetDependenciesFromReferencesFile(string paketReferencesFile)
         {
             return Dependencies.Locate(paketReferencesFile)
                 .GetDirectDependencies(ReferencesFile.FromFile(paketReferencesFile))
                 .Select(d => new PaketMetadata(d.Item1, d.Item2));
         }
 
-        private IEnumerable<IVsPackageMetadata> GetDependenciesFromFile(string paketDependenciesFile)
+        private IEnumerable<PaketMetadata> GetDependenciesFromFile(string paketDependenciesFile)
         {
             return DependenciesFile.ReadFromFile(paketDependenciesFile)
                                    .DirectDependencies
                                    .Select(d => new PaketMetadata(d.Key.Id, d.Value.ToString()));
         }
 
-        private IEnumerable<IVsPackageMetadata> GetIndirectPackages(string paketReferencesFile, string packageName)
+        private IEnumerable<PaketMetadata> GetIndirectPackages(string paketReferencesFile, string packageName)
         {
             return Dependencies.Locate(paketReferencesFile)
                     .GetDirectDependenciesForPackage(packageName)

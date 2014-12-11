@@ -7,7 +7,7 @@ namespace Paket.VisualStudio.SolutionExplorer
     {
         private static readonly GraphSchema Schema = new GraphSchema("Paket");
         public static readonly GraphCategory PackageCategory = Schema.Categories.AddNewCategory("NuGetPackage");
-        public static readonly GraphProperty PackageProperty = Schema.Properties.AddNewProperty("NuGetPackageProperty", typeof(NuGet.VisualStudio.IVsPackageMetadata));
+        public static readonly GraphProperty PackageProperty = Schema.Properties.AddNewProperty("NuGetPackageProperty", typeof(PaketMetadata));
     }
 
     internal static class GraphNodeExtensions
