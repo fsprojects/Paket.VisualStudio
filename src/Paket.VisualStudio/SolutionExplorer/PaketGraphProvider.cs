@@ -173,6 +173,13 @@ namespace Paket.VisualStudio.SolutionExplorer
                                    .Select(d => new PaketMetadata(d.Key.Id, d.Value.ToString()));
         }
 
+        private IEnumerable<IVsPackageMetadata> GetIndirectPackages(string paketReferencesFile, string packageName)
+        {
+            return Dependencies.Locate(paketReferencesFile)
+                    .GetDirectDependenciesForPackage(packageName)
+                    .Select(d => new PaketMetadata(d.Item1, d.Item2));
+        }
+
         private void TrackChanges(IGraphContext context)
         {
             if (!trackingContext.Contains(context))
