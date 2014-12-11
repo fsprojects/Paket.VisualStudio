@@ -147,7 +147,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 using (var scope = new GraphTransactionScope())
                 {
-                    node = context.Graph.Nodes.GetOrCreate(nodeId, metadata.Id, PaketGraphSchema.PackageCategory);
+                    node = context.Graph.Nodes.GetOrCreate(nodeId, metadata.Id + " " + metadata.VersionString, PaketGraphSchema.PackageCategory);
                     node[DgmlNodeProperties.Icon] = GraphIcons.Package;
                     node[PaketGraphSchema.PackageProperty] = metadata;
 
