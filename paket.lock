@@ -4,7 +4,7 @@ NUGET
     Clarius.VisualStudio (1.1.16)
     Clide (2.3.20)
     DotNetZip (1.9.3)
-    FAKE (3.11.3)
+    FAKE (3.11.4)
     FSharp.Compiler.Service (0.0.67)
     FSharp.Core (3.1.2.1)
     FSharp.Formatting (2.4.36)
@@ -19,8 +19,7 @@ NUGET
       Microsoft.Bcl (>= 1.1.9)
       Microsoft.Bcl.Build (>= 1.0.14)
     Newtonsoft.Json (6.0.6)
-    NUnit.Runners (2.6.3)
-    Octokit (0.5.3)
+    Octokit (0.6.0)
       Microsoft.Net.Http (>= 0)
     Paket.Core (0.18.7)
       DotNetZip (>= 1.9.3)
@@ -38,5 +37,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (511b7cfe523c09d4ed016d68b3586d15f0235054)
+    modules/Octokit/Octokit.fsx (6e8b0162eb63e1a0a925a7b833ff0777057f6b2a)
       Octokit (>= 0)

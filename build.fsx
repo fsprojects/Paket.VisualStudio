@@ -106,42 +106,6 @@ Target "CleanVSIX" (fun _ ->
     ZipHelper.Zip "bin/vsix" "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
 )
 
-// Build test projects in Debug mode in order to provide correct paths for multi-project scenarios
-Target "BuildTests" (fun _ ->    
-    !! "tests/data/**/*.sln"
-    |> MSBuildDebug "" "Rebuild"
-    |> ignore
-)
-
-// --------------------------------------------------------------------------------------
-// Run the unit tests using test runner
-
-Target "UnitTests" (fun _ ->
-    if !! testAssemblies |> Seq.isEmpty |> not then
-        !! testAssemblies 
-        |> NUnit (fun p ->
-            let param =
-                { p with
-                    DisableShadowCopy = true
-                    TimeOut = TimeSpan.FromMinutes 20.
-                    Framework = "4.5"
-                    Domain = NUnitDomainModel.MultipleDomainModel
-                    OutputFile = "TestResults.xml" }
-            if isAppVeyorBuild then { param with ExcludeCategory = "AppVeyorLongRunning" } else param)
-)
-
-// --------------------------------------------------------------------------------------
-// Run the integration tests using test runner
-
-Target "IntegrationTests" (fun _ ->
-    if !! "tests/**/bin/Release/Paket.VisualStudio.dll" |> Seq.isEmpty |> not then
-        !! "tests/**/bin/Release/Paket.VisualStudio.dll" 
-        |> MSTest.MSTest (fun p ->
-            { p with
-                TimeOut = TimeSpan.FromMinutes 20.
-            })
-)
-
 // --------------------------------------------------------------------------------------
 // Generate the documentation
 
@@ -183,37 +147,20 @@ Target "Release" (fun _ ->
     |> Async.RunSynchronously
 )
 
-Target "ReleaseAll"  DoNothing
-
 // --------------------------------------------------------------------------------------
 // Run main targets by default. Invoke 'build <Target>' to override
 
-Target "Main" DoNothing
-
-Target "All" DoNothing
+Target "Default" DoNothing
 
 "Clean"
   =?> ("BuildVersion", isAppVeyorBuild)
   ==> "AssemblyInfo"
   ==> "Build"
-  ==> "BuildTests"
-  ==> "UnitTests"
-  ==> "Main"
-
-"Build"
   ==> "CleanVSIX"
-
-"Release"
-  ==> "ReleaseAll"
-
-"Main"
-  =?> ("IntegrationTests", isLocalBuild)
-  ==> "All"
-
-"Main" 
+  ==> "Default"
   ==> "CleanDocs"
   ==> "GenerateDocs"
   ==> "ReleaseDocs"
   ==> "Release"
 
-RunTargetOrDefault "Main"
+RunTargetOrDefault "Default"

@@ -6,7 +6,6 @@ nuget Clide
 nuget Paket.Core
 nuget ReflectionMagic
 nuget VSSDK.GraphModel.12
-nuget NUnit.Runners
 nuget FSharp.Formatting
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
