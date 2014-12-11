@@ -32,7 +32,17 @@ namespace Paket.VisualStudio.SolutionExplorer
                 {
                     if (context.RequestedProperties.Contains(DgmlNodeProperties.ContainsChildren))
                     {
-                        var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
+                        var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketReferencesNode());
+                        if (configNode != null)
+                        {
+                            using (var scope = new GraphTransactionScope())
+                            {
+                                configNode.SetValue(DgmlNodeProperties.ContainsChildren, true);
+                                scope.Complete();
+                            }
+                        }
+
+                        configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
                         if (configNode != null)
                         {
                             using (var scope = new GraphTransactionScope())
@@ -46,10 +56,16 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }
                 case GraphContextDirection.Contains:
                 {
-                    var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
+                    var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketReferencesNode());
                     if (configNode != null)
                     {
-                        TryAddPackageNodes(context);
+                        TryAddReferencesFilePackageNodes(context);
+                    }
+
+                    configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
+                    if (configNode != null)
+                    {
+                        TryAddDependenciesFilePackageNodes(context);
                     }
                     break;
                 }
@@ -60,17 +76,38 @@ namespace Paket.VisualStudio.SolutionExplorer
             context.OnCompleted();
         }
 
-        private void TryAddPackageNodes(IGraphContext context)
+        private void TryAddReferencesFilePackageNodes(IGraphContext context)
         {
             try
             {
-                AddPackageNodes(context, context.InputNodes.First());
+                AddReferencesFilePackageNodes(context, context.InputNodes.First());
                 TrackChanges(context);
             }
             catch { }
         }
 
-        private void AddPackageNodes(IGraphContext context, GraphNode parentNode)
+        private void AddReferencesFilePackageNodes(IGraphContext context, GraphNode parentNode)
+        {
+            var file = parentNode.Id.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
+
+            if (file == null || !File.Exists(file.LocalPath))
+                return;
+
+            AddPackageNodes(context, () => parentNode, GetDependenciesFromReferencesFile(file.LocalPath));
+        }
+
+        private void TryAddDependenciesFilePackageNodes(IGraphContext context)
+        {
+            try
+            {
+                AddDependenciesFilePackageNodes(context, context.InputNodes.First());
+                TrackChanges(context);
+            }
+            catch { }
+        }
+
+
+        private void AddDependenciesFilePackageNodes(IGraphContext context, GraphNode parentNode)
         {
             var file = parentNode.Id.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
 
@@ -79,6 +116,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             AddPackageNodes(context, () => parentNode, GetDependenciesFromFile(file.LocalPath));
         }
+
 
         private void AddPackageNodes(IGraphContext context, Func<GraphNode> parentNode, IEnumerable<IVsPackageMetadata> installedPackages)
         {
@@ -121,11 +159,18 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
+        private IEnumerable<IVsPackageMetadata> GetDependenciesFromReferencesFile(string paketReferencesFile)
+        {
+            return Dependencies.Locate(paketReferencesFile)
+                .GetDirectDependencies(ReferencesFile.FromFile(paketReferencesFile))
+                .Select(d => new PaketMetadata(d.Item1, d.Item2));
+        }
+
         private IEnumerable<IVsPackageMetadata> GetDependenciesFromFile(string paketDependenciesFile)
         {
             return DependenciesFile.ReadFromFile(paketDependenciesFile)
                                    .DirectDependencies
-                                   .Select(d => new PaketMetadata(d.Key, d.Value));
+                                   .Select(d => new PaketMetadata(d.Key.Id, d.Value.ToString()));
         }
 
         private void TrackChanges(IGraphContext context)

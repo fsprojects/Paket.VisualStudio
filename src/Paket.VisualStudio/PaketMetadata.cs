@@ -6,10 +6,10 @@ namespace Paket.VisualStudio
 {
     public class PaketMetadata : IVsPackageMetadata
     {
-        public PaketMetadata(string id, VersionRequirement versionRequirement)
+        public PaketMetadata(string packageName, string version)
         {
-            Id = id;
-            VersionString = versionRequirement.ToString();
+            Id = packageName;
+            VersionString = version;
         }
 
         public string Id { get; private set; }
