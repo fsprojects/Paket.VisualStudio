@@ -33,6 +33,5 @@
   <Content>
     <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
     <MefComponent>|%CurrentProject%|</MefComponent>
-    <CustomExtension Type="ClideComponent">|%CurrentProject%|</CustomExtension>
   </Content>
 </Vsix>

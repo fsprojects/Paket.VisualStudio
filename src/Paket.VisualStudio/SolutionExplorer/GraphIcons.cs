@@ -36,7 +36,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RegisterIcon(string imageName, string resourceName)
         {
-            var imageService = serviceProvider.GetService<SVsImageService, IVsImageService>();
+            var imageService = (IVsImageService)serviceProvider.GetService(typeof(SVsImageService));
             imageService.Add(imageName, new LazyImage(() => LoadWpfImage(resourceName)));
         }
 

@@ -1,11 +1,9 @@
 source http://nuget.org/api/v2
 
 nuget FAKE
-nuget Clarius.VisualStudio
-nuget Clide
 nuget Paket.Core
-nuget ReflectionMagic
 nuget VSSDK.GraphModel.12
+nuget VSSDK.Text.12
 nuget FSharp.Formatting
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

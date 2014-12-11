@@ -4,7 +4,10 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.GraphModel;
+using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.GraphModel.Schemas;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text.Editor;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -14,9 +17,9 @@ namespace Paket.VisualStudio.SolutionExplorer
         private readonly List<IGraphContext> trackingContext = new List<IGraphContext>();
 
         [ImportingConstructor]
-        public PaketGraphProvider(IShellPackage package)
+        public PaketGraphProvider(SVsServiceProvider serviceProvider)
         {
-            new GraphIcons(package).Initialize();
+            new GraphIcons(serviceProvider).Initialize();
         }
 
         public void BeginGetGraphData(IGraphContext context)
@@ -30,41 +33,14 @@ namespace Paket.VisualStudio.SolutionExplorer
                 {
                     if (context.RequestedProperties.Contains(DgmlNodeProperties.ContainsChildren))
                     {
-                        var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketReferencesNode());
-                        if (configNode != null)
-                        {
-                            using (var scope = new GraphTransactionScope())
-                            {
-                                configNode.SetValue(DgmlNodeProperties.ContainsChildren, true);
-                                scope.Complete();
-                            }
-                        }
-
-                        configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
-                        if (configNode != null)
-                        {
-                            using (var scope = new GraphTransactionScope())
-                            {
-                                configNode.SetValue(DgmlNodeProperties.ContainsChildren, true);
-                                scope.Complete();
-                            }
-                        }
+                        Prepare(context);
                     }
                     break;
                 }
                 case GraphContextDirection.Contains:
                 {
-                    var configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketReferencesNode());
-                    if (configNode != null)
-                    {
-                        TryAddReferencesFilePackageNodes(context);
-                    }
-
-                    configNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode());
-                    if (configNode != null)
-                    {
-                        TryAddDependenciesFilePackageNodes(context);
-                    }
+                    Prepare(context);
+                    TryPopulatePaketNode(context);
                     break;
                 }
                 case GraphContextDirection.Custom:
@@ -74,47 +50,49 @@ namespace Paket.VisualStudio.SolutionExplorer
             context.OnCompleted();
         }
 
-        private void TryAddReferencesFilePackageNodes(IGraphContext context)
+        private void Prepare(IGraphContext context)
+        {
+            GraphNode selectedNode = context.InputNodes.FirstOrDefault(node => node.IsPaketDependenciesNode() || node.IsPaketReferencesNode());
+            if (selectedNode == null)
+                return;
+
+            using (GraphTransactionScope transactionScope = new GraphTransactionScope())
+            {
+                selectedNode.SetValue(DgmlNodeProperties.ContainsChildren, true);
+                selectedNode.AddCategory(PaketGraphSchema.PaketCategory);
+                transactionScope.Complete();
+            }
+        }
+
+        private void TryPopulatePaketNode(IGraphContext context)
         {
             try
             {
-                AddReferencesFilePackageNodes(context, context.InputNodes.First());
+                CreateChildNodes(context, context.InputNodes.First());
                 TrackChanges(context);
             }
-            catch { }
+            catch 
+            { 
+                // todo logging 
+            }
         }
 
-        private void AddReferencesFilePackageNodes(IGraphContext context, GraphNode parentNode)
+        private void CreateChildNodes(IGraphContext context, GraphNode parentNode)
         {
-            var file = parentNode.Id.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
+            Uri file = parentNode.Id.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
 
             if (file == null || !File.Exists(file.LocalPath))
                 return;
 
-            AddPackageNodes(context, () => parentNode, GetDependenciesFromReferencesFile(file.LocalPath));
-        }
-
-        private void TryAddDependenciesFilePackageNodes(IGraphContext context)
-        {
-            try
+            if (parentNode.IsPaketDependenciesNode())
             {
-                AddDependenciesFilePackageNodes(context, context.InputNodes.First());
-                TrackChanges(context);
+                AddPackageNodes(context, () => parentNode, GetDependenciesFromFile(file.LocalPath));
+            } 
+            else if (parentNode.IsPaketReferencesNode())
+            {
+                AddPackageNodes(context, () => parentNode, GetDependenciesFromReferencesFile(file.LocalPath));
             }
-            catch { }
         }
-
-
-        private void AddDependenciesFilePackageNodes(IGraphContext context, GraphNode parentNode)
-        {
-            var file = parentNode.Id.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
-
-            if (file == null || !File.Exists(file.LocalPath))
-                return;
-
-            AddPackageNodes(context, () => parentNode, GetDependenciesFromFile(file.LocalPath));
-        }
-
 
         private void AddPackageNodes(IGraphContext context, Func<GraphNode> parentNode, IEnumerable<PaketMetadata> installedPackages)
         {
@@ -122,8 +100,13 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             for (int index = 0; index < allPackages.Count; index++)
             {
-                var nugetPackage = allPackages[index];
-                CreateNode(context, parentNode(), nugetPackage);
+                PaketMetadata paketMetadata = allPackages[index];
+
+                using (var scope = new GraphTransactionScope())
+                {
+                    CreateNode(context, parentNode(), paketMetadata);
+                    scope.Complete();
+                }
 
                 context.ReportProgress(index, allPackages.Count, null);
 
@@ -135,26 +118,25 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void CreateNode(IGraphContext context, GraphNode parent, PaketMetadata metadata)
         {
             var parentId = parent.GetValue<GraphNodeId>("Id");
-            var nodeId = GraphNodeId.GetNested(
+            var id = GraphNodeId.GetNested(
                 parentId,
                 GraphNodeId.GetPartial(CodeGraphNodeIdName.Member, metadata.Id),
                 GraphNodeId.GetPartial(CodeGraphNodeIdName.Parameter, metadata.VersionString));
 
-            var node = context.Graph.Nodes.Get(nodeId);
+            var node = context.Graph.Nodes.Get(id);
             if (node == null)
             {
-                using (var scope = new GraphTransactionScope())
-                {
-                    node = context.Graph.Nodes.GetOrCreate(nodeId, metadata.Id + " " + metadata.VersionString, PaketGraphSchema.PackageCategory);
-                    node[DgmlNodeProperties.Icon] = GraphIcons.Package;
-                    node[PaketGraphSchema.PackageProperty] = metadata;
+                string label = metadata.Id + " " + metadata.VersionString;
 
-                    // Establish the relationship with the parent node.
-                    context.Graph.Links.GetOrCreate(parent, node, null, GraphCommonSchema.Contains);
-                    context.OutputNodes.Add(node);
-                    scope.Complete();
-                }
+                node = context.Graph.Nodes.GetOrCreate(id, label, PaketGraphSchema.PaketCategory);
+
+                node.SetValue(DgmlNodeProperties.ContainsChildren, false);
+                node.SetValue(CodeNodeProperties.SourceLocation, new SourceLocation(new Uri(parentId.GetFileName(), UriKind.Absolute),
+                                                                 new Position(PaketGraphSchema.GetDisplayIndex(node), 1)));
+                node.SetValue(DgmlNodeProperties.Icon, GraphIcons.Package);
             }
+
+            context.Graph.Links.GetOrCreate(parent, node, null, GraphCommonSchema.Contains);
         }
 
         private IEnumerable<PaketMetadata> GetDependenciesFromReferencesFile(string paketReferencesFile)
@@ -206,14 +188,14 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         public T GetExtension<T>(GraphObject graphObject, T previous) where T : class
         {
-            if (typeof(T) == typeof(IGraphFormattedLabel))
-            {
-                // TODO: format labels dynamically?
-            }
-            else if (typeof(T) == typeof(IGraphNavigateToItem))
-            {
-                return new GraphNodeNavigator() as T;
-            }
+            //if (typeof(T) == typeof(IGraphFormattedLabel))
+            //{
+            //    return null;
+            //}
+            //if (typeof(T) == typeof(IGraphNavigateToItem))
+            //{
+            //    return null;
+            //}
 
             return null;
         }

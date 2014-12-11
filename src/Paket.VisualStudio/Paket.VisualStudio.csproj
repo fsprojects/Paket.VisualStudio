@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
-  <Import Project="..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props" Condition="Exists('..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <NuGetPackageImportStamp>41c4c693</NuGetPackageImportStamp>
     <!-- This project is NOT intended to build the actual extension at all. -->
     <CreateVsixContainer>false</CreateVsixContainer>
   </PropertyGroup>
@@ -142,7 +140,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Guids.cs" />
-    <Compile Include="IShellPackage.cs" />
     <Compile Include="PaketMetadata.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -151,10 +148,11 @@
     </Compile>
     <Compile Include="PaketPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionExplorer\Extensions.cs" />
     <Compile Include="SolutionExplorer\GraphIcons.cs" />
     <Compile Include="SolutionExplorer\GraphNodeExtensions.cs" />
-    <Compile Include="SolutionExplorer\GraphNodeNavigator.cs" />
     <Compile Include="SolutionExplorer\PaketGraphProvider.cs" />
+    <Compile Include="SolutionExplorer\PaketGraphSchema.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -187,21 +185,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props'))" />
-    <Error Condition="!Exists('..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.targets'))" />
-  </Target>
+  <Import Project="..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props" Condition="Exists('..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.props')" />
   <Import Project="..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.targets" Condition="Exists('..\..\packages\Clarius.VisualStudio\build\Clarius.VisualStudio.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
   <Import Project="$(SolutionDir)\.paket\paket.targets" />
   <ItemGroup>
     <Content Include="..\..\docs\files\img\logo.png">
@@ -215,17 +200,18 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
-  <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
-      <ItemGroup>
-        <Reference Include="Clide">
-          <HintPath>..\..\packages\Clide\lib\net40\Clide.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+  <ItemGroup>
+    <Content Include="..\..\docs\files\img\logo.png">
+      <Link>logo.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\LICENSE.txt">
+      <Link>LICENSE.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5' Or $(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
       <ItemGroup>
@@ -375,10 +361,10 @@
     </Reference>
   </ItemGroup>
   <Choose>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
       <ItemGroup>
-        <Reference Include="ReflectionMagic">
-          <HintPath>..\..\packages\ReflectionMagic\lib\net40\ReflectionMagic.dll</HintPath>
+        <Reference Include="Microsoft.VisualStudio.CoreUtility">
+          <HintPath>..\..\packages\VSSDK.CoreUtility\lib\net45\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -390,6 +376,32 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.GraphModel">
           <HintPath>..\..\packages\VSSDK.GraphModel\lib\net45\Microsoft.VisualStudio.GraphModel.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.Text.Data">
+          <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Data.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.Logic">
+          <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf">
+          <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.UI">
+          <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

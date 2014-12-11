@@ -1,8 +1,6 @@
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    Clarius.VisualStudio (1.1.16)
-    Clide (2.3.20)
     DotNetZip (1.9.3)
     FAKE (3.11.4)
     FSharp.Compiler.Service (0.0.67)
@@ -27,13 +25,24 @@ NUGET
       Newtonsoft.Json (>= 6.0.6)
     RazorEngine (3.3.0)
       Microsoft.AspNet.Razor (>= 2.0.30506.0)
-    ReflectionMagic (2.0.3)
+    VSSDK.CoreUtility (12.0.4)
+      VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
+    VSSDK.CoreUtility.12 (12.0.4)
+      VSSDK.CoreUtility (>= 12.0.4 <  13.0.0)
+      VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
     VSSDK.GraphModel (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
     VSSDK.GraphModel.12 (12.0.4)
       VSSDK.GraphModel (>= 12.0.4 <  13.0.0)
       VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
     VSSDK.IDE.12 (12.0.4)
+    VSSDK.Text (12.0.4)
+      VSSDK.CoreUtility (>= 12.0.4)
+      VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
+    VSSDK.Text.12 (12.0.4)
+      VSSDK.CoreUtility.12 (>= 12.0.4 <  13.0.0)
+      VSSDK.IDE.12 (>= 12.0.4 <  13.0.0)
+      VSSDK.Text (>= 12.0.4 <  13.0.0)
 GITHUB
   remote: fsharp/FAKE
   specs:
