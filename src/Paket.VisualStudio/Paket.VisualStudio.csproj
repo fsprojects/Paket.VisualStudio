@@ -396,6 +396,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\docs\files\img\logo.png">
+      <Link>logo.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="..\..\LICENSE.txt">
       <Link>LICENSE.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
