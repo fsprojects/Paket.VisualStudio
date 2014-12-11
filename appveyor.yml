@@ -1,2 +1,5 @@
-before_build:
-  - nuget restore src\Paket.VisualStudio.sln
+build_script:
+  - ps: .\build.cmd
+test: off
+artifacts:
+  - path: bin\*.vsix

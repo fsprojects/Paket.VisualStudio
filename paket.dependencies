@@ -1,0 +1,15 @@
+source http://nuget.org/api/v2
+
+nuget FAKE
+nuget Clarius.VisualStudio
+nuget Clide
+nuget NuGet.Core
+nuget NuGet.VisualStudio
+nuget Paket.Core
+nuget ReflectionMagic
+nuget VSSDK.GraphModel.12
+nuget NUnit.Runners
+nuget FSharp.Formatting
+nuget Nuget.CommandLine
+
+github fsharp/FAKE modules/Octokit/Octokit.fsx
