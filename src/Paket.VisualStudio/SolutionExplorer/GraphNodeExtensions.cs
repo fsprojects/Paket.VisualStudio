@@ -12,6 +12,11 @@ namespace Paket.VisualStudio.SolutionExplorer
 
     internal static class GraphNodeExtensions
     {
+        internal static bool IsPaketReferencesNode(this GraphNode node)
+        {
+            return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == "paket.references";
+        }
+
         internal static bool IsPaketDependenciesNode(this GraphNode node)
         {
             return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == "paket.dependencies";
