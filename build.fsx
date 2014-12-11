@@ -100,7 +100,6 @@ Target "CleanVSIX" (fun _ ->
       |> Seq.map (fun fileName -> regex.Replace(fileName, "bin/vsix", 1))
     let filesToDelete = 
       Seq.fold (--) (!! "bin/vsix/*.dll") filesToKeep
-        -- "bin/vsix/FsXaml.Wpf.TypeProvider.dll"
         ++ "bin/vsix/Microsoft.VisualStudio*"
         ++ "bin/vsix/Microsoft.Build*"
     DeleteFiles filesToDelete
