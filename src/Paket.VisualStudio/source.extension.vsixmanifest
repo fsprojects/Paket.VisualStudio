@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
-  <Identifier Id="ClariusLabs.NuGetReferences">
+  <Identifier Id="Paket.VisualStudio">
     <Name>Paket for Visual Studio</Name>
     <Author>Igal Tabachnik</Author>
     <Version>1.0</Version>
-    <Description xml:space="preserve">Manage your Paket (http://fsprojects.github.io/Paket/) dependencies from Visual Studio!</Description>
+    <Description xml:space="preserve">Manage your Paket dependencies from Visual Studio!</Description>
     <Locale>1033</Locale>
     <License>License.txt</License>
-    <Icon>Resources\Extension.png</Icon>
+    <Icon>logo.png</Icon>
+    <ReleaseNotes>https://github.com/hmemcpy/Paket.VisualStudio/blob/master/RELEASE_NOTES.md</ReleaseNotes>
     <PreviewImage>Resources\Preview.png</PreviewImage>
     <MoreInfoUrl></MoreInfoUrl>
     <GettingStartedGuide></GettingStartedGuide>
@@ -28,7 +29,6 @@
     <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
       <Name>Visual Studio MPF</Name>
     </Reference>
-
   </References>
   <Content>
     <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
