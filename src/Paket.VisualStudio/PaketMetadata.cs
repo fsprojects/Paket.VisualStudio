@@ -9,6 +9,7 @@ namespace Paket.VisualStudio
         public PaketMetadata(string packageName, string version)
         {
             Id = packageName;
+            if (version == ">= 0") version = "";
             VersionString = version;
         }
 
