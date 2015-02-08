@@ -21,6 +21,11 @@
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+    <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)..\References</ReferencePath>
+    <StartWorkingDirectory>$(DevEnvDir)</StartWorkingDirectory>    
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <!-- 
           When building in AppVeyor do not attempt to deploy the extension as it 
