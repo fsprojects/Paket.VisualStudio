@@ -25,7 +25,7 @@
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
     <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)..\References</ReferencePath>
-    <StartWorkingDirectory>$(DevEnvDir)</StartWorkingDirectory>    
+    <StartWorkingDirectory>$(DevEnvDir)</StartWorkingDirectory>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <!-- 
           When building in AppVeyor do not attempt to deploy the extension as it 
@@ -145,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Guids.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketClassificationDefinition.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketClassifier.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketClassifierProvider.cs" />
     <Compile Include="PaketMetadata.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -379,8 +382,35 @@
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
       <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.Editor">
+          <HintPath>..\..\packages\VSSDK.Editor\lib\net45\Microsoft.VisualStudio.Editor.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.GraphModel">
           <HintPath>..\..\packages\VSSDK.GraphModel\lib\net45\Microsoft.VisualStudio.GraphModel.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.Language.Intellisense">
+          <HintPath>..\..\packages\VSSDK.Language\lib\net45\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Language.StandardClassification">
+          <HintPath>..\..\packages\VSSDK.Language\lib\net45\Microsoft.VisualStudio.Language.StandardClassification.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -407,6 +437,17 @@
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.UI">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5' Or $(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0">
+          <HintPath>..\..\packages\VSSDK.TextManager.Interop.8\lib\net20\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
