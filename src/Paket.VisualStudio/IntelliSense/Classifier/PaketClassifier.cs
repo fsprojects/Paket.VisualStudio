@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
@@ -10,13 +11,13 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
     {
         private readonly IClassificationType keyword, comment;
 
-        private readonly HashSet<string> keywords = new HashSet<string>
+        private static readonly HashSet<string> keywords = new HashSet<string>
         {
             "source", "nuget", "github", "gist", "http",
             "content", "reference", "redirects"
         };
 
-        public HashSet<string> Keywords
+        public static IEnumerable<string> Keywords
         {
             get { return keywords; }
         }
