@@ -30,7 +30,7 @@ namespace Paket.VisualStudio.IntelliSense
 
             string[] results = 
                 FSharpAsync.RunSynchronously(
-                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", query),
+                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", query, 1000),
                     FSharpOption<int>.None, 
                     FSharpOption<CancellationToken>.None);
 
