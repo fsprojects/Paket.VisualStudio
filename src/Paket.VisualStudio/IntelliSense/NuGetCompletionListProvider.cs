@@ -28,10 +28,11 @@ namespace Paket.VisualStudio.IntelliSense
             if (query.Length < 3)
                 return Enumerable.Empty<Completion>();
 
-            string[] results = FSharpAsync.StartAsTask(
-                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", query),
-                new FSharpOption<TaskCreationOptions>(TaskCreationOptions.None),
-                new FSharpOption<CancellationToken>(CancellationToken.None)).Result;
+            string[] results = 
+                FSharpAsync.RunSynchronously(
+                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", query),
+                    FSharpOption<int>.None, 
+                    FSharpOption<CancellationToken>.None);
 
             return results.Select(item => new Completion2(item, item, null, null, item));
         }
