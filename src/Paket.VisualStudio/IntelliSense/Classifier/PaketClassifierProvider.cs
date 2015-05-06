@@ -1,5 +1,6 @@
 using System.ComponentModel.Composition;
 using System.Xml.Schema;
+using MadsKristensen.EditorExtensions;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
@@ -11,7 +12,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 {
     [Export(typeof(IVsTextViewCreationListener))]
     [Export(typeof(IClassifierProvider))]
-    [ContentType("plaintext")]
+    [ContentType("text")]
     [TextViewRole(PredefinedTextViewRoles.Document)]
     internal class PaketClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
     {
@@ -41,7 +42,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 
                 PaketClassifier classifier;
                 view.TextDataModel.DocumentBuffer.Properties.TryGetProperty(typeof(PaketClassifier), out classifier);
-                //view.Properties.GetOrCreateSingletonProperty(() => new CommentCommandTarget(textViewAdapter, view, "#"));
+                view.Properties.GetOrCreateSingletonProperty(() => new CommentCommandTarget(textViewAdapter, view, "#"));
 
                 if (classifier != null)
                 {

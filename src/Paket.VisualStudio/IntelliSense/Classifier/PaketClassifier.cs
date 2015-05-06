@@ -11,20 +11,20 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
     {
         private readonly IClassificationType keyword, comment;
 
-        private static readonly HashSet<string> keywords = new HashSet<string>
+        private static readonly HashSet<string> validKeywords = new HashSet<string>
         {
             "source", "nuget", "github", "gist", "http",
             "content", "reference", "redirects"
         };
 
-        public static IEnumerable<string> Keywords
+        public static IEnumerable<string> ValidKeywords
         {
-            get { return keywords; }
+            get { return validKeywords; }
         }
 
         internal PaketClassifier(IClassificationTypeRegistryService registry)
         {
-            keyword = registry.GetClassificationType(PaketClassificationTypes.Keyword);
+            keyword = registry.GetClassificationType(PredefinedClassificationTypeNames.Keyword);
             comment = registry.GetClassificationType(PredefinedClassificationTypeNames.Comment);
         }
 
@@ -45,7 +45,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             {
                 string[] args = text.Split(' ');
 
-                if (args.Length >= 2 && Keywords.Contains(args[0].Trim().ToLowerInvariant()))
+                if (args.Length >= 2 && ValidKeywords.Contains(args[0].Trim().ToLowerInvariant()))
                 {
                     var result = new SnapshotSpan(span.Snapshot, span.Start, args[0].Length);
                     spans.Add(new ClassificationSpan(result, keyword));

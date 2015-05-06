@@ -21,9 +21,9 @@ namespace Paket.VisualStudio.IntelliSense
             glyph = glyphService.GetGlyph(StandardGlyphGroup.GlyphGroupVariable, StandardGlyphItem.GlyphItemPublic);
         }
 
-        public IEnumerable<Completion> GetCompletionEntries(CompletionContext context)
+        public IEnumerable<CompletionEntry> GetCompletionEntries(CompletionContext context)
         {
-            return PaketClassifier.Keywords.Select(item => new Completion2(item, item, null, glyph, item));
+            return PaketClassifier.ValidKeywords.Select(item => new CompletionEntry(item, item, null, glyph, "iconAutomationText"));
         }
     }
 }

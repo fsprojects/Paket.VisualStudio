@@ -31,7 +31,7 @@ namespace Paket.VisualStudio.IntelliSense
         private static readonly HashSet<ICompletionListProvider> completionProviders = new HashSet<ICompletionListProvider>
         {
             new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
-            new NuGetCompletionListProvider(),
+            new NuGetNameCompletionListProvider(),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, int position, out CompletionContext context)

@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+    <MinimumVisualStudioVersion Condition="'$(VisualStudioVersion)' != ''">$(VisualStudioVersion)</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <!-- This project is NOT intended to build the actual extension at all. -->
     <CreateVsixContainer>false</CreateVsixContainer>
@@ -153,11 +152,11 @@
     <Compile Include="IntelliSense\CompletionContext.cs" />
     <Compile Include="IntelliSense\CompletionContextType.cs" />
     <Compile Include="IntelliSense\CompletionEngine.cs" />
+    <Compile Include="IntelliSense\CompletionEntry.cs" />
     <Compile Include="IntelliSense\CompletionSourceProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionController.cs" />
-    <Compile Include="IntelliSense\ICompletionContextProvider.cs" />
     <Compile Include="IntelliSense\ICompletionListProvider.cs" />
-    <Compile Include="IntelliSense\NuGetCompletionListProvider.cs" />
+    <Compile Include="IntelliSense\NuGetNameCompletionListProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionSource.cs" />
     <Compile Include="IntelliSense\PaketDocument.cs" />
     <Compile Include="IntelliSense\PaketKeywordCompletionListProvider.cs" />
@@ -174,7 +173,9 @@
     <Compile Include="SolutionExplorer\GraphNodeExtensions.cs" />
     <Compile Include="SolutionExplorer\PaketGraphProvider.cs" />
     <Compile Include="SolutionExplorer\PaketGraphSchema.cs" />
+    <Compile Include="Utils\DteHelper.cs" />
     <Compile Include="Utils\ListHelpers.cs" />
+    <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -221,6 +222,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <EmbeddedResource Include="Resources\NuGet.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\docs\files\img\logo.png">
@@ -351,7 +353,7 @@
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -387,7 +389,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.ComponentModelHost">
           <HintPath>..\..\packages\VSSDK.ComponentModelHost\lib\net45\Microsoft.VisualStudio.ComponentModelHost.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -398,7 +400,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.CoreUtility">
           <HintPath>..\..\packages\VSSDK.CoreUtility\lib\net45\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -409,7 +411,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Editor">
           <HintPath>..\..\packages\VSSDK.Editor\lib\net45\Microsoft.VisualStudio.Editor.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -420,7 +422,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.GraphModel">
           <HintPath>..\..\packages\VSSDK.GraphModel\lib\net45\Microsoft.VisualStudio.GraphModel.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -431,12 +433,12 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Language.Intellisense">
           <HintPath>..\..\packages\VSSDK.Language\lib\net45\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Language.StandardClassification">
           <HintPath>..\..\packages\VSSDK.Language\lib\net45\Microsoft.VisualStudio.Language.StandardClassification.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -447,22 +449,22 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Text.Data">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Data.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.Logic">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.UI">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -473,7 +475,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0">
           <HintPath>..\..\packages\VSSDK.TextManager.Interop.8\lib\net20\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
-          <Private>True</Private>
+          <Private>False</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
