@@ -11,14 +11,15 @@ using System.Windows.Media.Imaging;
 using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using Microsoft.Internal.VisualStudio.PlatformUI;
+using Microsoft.VisualStudio.Language.Intellisense;
 using Paket.VisualStudio.Utils;
 
-namespace Paket.VisualStudio.IntelliSense
+namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 {
     internal class NuGetNameCompletionListProvider : ICompletionListProvider
     {
-        private static IEnumerable<string> searchResults = null;
-        
+        private static IEnumerable<string> searchResults;
+
         private static readonly Regex r = new Regex("nuget (?<query>.*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public CompletionContextType ContextType
@@ -26,7 +27,7 @@ namespace Paket.VisualStudio.IntelliSense
             get { return CompletionContextType.NuGet; }
         }
 
-        public IEnumerable<CompletionEntry> GetCompletionEntries(CompletionContext context)
+        public IEnumerable<Completion> GetCompletionEntries(CompletionContext context)
         {
             ImageSource imageSource = GetImageSource();
 
@@ -41,8 +42,8 @@ namespace Paket.VisualStudio.IntelliSense
             }
             else
             {
-
-                Action<CompletionEntry> action = entry => {
+                Action<CompletionEntry> action = entry =>
+                {
                     string text = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
                     string searchTerm = r.Match(text).Groups["query"].Value.TrimQuotes();
 
@@ -60,7 +61,7 @@ namespace Paket.VisualStudio.IntelliSense
             ThreadPool.QueueUserWorkItem(state =>
             {
                 Task<string[]> task = FSharpAsync.StartAsTask(
-                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", searchTerm),
+                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", searchTerm, 20),
                     new FSharpOption<TaskCreationOptions>(TaskCreationOptions.None),
                     new FSharpOption<CancellationToken>(CancellationToken.None));
 
@@ -78,5 +79,5 @@ namespace Paket.VisualStudio.IntelliSense
             imageSource.Freeze();
             return imageSource;
         }
-    }   
+    }
 }

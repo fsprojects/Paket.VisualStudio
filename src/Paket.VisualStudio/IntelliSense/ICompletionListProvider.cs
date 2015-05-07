@@ -6,6 +6,6 @@ namespace Paket.VisualStudio.IntelliSense
     public interface ICompletionListProvider
     {
         CompletionContextType ContextType { get; }
-        IEnumerable<CompletionEntry> GetCompletionEntries(CompletionContext context);
+        IEnumerable<Completion> GetCompletionEntries(CompletionContext context);
     }
 }

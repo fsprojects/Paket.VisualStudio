@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
+using Paket.VisualStudio.IntelliSense.CompletionProviders;
 
 namespace Paket.VisualStudio.IntelliSense
 {
