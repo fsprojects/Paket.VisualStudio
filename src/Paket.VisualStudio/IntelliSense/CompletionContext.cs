@@ -16,5 +16,10 @@ namespace Paket.VisualStudio.IntelliSense
             SpanStart = span.Start;
             SpanLength = span.Length;
         }
+
+        public string GetSearchTerm()
+        {
+            return Snapshot.GetText(SpanStart, SpanLength);
+        }
     }
 }
