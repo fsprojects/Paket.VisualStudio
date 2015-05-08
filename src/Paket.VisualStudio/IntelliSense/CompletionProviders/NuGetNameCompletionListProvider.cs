@@ -49,7 +49,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
                     ExecuteSearch(searchTerm);
                 };
 
-                yield return new CompletionEntry("Search remote NuGet packages...", null, null, null, commitAction: action);
+                yield return new CompletionEntry("Search remote NuGet packages...", null, null, imageSource, commitAction: action);
             }
         }
 
