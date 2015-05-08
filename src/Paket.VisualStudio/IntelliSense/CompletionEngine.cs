@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Operations;
 using Paket.VisualStudio.IntelliSense.CompletionProviders;
 
 namespace Paket.VisualStudio.IntelliSense
@@ -20,6 +21,8 @@ namespace Paket.VisualStudio.IntelliSense
 
     internal static class CompletionEngine
     {
+
+
         private static ExportProvider ExportProvider
         {
             get
@@ -35,9 +38,9 @@ namespace Paket.VisualStudio.IntelliSense
             new NuGetNameCompletionListProvider(),
         };
 
-        public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, int position, out CompletionContext context)
+        public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
         {
-            IEnumerable<ICompletionListProvider> providers = GetCompletionProviders(PaketDocument.FromTextBuffer(textBuffer), position, out context);
+            IEnumerable<ICompletionListProvider> providers = GetCompletionProviders(PaketDocument.FromTextBuffer(textBuffer), navigator, position, out context);
             if (context == null)
             {
                 return providers;
@@ -52,9 +55,9 @@ namespace Paket.VisualStudio.IntelliSense
             return providers;
         }
 
-        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(PaketDocument paketDocument, int position, out CompletionContext context)
+        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position, out CompletionContext context)
         {
-            context = GetCompletionContext(paketDocument, position);
+            context = GetCompletionContext(paketDocument, navigator, position);
             return GetCompletionProviders(context.ContextType);
         }
 
@@ -63,18 +66,18 @@ namespace Paket.VisualStudio.IntelliSense
             return completionProviders.Where(provider => provider.ContextType == contextType);
         }
 
-        private static CompletionContext GetCompletionContext(PaketDocument paketDocument, int position)
+        private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
         {
-            var snapshotLine = paketDocument.GetLineAt(position);
-            //todo hack!
-            var context = new CompletionContext(snapshotLine.Start, snapshotLine.Length);
-            string text = snapshotLine.GetText();
-            if (text.StartsWith("nuget"))
+            TextExtent wordUnderCaret = navigator.GetExtentOfWord(position - 1);
+            var context = new CompletionContext(wordUnderCaret.Span);
+
+            SnapshotSpan previous = navigator.GetSpanOfPreviousSibling(wordUnderCaret.Span);
+            if (previous.GetText() == "nuget")
                 context.ContextType = CompletionContextType.NuGet;
             else
                 context.ContextType = CompletionContextType.Keyword;
 
-            context.Snapshot = snapshotLine.Snapshot;
+            context.Snapshot = wordUnderCaret.Span.Snapshot;
             return context;
         }
     }

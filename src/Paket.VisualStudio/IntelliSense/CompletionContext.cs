@@ -7,14 +7,16 @@ namespace Paket.VisualStudio.IntelliSense
     {
         public int SpanStart { get; private set; }
         public int SpanLength { get; private set; }
+        public Span Span  { get; private set; }
         public ITextSnapshot Snapshot { get; set; }
         public IIntellisenseSession Session { get; set; }
         public CompletionContextType ContextType { get; set; }
 
-        public CompletionContext(int spanStart, int spanLength)
+        public CompletionContext(Span span)
         {
-            SpanStart = spanStart;
-            SpanLength = spanLength;
+            Span = span;
+            SpanStart = span.Start;
+            SpanLength = span.Length;
         }
     }
 }

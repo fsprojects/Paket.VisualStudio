@@ -22,7 +22,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
         public IEnumerable<Intel.Completion> GetCompletionEntries(CompletionContext context)
         {
-            return PaketClassifier.ValidKeywords.Select(item => new Intel.Completion2(item, item, null, glyph, "iconAutomationText"));
+            return PaketClassifier.ValidKeywords.OrderBy(x => x).Select(item => new Intel.Completion2(item, item, null, glyph, "iconAutomationText"));
         }
     }
 }

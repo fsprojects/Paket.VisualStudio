@@ -5,10 +5,10 @@ using System.Linq;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
 using Paket.VisualStudio.IntelliSense.Classifier;
 using Paket.VisualStudio.Utils;
-using Intel = Microsoft.VisualStudio.Language.Intellisense;
 
 namespace Paket.VisualStudio.IntelliSense
 {
@@ -18,6 +18,9 @@ namespace Paket.VisualStudio.IntelliSense
     internal class PaketCompletionSourceProvider : ICompletionSourceProvider
     {
         private readonly IGlyphService glyphService;
+
+        [Import]
+        internal ITextStructureNavigatorSelectorService NavigatorService;
 
         [ImportingConstructor]
         public PaketCompletionSourceProvider(IGlyphService glyphService)
@@ -31,7 +34,7 @@ namespace Paket.VisualStudio.IntelliSense
 
             if (PaketClassifierProvider.IsPaketFile(filename))
             {
-                return new PaketCompletionSource(glyphService, textBuffer);
+                return new PaketCompletionSource(glyphService, textBuffer, NavigatorService.GetTextStructureNavigator(textBuffer));
             }
 
             return null;
@@ -41,12 +44,14 @@ namespace Paket.VisualStudio.IntelliSense
     internal class PaketCompletionSource : ICompletionSource
     {
         private readonly ITextBuffer textBuffer;
+        private readonly ITextStructureNavigator navigator;
         private readonly ImageSource glyph;
         private bool disposed;
 
-        public PaketCompletionSource(IGlyphService glyphService, ITextBuffer textBuffer)
+        public PaketCompletionSource(IGlyphService glyphService, ITextBuffer textBuffer, ITextStructureNavigator navigator)
         {
             this.textBuffer = textBuffer;
+            this.navigator = navigator;
             glyph = glyphService.GetGlyph(StandardGlyphGroup.GlyphGroupVariable, StandardGlyphItem.GlyphItemPublic);
         }
 
@@ -63,11 +68,11 @@ namespace Paket.VisualStudio.IntelliSense
             int position = triggerPoint.Value.Position;
 
             CompletionContext context;
-            var completionProviders = CompletionEngine.GetCompletionProviders(session, textBuffer, position, out context).ToList();
+            var completionProviders = CompletionEngine.GetCompletionProviders(session, textBuffer, triggerPoint.Value, navigator, out context).ToList();
             if (completionProviders.Count == 0 || context == null)
                 return;
 
-            var completions = new List<Intel.Completion>();
+            var completions = new List<Completion>();
 
             foreach (ICompletionListProvider completionListProvider in completionProviders)
                 completions.AddRange(completionListProvider.GetCompletionEntries(context));
@@ -75,22 +80,13 @@ namespace Paket.VisualStudio.IntelliSense
             if (completions.Count == 0)
                 return;
 
-            var line = triggerPoint.Value.GetContainingLine();
-            string text = line.GetText();
-            int index = text.IndexOf(' ');
-            int hash = text.IndexOf('#');
-            SnapshotPoint start = triggerPoint.Value;
+            ITrackingSpan trackingSpan =
+                textBuffer.CurrentSnapshot.CreateTrackingSpan(
+                    position <= context.SpanStart || position > context.SpanStart + context.SpanLength
+                        ? new Span(position, 0)
+                        : new Span(context.SpanStart, context.SpanLength), SpanTrackingMode.EdgeInclusive);
 
-            if (hash > -1 && hash < triggerPoint.Value.Position || (index > -1 && (start - line.Start.Position) > index))
-                return;
-
-            while (start > line.Start && !char.IsWhiteSpace((start - 1).GetChar()))
-            {
-                start -= 1;
-            }
-
-            ITrackingSpan applicableTo = snapshot.CreateTrackingSpan(new SnapshotSpan(start, triggerPoint.Value), SpanTrackingMode.EdgeInclusive);
-            CompletionSet completionSet = new CompletionSet("PaketCompletion", "Paket", applicableTo, completions, Enumerable.Empty<Intel.Completion>());
+            CompletionSet completionSet = new CompletionSet("PaketCompletion", "Paket", trackingSpan, completions, Enumerable.Empty<Completion>());
 
             completionSets.Add(completionSet);
         }
