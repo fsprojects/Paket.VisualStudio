@@ -20,8 +20,6 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
     {
         private static IEnumerable<string> searchResults;
 
-        private static readonly Regex r = new Regex("nuget (?<query>.*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         public CompletionContextType ContextType
         {
             get { return CompletionContextType.NuGet; }
@@ -35,7 +33,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
             {
                 foreach (var value in searchResults)
                 {
-                    yield return new CompletionEntry(value, value.AddQuotes(), value, imageSource);
+                    yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
                 }
 
                 searchResults = null;
@@ -44,8 +42,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
             {
                 Action<CompletionEntry> action = entry =>
                 {
-                    string text = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
-                    string searchTerm = r.Match(text).Groups["query"].Value.TrimQuotes();
+                    string searchTerm = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
 
                     entry.UpdateDisplayText(searchTerm);
 
