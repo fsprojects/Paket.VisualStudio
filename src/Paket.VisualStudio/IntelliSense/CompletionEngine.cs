@@ -41,7 +41,7 @@ namespace Paket.VisualStudio.IntelliSense
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
         {
-            IEnumerable<ICompletionListProvider> providers = GetCompletionProviders(PaketDocument.FromTextBuffer(textBuffer), navigator, position, out context);
+            IEnumerable<ICompletionListProvider> providers = GetCompletionProviders(navigator, position, out context);
             if (context == null)
             {
                 return providers;
@@ -56,9 +56,9 @@ namespace Paket.VisualStudio.IntelliSense
             return providers;
         }
 
-        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position, out CompletionContext context)
+        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(ITextStructureNavigator navigator, SnapshotPoint position, out CompletionContext context)
         {
-            context = GetCompletionContext(paketDocument, navigator, position);
+            context = GetCompletionContext(navigator, position);
             return GetCompletionProviders(context.ContextType);
         }
 
@@ -67,7 +67,7 @@ namespace Paket.VisualStudio.IntelliSense
             return completionProviders.Where(provider => provider.ContextType == contextType);
         }
 
-        private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
+        private static CompletionContext GetCompletionContext(ITextStructureNavigator navigator, SnapshotPoint position)
         {
             TextExtent endPosition = navigator.GetExtentOfWord(position - 1);
             TextExtent startPosition = endPosition;
