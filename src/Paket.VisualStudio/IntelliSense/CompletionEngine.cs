@@ -84,7 +84,14 @@ namespace Paket.VisualStudio.IntelliSense
 
             var context = new CompletionContext(span);
 
-            if (paketDocument.GetLineAt(position).GetText().StartsWith("nuget "))
+            TextExtent previous = navigator.GetExtentOfWord(startPosition.Span.Start - 1);
+            // try to extend the span over blanks
+            while (paketDocument.GetCharAt(previous.Span.Start.Position) == " ")
+            {
+                previous = navigator.GetExtentOfWord(previous.Span.Start - 1);
+            }
+            var lastWord = previous.Span.GetText();
+            if (lastWord == "nuget")
                 context.ContextType = CompletionContextType.NuGet;
             else
                 context.ContextType = CompletionContextType.Keyword;
