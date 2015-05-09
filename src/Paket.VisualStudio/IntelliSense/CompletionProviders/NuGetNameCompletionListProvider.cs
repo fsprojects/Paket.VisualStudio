@@ -58,7 +58,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
             ThreadPool.QueueUserWorkItem(state =>
             {
                 Task<string[]> task = FSharpAsync.StartAsTask(
-                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, "http://nuget.org/api/v2", searchTerm, 20),
+                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Paket.Constants.DefaultNugetStream, searchTerm, 20),
                     new FSharpOption<TaskCreationOptions>(TaskCreationOptions.None),
                     new FSharpOption<CancellationToken>(CancellationToken.None));
 
