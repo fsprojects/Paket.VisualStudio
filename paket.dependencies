@@ -2,8 +2,11 @@ source http://nuget.org/api/v2
 
 nuget FAKE
 nuget Paket.Core
+nuget FSharp.Formatting
 nuget VSSDK.GraphModel.12
 nuget VSSDK.Text.12
-nuget FSharp.Formatting
+nuget VSSDK.Language.12
+nuget VSSDK.Editor.12
+nuget VSSDK.ComponentModelHost.12
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

@@ -9,7 +9,7 @@ namespace Paket.VisualStudio.SolutionExplorer
     internal class GraphIcons
     {
         private const string Prefix = "Paket.VisualStudio";
-        private const string PrefixDot = Prefix + ".";
+        internal const string PrefixDot = Prefix + ".";
 
         public const string Packages = PrefixDot + "Packages";
         public const string Package = PrefixDot + "Package";
@@ -40,7 +40,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             imageService.Add(imageName, new LazyImage(() => LoadWpfImage(resourceName)));
         }
 
-        private static ImageSource LoadWpfImage(string resourceName)
+        internal static ImageSource LoadWpfImage(string resourceName)
         {
             string fullResourceName = PackPrefix + resourceName;
 
