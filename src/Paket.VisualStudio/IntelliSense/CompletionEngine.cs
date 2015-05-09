@@ -36,6 +36,7 @@ namespace Paket.VisualStudio.IntelliSense
         {
             new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
             new NuGetNameCompletionListProvider(),
+            new SourceCompletionListProvider(),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -68,16 +69,38 @@ namespace Paket.VisualStudio.IntelliSense
 
         private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
         {
-            TextExtent wordUnderCaret = navigator.GetExtentOfWord(position - 1);
-            var context = new CompletionContext(wordUnderCaret.Span);
+            TextExtent endPosition = navigator.GetExtentOfWord(position - 1);
+            TextExtent startPosition = endPosition;
+            
+            // try to extend the span over .
+            while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
+            {
+                startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
+            }
 
-            SnapshotSpan previous = navigator.GetSpanOfPreviousSibling(wordUnderCaret.Span);
-            if (previous.GetText() == "nuget")
-                context.ContextType = CompletionContextType.NuGet;
-            else
-                context.ContextType = CompletionContextType.Keyword;
+            var startPos = startPosition.Span.Start.Position ;
+            var length = endPosition.Span.End.Position - startPos;
+            var span = new Span(startPos,length);
+            var snapShotSpan = new SnapshotSpan(position.Snapshot, span);
 
-            context.Snapshot = wordUnderCaret.Span.Snapshot;
+            var context = new CompletionContext(span);
+
+            TextExtent previous = navigator.GetExtentOfWord(startPosition.Span.Start - 1);
+            // try to extend the span over blanks
+            while (paketDocument.GetCharAt(previous.Span.Start.Position) == " ")
+            {
+                previous = navigator.GetExtentOfWord(previous.Span.Start - 1);
+            }
+            var lastWord = previous.Span.GetText();
+
+            switch(lastWord)
+            {
+                case "nuget": context.ContextType = CompletionContextType.NuGet; break;
+                case "source": context.ContextType = CompletionContextType.Source; break;
+                default: context.ContextType = CompletionContextType.Keyword; break;
+            }
+
+            context.Snapshot = snapShotSpan.Snapshot;
             return context;
         }
     }

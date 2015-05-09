@@ -157,6 +157,7 @@
     <Compile Include="IntelliSense\CompletionEntry.cs" />
     <Compile Include="IntelliSense\CompletionProviders\NuGetNameCompletionListProvider.cs" />
     <Compile Include="IntelliSense\CompletionProviders\PaketKeywordCompletionListProvider.cs" />
+    <Compile Include="IntelliSense\CompletionProviders\SourceCompletionListProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionController.cs" />
     <Compile Include="IntelliSense\ICompletionListProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionSourceProvider.cs" />
