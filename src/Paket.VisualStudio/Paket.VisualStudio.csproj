@@ -143,6 +143,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandIDs.cs" />
+    <Compile Include="Commands\UpdatePackageCommand.cs" />
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />
     <Compile Include="EditorExtensions\CommentCommandTarget.cs" />
     <Compile Include="EditorExtensions\Disposable.cs" />
@@ -223,6 +225,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <VSCTCompile Include="Commands\CommandTable.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
     <EmbeddedResource Include="Resources\NuGet.ico" />
   </ItemGroup>
   <ItemGroup>
