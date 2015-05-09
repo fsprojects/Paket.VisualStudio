@@ -1,0 +1,95 @@
+﻿<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Extern href="VSDbgCmd.h" />
+  <Extern href="VsDebugGuids.h"/>
+
+
+  <!--The Commands section is where we the commands, menus and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+  <Commands package="guidPackage">
+    <Buttons>
+      <Button guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
+        <Icon guid="CheckUpdates.bmpGuid" id="CheckUpdates.bmpId" />
+        <Strings>
+          <CommandName>cmdidUpdate</CommandName>
+          <ButtonText>Update Package</ButtonText>
+          <MenuText>Update Package</MenuText>
+          <ToolTipText>Update Package</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="guidCommandSet" id="CheckUpdates" priority="0x0100">
+        <Strings>
+          <CommandName>cmdidCheckUpdates</CommandName>
+          <ButtonText>Check for Updates</ButtonText>
+          <MenuText>Check for Updates</MenuText>
+          <ToolTipText>Check for Updates</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="guidCommandSet" id="Reinstall" priority="0x0100">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidReinstall</CommandName>
+          <ButtonText>Reinstall</ButtonText>
+          <MenuText>Reinstall</MenuText>
+          <ToolTipText>Reinstall</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="guidCommandSet" id="Uninstall" priority="0x0100">
+        <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
+        <Strings>
+          <CommandName>cmdidUninstall</CommandName>
+          <ButtonText>Uninstall</ButtonText>
+          <MenuText>Uninstall</MenuText>
+          <ToolTipText>Uninstall</ToolTipText>
+        </Strings>
+      </Button>
+    </Buttons>
+
+
+    <Bitmaps>
+      <!--    <Bitmap guid="CheckUpdates.bmpGuid" href="..\Button Bitmaps\CheckUpdates.bmp" usedList="CheckUpdates.bmpId" />-->
+      <!--    <Bitmap guid="Uninstall.bmpGuid" href="..\Button Bitmaps\Uninstall.bmp" usedList="Uninstall.bmpId" />-->
+    </Bitmaps>
+
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidCommandSet" id="CheckUpdates" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
+    </CommandPlacement>
+<!--    <CommandPlacement guid="guidCommandSet" id="Reinstall" priority="0x0100">-->
+<!--      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />-->
+<!--    </CommandPlacement>-->
+<!--    <CommandPlacement guid="guidCommandSet" id="Uninstall" priority="0x0100">-->
+<!--      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />-->
+<!--    </CommandPlacement>-->
+  </CommandPlacements>
+
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidPackage" value="{2418556f-c184-4e6d-94cb-341be5c474ac}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidCommandSet" value="{9be58af9-d601-430c-b615-f279503109b2}">
+      <IDSymbol name="UpdatePackage" value="0x0002" />
+      <IDSymbol name="CheckUpdates" value="0x0006" />
+      <IDSymbol name="Reinstall" value="0x000A" />
+      <IDSymbol name="Uninstall" value="0x000B" />
+    </GuidSymbol>
+
+    <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
+      <IDSymbol name="CheckUpdates.bmpId" value="1" />
+    </GuidSymbol>
+    <GuidSymbol name="Uninstall.bmpGuid" value="{2f43a43b-9f7b-41e9-b0e7-f5810200f956}">
+      <IDSymbol name="Uninstall.bmpId" value="1" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>
