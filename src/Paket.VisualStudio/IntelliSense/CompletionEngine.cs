@@ -36,6 +36,7 @@ namespace Paket.VisualStudio.IntelliSense
         {
             new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
             new NuGetNameCompletionListProvider(),
+            new SourceCompletionListProvider(),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -72,7 +73,7 @@ namespace Paket.VisualStudio.IntelliSense
             TextExtent startPosition = endPosition;
             
             // try to extend the span over .
-            while (paketDocument.GetCharAt(startPosition.Span.Start.Position - 1) == ".")
+            while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
             {
                 startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
             }
@@ -91,10 +92,13 @@ namespace Paket.VisualStudio.IntelliSense
                 previous = navigator.GetExtentOfWord(previous.Span.Start - 1);
             }
             var lastWord = previous.Span.GetText();
-            if (lastWord == "nuget")
-                context.ContextType = CompletionContextType.NuGet;
-            else
-                context.ContextType = CompletionContextType.Keyword;
+
+            switch(lastWord)
+            {
+                case "nuget": context.ContextType = CompletionContextType.NuGet; break;
+                case "source": context.ContextType = CompletionContextType.Source; break;
+                default: context.ContextType = CompletionContextType.Keyword; break;
+            }
 
             context.Snapshot = snapShotSpan.Snapshot;
             return context;
