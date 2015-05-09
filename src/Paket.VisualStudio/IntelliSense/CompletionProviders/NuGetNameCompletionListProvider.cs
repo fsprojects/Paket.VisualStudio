@@ -57,12 +57,11 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
         {
             ThreadPool.QueueUserWorkItem(state =>
             {
-                Task<string[]> task = FSharpAsync.StartAsTask(
-                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Paket.Constants.DefaultNugetStream, searchTerm, 20),
-                    new FSharpOption<TaskCreationOptions>(TaskCreationOptions.None),
-                    new FSharpOption<CancellationToken>(CancellationToken.None));
-
-                searchResults = task.Result;
+                searchResults =
+                    FSharpAsync.RunSynchronously(
+                        NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, searchTerm, 20),
+                        FSharpOption<int>.None,
+                        FSharpOption<CancellationToken>.None);
 
                 DteHelper.ExecuteCommand("Edit.CompleteWord");
             });
