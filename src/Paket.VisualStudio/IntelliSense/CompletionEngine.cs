@@ -69,15 +69,24 @@ namespace Paket.VisualStudio.IntelliSense
         private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
         {
             TextExtent wordUnderCaret = navigator.GetExtentOfWord(position - 1);
-            var context = new CompletionContext(wordUnderCaret.Span);
+            TextExtent wordUnderCaret2 = navigator.GetExtentOfWord(position - 1);
+            while (paketDocument.GetCharAt(wordUnderCaret2.Span.Start.Position - 1) == ".")
+            {
+                wordUnderCaret2 = navigator.GetExtentOfWord(wordUnderCaret2.Span.Start - 2);
+            }
+            var startPos = wordUnderCaret2.Span.Start.Position ;
+            var length = wordUnderCaret.Span.End.Position - startPos;
+            var span = new Span(startPos,length);
+            var snapShotSpan = new SnapshotSpan(position.Snapshot, span);
 
-            SnapshotSpan previous = navigator.GetSpanOfPreviousSibling(wordUnderCaret.Span);
-            if (previous.GetText() == "nuget")
+            var context = new CompletionContext(span);
+
+            if (paketDocument.GetLineAt(position).GetText().StartsWith("nuget "))
                 context.ContextType = CompletionContextType.NuGet;
             else
                 context.ContextType = CompletionContextType.Keyword;
 
-            context.Snapshot = wordUnderCaret.Span.Snapshot;
+            context.Snapshot = snapShotSpan.Snapshot;
             return context;
         }
     }

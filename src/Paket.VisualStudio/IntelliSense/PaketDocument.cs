@@ -21,5 +21,12 @@ namespace Paket.VisualStudio.IntelliSense
         {
             return textSnapshot.GetLineFromPosition(position);
         }
+        
+        public string GetCharAt(int position)
+        {
+            if (position < 0)
+                return "";
+            return textSnapshot.GetText(position,1);
+        }
     }
 }
