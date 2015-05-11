@@ -58,7 +58,8 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         int IVsSelectionEvents.OnSelectionChanged(IVsHierarchy pHierOld, uint itemidOld, IVsMultiItemSelect pMISOld, ISelectionContainer pSCOld, IVsHierarchy pHierNew, uint itemidNew, IVsMultiItemSelect pMISNew, ISelectionContainer pSCNew)
         {
-            SelectedGraphNode = GetCurrentSelectionGraphNode(pSCNew);
+            if (pSCNew != null)
+                SelectedGraphNode = GetCurrentSelectionGraphNode(pSCNew);
             return VSConstants.S_OK;
         }
 
