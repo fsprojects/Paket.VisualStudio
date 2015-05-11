@@ -32,7 +32,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void UpdatePackage(object sender, EventArgs e)
         {
             var node = tracker.SelectedGraphNode;
-            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory)) return;
+            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory)) 
+                return;
 
             MessageBox.Show("You clicked on " + node.Label);
         }
