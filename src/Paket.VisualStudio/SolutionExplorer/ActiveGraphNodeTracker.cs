@@ -28,7 +28,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             if (vsMonitorSelection == null)
                 vsMonitorSelection = GetMonitorSelection();
 
-            vsMonitorSelection?.AdviseSelectionEvents(this, out selectionEventsCookie);
+            if(vsMonitorSelection != null)
+                vsMonitorSelection.AdviseSelectionEvents(this, out selectionEventsCookie);
         }
 
         public void Unregister()
@@ -36,7 +37,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             if (vsMonitorSelection == null)
                 vsMonitorSelection = GetMonitorSelection();
 
-            vsMonitorSelection?.UnadviseSelectionEvents(selectionEventsCookie);
+            if (vsMonitorSelection != null)
+                vsMonitorSelection.UnadviseSelectionEvents(selectionEventsCookie);
         }
 
         private IVsMonitorSelection GetMonitorSelection()
