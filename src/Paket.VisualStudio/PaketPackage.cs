@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Paket.VisualStudio.Commands;
+using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio
 {
@@ -14,19 +15,22 @@ namespace Paket.VisualStudio
     [Guid(Guids.PackageGuid)]
     public sealed class PaketPackage : Package
     {
+        private PaketMenuCommandService commandService;
+
         protected override void Initialize()
         {
             base.Initialize();
 
+            var tracker = new ActiveGraphNodeTracker(this);
             var menuCommandService = (OleMenuCommandService)GetService(typeof(IMenuCommandService));
-            RegisterMenuCommands(menuCommandService);
-
+            commandService = new PaketMenuCommandService(this, menuCommandService, tracker);
+            commandService.Register();
         }
 
-        private void RegisterMenuCommands(IMenuCommandService menuCommandService)
+        protected override void Dispose(bool disposing)
         {
-            menuCommandService.AddCommand(new OleMenuCommand(id: CommandIDs.UpdatePackage, invokeHandler:
-                (sender, args) => { UpdatePackageCommand.Execute(); }));
+            base.Dispose(disposing);
+            commandService.Unregister();
         }
     }
 }
