@@ -18,9 +18,16 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         internal static string GetFileName(this GraphNodeId nodeId)
         {
-            Uri fileName = nodeId.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
+            Uri fileName = nodeId.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);            
 
-            return (fileName != null) ? fileName.LocalPath : null;
+            if (fileName != null) 
+                return fileName.LocalPath;
+
+            var start = nodeId.LiteralValue.IndexOf("File=file:///") + 13;
+            if (start < 0) return null;
+            var end = nodeId.LiteralValue.IndexOf(')',start);
+            if (end < 0) return null;
+            return nodeId.LiteralValue.Substring(start, end - start);
         }
     }
 }
