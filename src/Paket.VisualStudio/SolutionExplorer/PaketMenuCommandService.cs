@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Paket.VisualStudio.Commands;
+using System.Threading.Tasks;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -15,13 +16,20 @@ namespace Paket.VisualStudio.SolutionExplorer
         private readonly IServiceProvider serviceProvider;
         private readonly OleMenuCommandService menuCommandService;
         private readonly ActiveGraphNodeTracker tracker;
-        private GraphNode currentlySelectedNode;
 
         public PaketMenuCommandService(IServiceProvider serviceProvider, OleMenuCommandService menuCommandService, ActiveGraphNodeTracker tracker)
         {
             this.serviceProvider = serviceProvider;
             this.menuCommandService = menuCommandService;
             this.tracker = tracker;
+        }
+
+        private void UpdatePackageAsync(string dependenciesFileName, string packageName)
+        {            
+            System.Threading.Tasks.Task.Run(() => {
+                Paket.Dependencies.Locate(dependenciesFileName)
+                    .UpdatePackage(packageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
+            });
         }
 
         private void RegisterCommands()
@@ -35,7 +43,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory)) 
                 return;
 
-            MessageBox.Show("You clicked on " + node.Label);
+            UpdatePackageAsync(node.Id.GetFileName(), node.GetPackageName());
         }
 
         private void RegisterCommand(CommandID commandId, EventHandler invokeHandler, EventHandler beforeQueryStatusHandler = null)

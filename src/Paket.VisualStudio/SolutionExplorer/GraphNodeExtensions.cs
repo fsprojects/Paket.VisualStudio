@@ -29,5 +29,10 @@ namespace Paket.VisualStudio.SolutionExplorer
             if (end < 0) return null;
             return nodeId.LiteralValue.Substring(start, end - start);
         }
+
+        internal static string GetPackageName(this GraphNode node)
+        {
+            return node.Label.Trim();
+        }
     }
 }
