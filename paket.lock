@@ -18,7 +18,7 @@ NUGET
     Newtonsoft.Json (6.0.8)
     Octokit (0.11.0)
       Microsoft.Net.Http
-    Paket.Core (1.4.2)
+    Paket.Core (1.4.3)
       FSharp.Core
       Newtonsoft.Json
     VSSDK.ComponentModelHost (12.0.4)
