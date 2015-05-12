@@ -8,12 +8,12 @@ namespace Paket.VisualStudio.SolutionExplorer
     {
         internal static bool IsPaketReferencesNode(this GraphNode node)
         {
-            return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == "paket.references";
+            return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == Paket.Constants.ReferencesFile;
         }
 
         internal static bool IsPaketDependenciesNode(this GraphNode node)
         {
-            return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == "paket.dependencies";
+            return node.HasCategory(CodeNodeCategories.ProjectItem) && node.Label == Paket.Constants.DependenciesFileName;
         }
 
         internal static string GetFileName(this GraphNodeId nodeId)
