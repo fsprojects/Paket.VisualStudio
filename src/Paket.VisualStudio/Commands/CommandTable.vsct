@@ -29,15 +29,15 @@
           <ToolTipText>Check for Updates</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="guidCommandSet" id="Reinstall" priority="0x0100">
+      <Button guid="guidCommandSet" id="Update" priority="0x0100">
         <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
 
         <Strings>
-          <CommandName>cmdidReinstall</CommandName>
-          <ButtonText>Reinstall</ButtonText>
-          <MenuText>Reinstall</MenuText>
-          <ToolTipText>Reinstall</ToolTipText>
+          <CommandName>cmdidUpdate</CommandName>
+          <ButtonText>Update</ButtonText>
+          <MenuText>Update</MenuText>
+          <ToolTipText>Update</ToolTipText>
         </Strings>
       </Button>
       <Button guid="guidCommandSet" id="RemovePackage" priority="0x0100">
@@ -63,6 +63,9 @@
     <CommandPlacement guid="guidCommandSet" id="CheckUpdates" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="Update" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
     <CommandPlacement guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
@@ -83,7 +86,7 @@
     <GuidSymbol name="guidCommandSet" value="{9be58af9-d601-430c-b615-f279503109b2}">
       <IDSymbol name="UpdatePackage" value="0x0002" />
       <IDSymbol name="CheckUpdates" value="0x0006" />
-      <IDSymbol name="Reinstall" value="0x000A" />
+      <IDSymbol name="Update" value="0x000A" />
       <IDSymbol name="RemovePackage" value="0x000B" />
     </GuidSymbol>
 
