@@ -107,11 +107,19 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void RunCommand(object sender, EventArgs e, Action command)
         {
             PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
 
             System.Threading.Tasks.Task.Run(() =>
             {
-                command();
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                try
+                {
+                    command();
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                }catch(Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName());
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message +"\r\n");
+                }
             });
         }
 
@@ -122,14 +130,23 @@ namespace Paket.VisualStudio.SolutionExplorer
                 return;
 
             PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
 
             System.Threading.Tasks.Task.Run(() =>
             {
                 var info = new PackageInfo();
                 info.DependenciesFileName = node.Id.GetFileName();
                 info.PackageName = node.GetPackageName();
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                try
+                {
+                    command(info);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
             });
         }
 
@@ -140,6 +157,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 return;
 
             PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
 
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -147,8 +165,16 @@ namespace Paket.VisualStudio.SolutionExplorer
                 info.DependenciesFileName = node.Id.GetFileName();
                 info.ReferencesFileName = node.Id.GetFileName();
                 info.PackageName = node.GetPackageName();
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                try
+                {
+                    command(info);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
             });
         }
 
