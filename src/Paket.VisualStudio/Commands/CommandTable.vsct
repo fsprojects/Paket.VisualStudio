@@ -19,6 +19,9 @@
         </Strings>
       </Button>
       <Button guid="guidCommandSet" id="CheckUpdates" priority="0x0100">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        
         <Strings>
           <CommandName>cmdidCheckUpdates</CommandName>
           <ButtonText>Check for Updates</ButtonText>
