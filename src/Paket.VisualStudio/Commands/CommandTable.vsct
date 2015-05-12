@@ -40,6 +40,17 @@
           <ToolTipText>Update</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="guidCommandSet" id="Install" priority="0x0100">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidInstall</CommandName>
+          <ButtonText>Install</ButtonText>
+          <MenuText>Install</MenuText>
+          <ToolTipText>Install</ToolTipText>
+        </Strings>
+      </Button>
       <Button guid="guidCommandSet" id="RemovePackage" priority="0x0100">
         <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
         <Strings>
@@ -66,6 +77,9 @@
     <CommandPlacement guid="guidCommandSet" id="Update" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="Install" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
     <CommandPlacement guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
@@ -85,9 +99,10 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidCommandSet" value="{9be58af9-d601-430c-b615-f279503109b2}">
       <IDSymbol name="UpdatePackage" value="0x0002" />
-      <IDSymbol name="CheckUpdates" value="0x0006" />
+      <IDSymbol name="CheckUpdates" value="0x0006" />      
       <IDSymbol name="Update" value="0x000A" />
       <IDSymbol name="RemovePackage" value="0x000B" />
+      <IDSymbol name="Install" value="0x000C" />
     </GuidSymbol>
 
     <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
