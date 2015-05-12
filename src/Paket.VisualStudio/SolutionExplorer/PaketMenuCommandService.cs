@@ -30,6 +30,18 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage);
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage);
+            RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates);
+        }
+
+        private void CheckForUpdates(object sender, EventArgs e)
+        {
+            PaketOutputPane.OutputPane.Activate();
+
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                    .ShowOutdated(false, true);
+            });
         }
 
         private void UpdatePackage(object sender, EventArgs e)
