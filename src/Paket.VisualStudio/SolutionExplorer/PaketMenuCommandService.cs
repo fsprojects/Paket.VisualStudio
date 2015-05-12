@@ -110,7 +110,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             System.Threading.Tasks.Task.Run(() =>
             {
                 command();
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
             });
         }
 
@@ -128,7 +128,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 info.DependenciesFileName = node.Id.GetFileName();
                 info.PackageName = node.GetPackageName();
                 command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
             });
         }
 
@@ -147,7 +147,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 info.ReferencesFileName = node.Id.GetFileName();
                 info.PackageName = node.GetPackageName();
                 command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
             });
         }
 
