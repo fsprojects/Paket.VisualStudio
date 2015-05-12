@@ -38,6 +38,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Update, Update, OnlyDependenciesFileNodes);
+            RegisterCommand(CommandIDs.Install, Install, OnlyDependenciesFileNodes);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)
@@ -101,6 +102,15 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Update(false, false);
+            });
+        }
+
+        private void Install(object sender, EventArgs e)
+        {
+            RunCommand(sender, e, () =>
+            {
+                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                    .Install(false, false);
             });
         }
 
