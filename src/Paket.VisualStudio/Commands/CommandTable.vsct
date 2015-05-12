@@ -37,13 +37,13 @@
           <ToolTipText>Reinstall</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="guidCommandSet" id="Uninstall" priority="0x0100">
+      <Button guid="guidCommandSet" id="RemovePackage" priority="0x0100">
         <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
         <Strings>
-          <CommandName>cmdidUninstall</CommandName>
-          <ButtonText>Uninstall</ButtonText>
-          <MenuText>Uninstall</MenuText>
-          <ToolTipText>Uninstall</ToolTipText>
+          <CommandName>cmdidRemovePackage</CommandName>
+          <ButtonText>Remove Package</ButtonText>
+          <MenuText>Remove Package</MenuText>
+          <ToolTipText>Remove Package</ToolTipText>
         </Strings>
       </Button>
     </Buttons>
@@ -66,9 +66,9 @@
 <!--    <CommandPlacement guid="guidCommandSet" id="Reinstall" priority="0x0100">-->
 <!--      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />-->
 <!--    </CommandPlacement>-->
-<!--    <CommandPlacement guid="guidCommandSet" id="Uninstall" priority="0x0100">-->
-<!--      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />-->
-<!--    </CommandPlacement>-->
+    <CommandPlacement guid="guidCommandSet" id="RemovePackage" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
+    </CommandPlacement>
   </CommandPlacements>
 
 
@@ -81,7 +81,7 @@
       <IDSymbol name="UpdatePackage" value="0x0002" />
       <IDSymbol name="CheckUpdates" value="0x0006" />
       <IDSymbol name="Reinstall" value="0x000A" />
-      <IDSymbol name="Uninstall" value="0x000B" />
+      <IDSymbol name="RemovePackage" value="0x000B" />
     </GuidSymbol>
 
     <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
