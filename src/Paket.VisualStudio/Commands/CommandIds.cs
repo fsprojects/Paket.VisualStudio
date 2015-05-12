@@ -6,5 +6,6 @@ namespace Paket.VisualStudio.Commands
     {
         public static readonly CommandID UpdatePackage = new CommandID(Guids.CommandSet, 0x0002);
         public static readonly CommandID RemovePackage = new CommandID(Guids.CommandSet, 0x000B);
+        public static readonly CommandID CheckForUpdates = new CommandID(Guids.CommandSet, 0x0006);
     };
 }
