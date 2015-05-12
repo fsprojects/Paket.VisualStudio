@@ -12,6 +12,12 @@ using EnvDTE;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
+    class PackageInfo
+    {
+        public string DependenciesFileName { get; set;}
+        public string PackageName { get; set;}
+    }
+
     internal class PaketMenuCommandService
     {
         private readonly IServiceProvider serviceProvider;
@@ -51,44 +57,18 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void CheckForUpdates(object sender, EventArgs e)
+        private void RunCommand(object sender, EventArgs e, Action command)
         {
             PaketOutputPane.OutputPane.Activate();
 
             System.Threading.Tasks.Task.Run(() =>
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
-                    .ShowOutdated(false, true);
+                command();
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
             });
         }
 
-        private void Update(object sender, EventArgs e)
-        {
-            PaketOutputPane.OutputPane.Activate();
-
-            System.Threading.Tasks.Task.Run(() =>
-            {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Update(false, false);
-            });
-        }
-
-        private void UpdatePackage(object sender, EventArgs e)
-        {
-            var node = tracker.SelectedGraphNode;
-            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory)) 
-                return;
-
-            PaketOutputPane.OutputPane.Activate();
-
-            System.Threading.Tasks.Task.Run(() =>
-            {             
-                Paket.Dependencies.Locate(node.Id.GetFileName())
-                    .UpdatePackage(node.GetPackageName(), Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
-            });
-        }
-
-        private void RemovePackage(object sender, EventArgs e)
+        private void RunCommandOnPackage(object sender, EventArgs e, Action<PackageInfo> command)
         {
             var node = tracker.SelectedGraphNode;
             if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
@@ -98,8 +78,47 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             System.Threading.Tasks.Task.Run(() =>
             {
-                Paket.Dependencies.Locate(node.Id.GetFileName())
-                    .Remove(node.GetPackageName());
+                var info = new PackageInfo();
+                info.DependenciesFileName = node.Id.GetFileName();
+                info.PackageName = node.GetPackageName();
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
+            });
+        }
+
+        private void CheckForUpdates(object sender, EventArgs e)
+        {
+            RunCommand(sender, e, () =>
+            {
+                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                    .ShowOutdated(false, true);
+            });
+        }
+
+        private void Update(object sender, EventArgs e)
+        {
+            RunCommand(sender, e, () =>
+            {
+                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                    .Update(false, false);
+            });
+        }
+
+        private void UpdatePackage(object sender, EventArgs e)
+        {
+            RunCommandOnPackage(sender, e, info =>
+            {             
+                Paket.Dependencies.Locate(info.DependenciesFileName)
+                    .UpdatePackage(info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
+            });
+        }
+
+        private void RemovePackage(object sender, EventArgs e)
+        {
+            RunCommandOnPackage(sender, e, info =>
+            {
+                Paket.Dependencies.Locate(info.DependenciesFileName)
+                    .Remove(info.PackageName);
             });
         }
 
