@@ -7,7 +7,7 @@ Manage your Paket (http://fsprojects.github.io/Paket/) dependencies from Visual 
 
 Inspired by the [NuGet References](https://visualstudiogallery.msdn.microsoft.com/e8d1fcad-5fa5-4353-ba9c-90f4b6a68154) extension by Daniel Cazzulino ([@kzu](https://github.com/kzu)).
 
-![](http://i.imgur.com/8CEfxfM.png)
+![](https://raw.githubusercontent.com/fsprojects/Paket.VisualStudio/master/docs/files/img/paket.visualstudio.png)
 
 ### Build [![Build status](https://ci.appveyor.com/api/projects/status/ref6jmm8cqdjt22a?svg=true)](https://ci.appveyor.com/project/hmemcpy/paket-visualstudio)
 
