@@ -31,6 +31,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage);
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
+            RegisterCommand(CommandIDs.Update, Update, OnlyDependenciesFileNodes);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)
@@ -42,7 +43,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 menuCommand.Enabled = false;                
 
                 var fileName = tracker.GetSelectedFileName();
-                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith("paket.dependencies"))
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
                     return;
 
                 menuCommand.Visible = true;
@@ -58,6 +59,17 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .ShowOutdated(false, true);
+            });
+        }
+
+        private void Update(object sender, EventArgs e)
+        {
+            PaketOutputPane.OutputPane.Activate();
+
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                    .Update(false, false);
             });
         }
 
