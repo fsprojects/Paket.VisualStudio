@@ -64,6 +64,9 @@
       </Button>
       <Button guid="guidCommandSet" id="RemovePackage" priority="0x0100">
         <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
         <Strings>
           <CommandName>cmdidRemovePackage</CommandName>
           <ButtonText>Remove Package</ButtonText>

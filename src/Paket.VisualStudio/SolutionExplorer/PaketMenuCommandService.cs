@@ -34,8 +34,8 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RegisterCommands()
         {
-            RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage);
-            RegisterCommand(CommandIDs.RemovePackage, RemovePackage);
+            RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage, null);
+            RegisterCommand(CommandIDs.RemovePackage, RemovePackage, OnlyBelowDependenciesFileNodes);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Update, Update, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Install, Install, OnlyDependenciesFileNodes);
@@ -51,6 +51,27 @@ namespace Paket.VisualStudio.SolutionExplorer
                 menuCommand.Enabled = false;                
 
                 var fileName = tracker.GetSelectedFileName();
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
+                    return;
+
+                menuCommand.Visible = true;
+                menuCommand.Enabled = true;
+            }
+        }
+
+        private void OnlyBelowDependenciesFileNodes(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand != null)
+            {
+                menuCommand.Visible = false;
+                menuCommand.Enabled = false;
+
+                var node = tracker.SelectedGraphNode;
+                if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
+                    return;
+
+                var fileName = node.Id.GetFileName();
                 if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
                     return;
 
@@ -142,7 +163,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
-        private void RegisterCommand(CommandID commandId, EventHandler invokeHandler, EventHandler beforeQueryStatusHandler = null)
+        private void RegisterCommand(CommandID commandId, EventHandler invokeHandler, EventHandler beforeQueryStatusHandler)
         {
             menuCommandService.AddCommand(new OleMenuCommand(
                 id: commandId,
