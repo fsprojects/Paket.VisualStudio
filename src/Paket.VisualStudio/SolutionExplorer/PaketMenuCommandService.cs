@@ -14,7 +14,8 @@ namespace Paket.VisualStudio.SolutionExplorer
 {
     class PackageInfo
     {
-        public string DependenciesFileName { get; set;}
+        public string DependenciesFileName { get; set; }
+        public string ReferencesFileName { get; set; }
         public string PackageName { get; set;}
     }
 
@@ -36,6 +37,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage, null);
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage, OnlyBelowDependenciesFileNodes);
+            RegisterCommand(CommandIDs.RemovePackageFromProject, RemovePackageFromProject, OnlyBelowReferencesFileNodes);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Update, Update, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Install, Install, OnlyDependenciesFileNodes);
@@ -80,6 +82,27 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
+        private void OnlyBelowReferencesFileNodes(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand != null)
+            {
+                menuCommand.Visible = false;
+                menuCommand.Enabled = false;
+
+                var node = tracker.SelectedGraphNode;
+                if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
+                    return;
+
+                var fileName = node.Id.GetFileName();
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.ReferencesFile))
+                    return;
+
+                menuCommand.Visible = true;
+                menuCommand.Enabled = true;
+            }
+        }
+
         private void RunCommand(object sender, EventArgs e, Action command)
         {
             PaketOutputPane.OutputPane.Activate();
@@ -103,6 +126,25 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 var info = new PackageInfo();
                 info.DependenciesFileName = node.Id.GetFileName();
+                info.PackageName = node.GetPackageName();
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
+            });
+        }
+
+        private void RunCommandOnPackageInProject(object sender, EventArgs e, Action<PackageInfo> command)
+        {
+            var node = tracker.SelectedGraphNode;
+            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
+                return;
+
+            PaketOutputPane.OutputPane.Activate();
+
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                var info = new PackageInfo();
+                info.DependenciesFileName = node.Id.GetFileName();
+                info.ReferencesFileName = node.Id.GetFileName();
                 info.PackageName = node.GetPackageName();
                 command(info);
                 PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.");
@@ -160,6 +202,15 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .Remove(info.PackageName);
+            });
+        }
+
+        private void RemovePackageFromProject(object sender, EventArgs e)
+        {
+            RunCommandOnPackageInProject(sender, e, info =>
+            {
+                Paket.Dependencies.Locate(info.DependenciesFileName)
+                    .RemoveFromProject(info.PackageName, false, false, info.ReferencesFileName, true);
             });
         }
 

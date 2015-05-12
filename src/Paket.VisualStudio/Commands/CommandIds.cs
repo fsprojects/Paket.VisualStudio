@@ -10,5 +10,6 @@ namespace Paket.VisualStudio.Commands
         public static readonly CommandID Update = new CommandID(Guids.CommandSet, 0x000A);
         public static readonly CommandID Install = new CommandID(Guids.CommandSet, 0x000C);
         public static readonly CommandID Restore = new CommandID(Guids.CommandSet, 0x000D);
+        public static readonly CommandID RemovePackageFromProject = new CommandID(Guids.CommandSet, 0x000E);
     };
 }
