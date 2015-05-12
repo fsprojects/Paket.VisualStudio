@@ -26,12 +26,15 @@ namespace Paket.VisualStudio
             var menuCommandService = (OleMenuCommandService)GetService(typeof(IMenuCommandService));
             commandService = new PaketMenuCommandService(this, menuCommandService, tracker);            
             commandService.Register();
+
+            PaketErrorPane.SetServiceProvider(this);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             commandService.Unregister();
+            PaketErrorPane.Unregister();
         }
     }
 }
