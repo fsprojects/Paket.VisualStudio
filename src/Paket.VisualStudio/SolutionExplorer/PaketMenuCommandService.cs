@@ -30,7 +30,24 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage);
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage);
-            RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates);
+            RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
+        }
+
+        private void OnlyDependenciesFileNodes(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand != null)
+            {
+                menuCommand.Visible = false;
+                menuCommand.Enabled = false;                
+
+                var fileName = tracker.GetSelectedFileName();
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith("paket.dependencies"))
+                    return;
+
+                menuCommand.Visible = true;
+                menuCommand.Enabled = true;
+            }
         }
 
         private void CheckForUpdates(object sender, EventArgs e)
