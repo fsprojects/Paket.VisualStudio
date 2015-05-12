@@ -51,6 +51,17 @@
           <ToolTipText>Install</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="guidCommandSet" id="Restore" priority="0x0100">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidRestore</CommandName>
+          <ButtonText>Restore</ButtonText>
+          <MenuText>Restore</MenuText>
+          <ToolTipText>Restore</ToolTipText>
+        </Strings>
+      </Button>
       <Button guid="guidCommandSet" id="RemovePackage" priority="0x0100">
         <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
         <Strings>
@@ -80,12 +91,12 @@
     <CommandPlacement guid="guidCommandSet" id="Install" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="Restore" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
     <CommandPlacement guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
-<!--    <CommandPlacement guid="guidCommandSet" id="Reinstall" priority="0x0100">-->
-<!--      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />-->
-<!--    </CommandPlacement>-->
     <CommandPlacement guid="guidCommandSet" id="RemovePackage" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
@@ -103,6 +114,7 @@
       <IDSymbol name="Update" value="0x000A" />
       <IDSymbol name="RemovePackage" value="0x000B" />
       <IDSymbol name="Install" value="0x000C" />
+      <IDSymbol name="Restore" value="0x000D" />
     </GuidSymbol>
 
     <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
