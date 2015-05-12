@@ -162,7 +162,8 @@
     <Compile Include="IntelliSense\PaketCompletionController.cs" />
     <Compile Include="IntelliSense\ICompletionListProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionSourceProvider.cs" />
-    <Compile Include="IntelliSense\PaketOutputPane.cs" />
+    <Compile Include="PaketErrorPane.cs" />
+    <Compile Include="PaketOutputPane.cs" />
     <Compile Include="IntelliSense\PaketDocument.cs" />
     <Compile Include="PaketMetadata.cs" />
     <Compile Include="Resources.Designer.cs">
