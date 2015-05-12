@@ -26,3 +26,4 @@ The extension is available under MIT license. For more information see the [Lice
 ### Maintainer
 
 - [@hmemcpy](https://github.com/hmemcpy)
+- [@forki](https://github.com/forki)
