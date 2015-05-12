@@ -32,7 +32,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         internal static string GetPackageName(this GraphNode node)
         {
-            return node.Label.Trim();
+            return node.Label.Split(' ')[0];
         }
     }
 }
