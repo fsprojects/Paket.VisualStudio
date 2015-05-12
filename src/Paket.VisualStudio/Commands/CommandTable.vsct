@@ -86,6 +86,17 @@
           <ToolTipText>Remove Package</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="guidCommandSet" id="Simplify" priority="0x0100">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidSimplify</CommandName>
+          <ButtonText>Simplify</ButtonText>
+          <MenuText>Simplify</MenuText>
+          <ToolTipText>Simplify</ToolTipText>
+        </Strings>
+      </Button>        
     </Buttons>
 
 
@@ -118,6 +129,9 @@
     <CommandPlacement guid="guidCommandSet" id="RemovePackageFromProject" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="Simplify" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
   </CommandPlacements>
 
 
@@ -134,6 +148,7 @@
       <IDSymbol name="Install" value="0x000C" />
       <IDSymbol name="Restore" value="0x000D" />
       <IDSymbol name="RemovePackageFromProject" value="0x000E" />
+      <IDSymbol name="Simplify" value="0x000F" />
     </GuidSymbol>
 
     <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
