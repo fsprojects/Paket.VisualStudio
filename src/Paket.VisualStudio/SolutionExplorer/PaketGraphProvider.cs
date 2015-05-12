@@ -126,7 +126,9 @@ namespace Paket.VisualStudio.SolutionExplorer
             var node = context.Graph.Nodes.Get(id);
             if (node == null)
             {
-                string label = metadata.Id + " " + metadata.VersionString;
+                string label = metadata.Id;
+                if (!String.IsNullOrWhiteSpace(metadata.VersionString))
+                    label = label + " " + metadata.VersionString;
 
                 node = context.Graph.Nodes.GetOrCreate(id, label, PaketGraphSchema.PaketCategory);
 
