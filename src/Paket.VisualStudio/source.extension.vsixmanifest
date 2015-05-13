@@ -8,7 +8,7 @@
     <Locale>1033</Locale>
     <License>License.txt</License>
     <Icon>logo.png</Icon>
-    <ReleaseNotes>https://github.com/hmemcpy/Paket.VisualStudio/blob/master/RELEASE_NOTES.md</ReleaseNotes>
+    <ReleaseNotes>https://github.com/fsprojects/Paket.VisualStudio/blob/master/RELEASE_NOTES.md</ReleaseNotes>
     <PreviewImage>Resources\Preview.png</PreviewImage>
     <MoreInfoUrl></MoreInfoUrl>
     <GettingStartedGuide></GettingStartedGuide>
