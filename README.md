@@ -3,8 +3,6 @@ Paket.VisualStudio
 
 [![Join the chat at https://gitter.im/fsprojects/Paket.VisualStudio](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsprojects/Paket.VisualStudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Join the chat at https://gitter.im/hmemcpy/Paket.VisualStudio](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hmemcpy/Paket.VisualStudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Manage your Paket (http://fsprojects.github.io/Paket/) dependencies from Visual Studio!
 
 Inspired by the [NuGet References](https://visualstudiogallery.msdn.microsoft.com/e8d1fcad-5fa5-4353-ba9c-90f4b6a68154) extension by Daniel Cazzulino ([@kzu](https://github.com/kzu)).
