@@ -56,7 +56,7 @@ namespace Paket.VisualStudio
             return hr;
         }
 
-        internal static void ShowError(string message, string document, int lineNo = 0, int column = 0, string errorUrl = "http://fsprojects.github.io/Paket/")
+        internal static void ShowError(string message, string document, string helpSubPage = "", int lineNo = 0, int column = 0)
         {
             ErrorTask task = new ErrorTask()
             {
@@ -89,6 +89,11 @@ namespace Paket.VisualStudio
 
             task.Help += (s, e) =>
             {
+                var mainPage = "http://fsprojects.github.io/Paket/";
+                var errorUrl = mainPage;
+                if (!String.IsNullOrWhiteSpace(helpSubPage))
+                    errorUrl += helpSubPage;
+
                 IVsWebBrowsingService webBrowsingService = serviceProvider.GetService(typeof(SVsWebBrowsingService)) as IVsWebBrowsingService;
                 if (webBrowsingService != null)
                 {

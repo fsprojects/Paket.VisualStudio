@@ -104,7 +104,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void RunCommand(object sender, EventArgs e, Action command)
+        private void RunCommand(object sender, EventArgs e, string helpTopic, Action command)
         {
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
@@ -117,13 +117,13 @@ namespace Paket.VisualStudio.SolutionExplorer
                     PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
                 }catch(Exception ex)
                 {
-                    PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName());
+                    PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName(), helpTopic);
                     PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message +"\r\n");
                 }
             });
         }
 
-        private void RunCommandOnPackage(object sender, EventArgs e, Action<PackageInfo> command)
+        private void RunCommandOnPackage(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
         {
             var node = tracker.SelectedGraphNode;
             if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
@@ -144,13 +144,13 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }
                 catch (Exception ex)
                 {
-                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName);
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
                     PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
                 }
             });
         }
 
-        private void RunCommandOnPackageInProject(object sender, EventArgs e, Action<PackageInfo> command)
+        private void RunCommandOnPackageInProject(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
         {
             var node = tracker.SelectedGraphNode;
             if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
@@ -172,7 +172,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }
                 catch (Exception ex)
                 {
-                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName);
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
                     PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
                 }
             });
@@ -180,7 +180,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void CheckForUpdates(object sender, EventArgs e)
         {
-            RunCommand(sender, e, () =>
+            RunCommand(sender, e, "paket-outdated.html", () =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .ShowOutdated(false, true);
@@ -189,7 +189,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Update(object sender, EventArgs e)
         {
-            RunCommand(sender, e, () =>
+            RunCommand(sender, e, "paket-update.html", () =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Update(false, false);
@@ -198,7 +198,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Install(object sender, EventArgs e)
         {
-            RunCommand(sender, e, () =>
+            RunCommand(sender, e, "paket-install.html", () =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Install(false, false);
@@ -207,7 +207,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Restore(object sender, EventArgs e)
         {
-            RunCommand(sender, e, () =>
+            RunCommand(sender, e, "paket-restore.html", () =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Restore();
@@ -216,7 +216,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Simplify(object sender, EventArgs e)
         {
-            RunCommand(sender, e, () =>
+            RunCommand(sender, e, "paket-simplify.html", () =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Simplify(false);
@@ -225,7 +225,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void UpdatePackage(object sender, EventArgs e)
         {
-            RunCommandOnPackage(sender, e, info =>
+            RunCommandOnPackage(sender, e, "paket-update.html#Updating-a-single-package", info =>
             {             
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .UpdatePackage(info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
@@ -234,7 +234,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RemovePackage(object sender, EventArgs e)
         {
-            RunCommandOnPackage(sender, e, info =>
+            RunCommandOnPackage(sender, e, "paket-remove.html", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .Remove(info.PackageName);
@@ -243,7 +243,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RemovePackageFromProject(object sender, EventArgs e)
         {
-            RunCommandOnPackageInProject(sender, e, info =>
+            RunCommandOnPackageInProject(sender, e, "paket-remove.html#Removing-from-a-single-project", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .RemoveFromProject(info.PackageName, false, false, info.ReferencesFileName, true);
