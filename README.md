@@ -1,6 +1,8 @@
 Paket.VisualStudio
 ==================
 
+[![Join the chat at https://gitter.im/fsprojects/Paket.VisualStudio](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fsprojects/Paket.VisualStudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Join the chat at https://gitter.im/hmemcpy/Paket.VisualStudio](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hmemcpy/Paket.VisualStudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Manage your Paket (http://fsprojects.github.io/Paket/) dependencies from Visual Studio!
