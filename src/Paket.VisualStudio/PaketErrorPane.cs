@@ -6,6 +6,10 @@ using Microsoft.VisualStudio.Shell;
 using EnvDTE;
 using EnvDTE80;
 
+using VsShell = Microsoft.VisualStudio.Shell.VsShellUtilities;
+using Microsoft.VisualStudio.TextManager.Interop;
+using System.Runtime.InteropServices;
+
 namespace Paket.VisualStudio
 {
     internal class PaketErrorPane
@@ -30,7 +34,29 @@ namespace Paket.VisualStudio
                 _paketErrorProvider.Dispose();
         }
 
-        internal static void ShowError(string message, string document = null, string errorUrl = "http://fsprojects.github.io/Paket/")
+        public static int ThrowOnFailure(int hr)
+        {
+            return ThrowOnFailure(hr, null);
+        }
+
+        public static bool Failed(int hr)
+        {
+            return (hr < 0);
+        }
+
+        public static int ThrowOnFailure(int hr, params int[] expectedHRFailure)
+        {
+            if (Failed(hr))
+            {
+                if ((null == expectedHRFailure) || (Array.IndexOf(expectedHRFailure, hr) < 0))
+                {
+                    Marshal.ThrowExceptionForHR(hr);
+                }
+            }
+            return hr;
+        }
+
+        internal static void ShowError(string message, string document, int lineNo = 0, int column = 0, string errorUrl = "http://fsprojects.github.io/Paket/")
         {
             ErrorTask task = new ErrorTask()
             {
@@ -48,7 +74,16 @@ namespace Paket.VisualStudio
 
                 task.Navigate += (s, e) =>
                 {
-                    dte.ItemOperations.OpenFile(document);
+                    IVsUIHierarchy hierarchy;
+                    uint itemID;
+                    IVsWindowFrame docFrame;
+                    IVsTextView textView;
+                    VsShell.OpenDocument(serviceProvider,document, Guids.LOGVIEWID_Code, out hierarchy, out itemID, out docFrame, out textView);
+                    ThrowOnFailure(docFrame.Show());
+                    if (textView != null)
+                    {
+                        ThrowOnFailure(textView.SetCaretPos(lineNo, column));
+                    }
                 };
             }
 
@@ -71,6 +106,7 @@ namespace Paket.VisualStudio
             };
             _paketErrorProvider.Tasks.Add(task);
             _paketErrorProvider.Show();
+            _paketErrorProvider.BringToFront();
         }
     }
 }
