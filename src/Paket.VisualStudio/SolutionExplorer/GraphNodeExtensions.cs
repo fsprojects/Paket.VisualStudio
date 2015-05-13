@@ -18,7 +18,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         internal static string GetFileName(this GraphNodeId nodeId)
         {
-            Uri fileName = nodeId.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);            
+            Uri fileName = nodeId.GetNestedValueByName<Uri>(CodeGraphNodeIdName.File);
 
             if (fileName != null) 
                 return fileName.LocalPath;

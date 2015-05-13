@@ -27,7 +27,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             // Get the file path
             string itemFullPath = null;
             IVsHierarchy hierarchy = null;
-            uint itemid = VSConstants.VSITEMID_NIL;
+            uint itemid;
             if (!IsSingleProjectItemSelection(out hierarchy, out itemid))
                 return null;
 
@@ -70,13 +70,15 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         int IVsSelectionEvents.OnSelectionChanged(IVsHierarchy pHierOld, uint itemidOld, IVsMultiItemSelect pMISOld, ISelectionContainer pSCOld, IVsHierarchy pHierNew, uint itemidNew, IVsMultiItemSelect pMISNew, ISelectionContainer pSCNew)
         {
-            if (pSCNew != null)
-                SelectedGraphNode = GetCurrentSelectionGraphNode(pSCNew);
+            SelectedGraphNode = GetCurrentSelectionGraphNode(pSCNew);
             return VSConstants.S_OK;
         }
 
         private GraphNode GetCurrentSelectionGraphNode(ISelectionContainer selectionContainer)
         {
+            if (selectionContainer == null)
+                return null;
+
             uint selectedObjectsCount;
             if (!ErrorHandler.Succeeded(selectionContainer.CountObjects(SelectionContainer.SELECTED, out selectedObjectsCount)) || selectedObjectsCount == 0) return null;
 
@@ -93,26 +95,25 @@ namespace Paket.VisualStudio.SolutionExplorer
             return null;
         }
 
-        public static bool IsSingleProjectItemSelection(out IVsHierarchy hierarchy, out uint itemid)
+        public bool IsSingleProjectItemSelection(out IVsHierarchy hierarchy, out uint itemid)
         {
             hierarchy = null;
             itemid = VSConstants.VSITEMID_NIL;
-            int hr = VSConstants.S_OK;
+            int hr;
 
-            var monitorSelection = Package.GetGlobalService(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
             var solution = Package.GetGlobalService(typeof(SVsSolution)) as IVsSolution;
-            if (monitorSelection == null || solution == null)
+            if (vsMonitorSelection == null || solution == null)
             {
                 return false;
             }
 
-            IVsMultiItemSelect multiItemSelect = null;
             IntPtr hierarchyPtr = IntPtr.Zero;
             IntPtr selectionContainerPtr = IntPtr.Zero;
 
             try
             {
-                hr = monitorSelection.GetCurrentSelection(out hierarchyPtr, out itemid, out multiItemSelect, out selectionContainerPtr);
+                IVsMultiItemSelect multiItemSelect;
+                hr = vsMonitorSelection.GetCurrentSelection(out hierarchyPtr, out itemid, out multiItemSelect, out selectionContainerPtr);
 
                 if (ErrorHandler.Failed(hr) || hierarchyPtr == IntPtr.Zero || itemid == VSConstants.VSITEMID_NIL)
                 {
