@@ -151,8 +151,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         private IEnumerable<PaketMetadata> GetDependenciesFromFile(string paketDependenciesFile)
         {
             return DependenciesFile.ReadFromFile(paketDependenciesFile)
-                                   .DirectDependencies
-                                   .Select(d => new PaketMetadata(d.Key.Id, d.Value.ToString()));
+                                   .Packages
+                                   .Select(d => new PaketMetadata(d.Name.ToString(), d.VersionRequirement.ToString()));
         }
 
         private IEnumerable<PaketMetadata> GetIndirectPackages(string paketReferencesFile, string packageName)
