@@ -11,12 +11,12 @@ Inspired by the [NuGet References](https://visualstudiogallery.msdn.microsoft.co
 
 ![](https://raw.githubusercontent.com/fsprojects/Paket.VisualStudio/master/docs/files/img/paket.visualstudio.png)
 
-### Build [![Build status](https://ci.appveyor.com/api/projects/status/ref6jmm8cqdjt22a?svg=true)](https://ci.appveyor.com/project/fsprojects/paket-visualstudio)
+### Build [![Build status](https://ci.appveyor.com/api/projects/status/do913wfhcmnit5ps/branch/master?svg=true)](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/branch/master)
 
 Require Visual Studio 2013 and Visual Studio 2013 SDK. 
 Run the `build.cmd` script or `Paket.VisualStudio.sln` to build the solution.
 
-You can download the latest installer [here](https://ci.appveyor.com/project/fsprojects/paket-visualstudio/branch/master/artifacts).
+You can download the latest installer [here](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/artifacts).
 
 ### Getting involved
 
