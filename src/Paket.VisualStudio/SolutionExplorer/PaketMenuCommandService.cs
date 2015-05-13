@@ -179,6 +179,36 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
+        private void RunCommandOnPackageInUnloadedProject(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
+        {
+            var node = tracker.SelectedGraphNode;
+            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
+                return;
+
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
+
+            var projectGuid = tracker.GetSelectedProject();
+            SolutionExplorerExtensions.UnloadProject(projectGuid);
+
+            var info = new PackageInfo();
+            info.DependenciesFileName = node.Id.GetFileName();
+            info.ReferencesFileName = node.Id.GetFileName();
+            info.PackageName = node.GetPackageName();
+            try
+            {
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+            }
+
+            SolutionExplorerExtensions.ReloadProject(projectGuid);
+        }
+
         private void CheckForUpdates(object sender, EventArgs e)
         {
             RunCommand(sender, e, "paket-outdated.html", () =>
@@ -244,7 +274,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RemovePackageFromProject(object sender, EventArgs e)
         {
-            RunCommandOnPackageInProject(sender, e, "paket-remove.html#Removing-from-a-single-project", info =>
+            RunCommandOnPackageInUnloadedProject(sender, e, "paket-remove.html#Removing-from-a-single-project", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .RemoveFromProject(info.PackageName, false, false, info.ReferencesFileName, true);

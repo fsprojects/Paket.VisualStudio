@@ -28,6 +28,7 @@ namespace Paket.VisualStudio
             commandService.Register();
 
             PaketErrorPane.SetServiceProvider(this);
+            SolutionExplorerExtensions.SetServiceProvider(this);
         }
 
         protected override void Dispose(bool disposing)
