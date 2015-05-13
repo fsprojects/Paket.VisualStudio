@@ -2,6 +2,7 @@
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Linq;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.Shell;
@@ -151,6 +152,44 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
+        private void RunCommandOnPackageAndReloadAllDependendProjects(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
+        {
+            var node = tracker.SelectedGraphNode;
+            if (node == null || !node.HasCategory(PaketGraphSchema.PaketCategory))
+                return;
+
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();   
+
+            var info = new PackageInfo();
+            info.DependenciesFileName = node.Id.GetFileName();
+            info.PackageName = node.GetPackageName();
+
+            var projectGuids = 
+                    Paket.Dependencies.Locate(info.DependenciesFileName)
+                        .FindProjectsFor(info.PackageName)
+                        .Select(project => project.GetProjectGuid())
+                        .ToArray();
+
+            foreach(var projectGuid in projectGuids)
+                SolutionExplorerExtensions.UnloadProject(projectGuid);
+
+            try
+            {
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+            }
+
+            foreach (var projectGuid in projectGuids)
+                SolutionExplorerExtensions.ReloadProject(projectGuid);
+        }
+
+
         private void RunCommandOnPackageInProject(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
         {
             var node = tracker.SelectedGraphNode;
@@ -256,7 +295,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void UpdatePackage(object sender, EventArgs e)
         {
-            RunCommandOnPackage(sender, e, "paket-update.html#Updating-a-single-package", info =>
+            RunCommandOnPackageAndReloadAllDependendProjects(sender, e, "paket-update.html#Updating-a-single-package", info =>
             {             
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .UpdatePackage(info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
