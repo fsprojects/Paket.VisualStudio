@@ -12,5 +12,7 @@ namespace Paket.VisualStudio.Commands
         public static readonly CommandID Restore = new CommandID(Guids.CommandSet, 0x000D);
         public static readonly CommandID RemovePackageFromProject = new CommandID(Guids.CommandSet, 0x000E);
         public static readonly CommandID Simplify = new CommandID(Guids.CommandSet, 0x000F);
+
+        public static readonly CommandID ConvertFromNuget = new CommandID(Guids.CommandSet, 0x0010);
     };
 }

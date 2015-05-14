@@ -43,6 +43,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.Install, Install, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Restore, Restore, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Simplify, Simplify, OnlyDependenciesFileNodes);
+            RegisterCommand(CommandIDs.ConvertFromNuget, ConvertFromNuGet, null);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)
@@ -51,7 +52,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             if (menuCommand != null)
             {
                 menuCommand.Visible = false;
-                menuCommand.Enabled = false;                
+                menuCommand.Enabled = false;
 
                 var fileName = tracker.GetSelectedFileName();
                 if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
@@ -248,6 +249,11 @@ namespace Paket.VisualStudio.SolutionExplorer
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .RemoveFromProject(info.PackageName, false, false, info.ReferencesFileName, true);
             });
+        }
+
+        private void ConvertFromNuGet(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void RegisterCommand(CommandID commandId, EventHandler invokeHandler, EventHandler beforeQueryStatusHandler)

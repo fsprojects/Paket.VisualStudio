@@ -24,7 +24,7 @@ namespace Paket.VisualStudio
             PaketOutputPane.SetServiceProvider(this);
             var tracker = new ActiveGraphNodeTracker(this);
             var menuCommandService = (OleMenuCommandService)GetService(typeof(IMenuCommandService));
-            commandService = new PaketMenuCommandService(this, menuCommandService, tracker);            
+            commandService = new PaketMenuCommandService(this, menuCommandService, tracker);
             commandService.Register();
 
             PaketErrorPane.SetServiceProvider(this);
