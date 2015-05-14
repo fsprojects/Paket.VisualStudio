@@ -1,0 +1,18 @@
+# Install the EditorConfig extension for Visual Studio
+# https://visualstudiogallery.msdn.microsoft.com/c8bccfe2-650c-4b42-bc5c-845e21f96328
+root = true
+
+[*]
+insert_final_newline = true
+
+[*.cs]
+indent_style = spaces
+indent_size = 4
+
+[*.vsixmanifest]
+indent_style = spaces
+indent_size = 2
+
+[*.vsct]
+indent_style = spaces
+indent_size = 2
