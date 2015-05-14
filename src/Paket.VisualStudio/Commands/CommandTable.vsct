@@ -8,7 +8,32 @@
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidPackage">
+    
+    <Menus>
+      <Menu guid="guidFlyoutMenu" id="FlyoutMenu" priority="0x0400" type="Menu">
+        <!-- change the priority value to change the position of this menu -->
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLS_OTHER2" />
+        <Strings>
+          <ButtonText>Paket Dependencies Manager</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="guidFlyoutMenu" id="FlyoutMenuGroup" priority="0x0800">
+        <Parent guid="guidFlyoutMenu" id="FlyoutMenu"/>
+      </Group>
+    </Groups>
+
     <Buttons>
+
+      <Button guid="guidCommandSet" id="ConvertFromNuget" priority="0x0100" type="Button">
+        <Parent guid="guidFlyoutMenu" id="FlyoutMenuGroup" />
+        <Strings>
+          <ButtonText>Convert from NuGet</ButtonText>
+        </Strings>
+      </Button>
+      
       <Button guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
         <Icon guid="CheckUpdates.bmpGuid" id="CheckUpdates.bmpId" />
         <Strings>
@@ -142,13 +167,19 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidCommandSet" value="{9be58af9-d601-430c-b615-f279503109b2}">
       <IDSymbol name="UpdatePackage" value="0x0002" />
-      <IDSymbol name="CheckUpdates" value="0x0006" />      
+      <IDSymbol name="CheckUpdates" value="0x0006" />
       <IDSymbol name="Update" value="0x000A" />
       <IDSymbol name="RemovePackage" value="0x000B" />
       <IDSymbol name="Install" value="0x000C" />
       <IDSymbol name="Restore" value="0x000D" />
       <IDSymbol name="RemovePackageFromProject" value="0x000E" />
       <IDSymbol name="Simplify" value="0x000F" />
+      <IDSymbol name="ConvertFromNuget" value="0x0010" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">
+      <IDSymbol name="FlyoutMenu" value="0x1020" />
+      <IDSymbol name="FlyoutMenuGroup" value="0x1030" />
     </GuidSymbol>
 
     <GuidSymbol name="CheckUpdates.bmpGuid" value="{f37a669d-379f-4f49-a150-1452bda36719}">
