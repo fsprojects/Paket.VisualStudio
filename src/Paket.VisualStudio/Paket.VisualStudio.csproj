@@ -436,6 +436,32 @@
   <Choose>
     <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
       <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.Text.Data">
+          <HintPath>..\..\packages\VSSDK.IDE.8\lib\net45\Microsoft.VisualStudio.Text.Data.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.Logic">
+          <HintPath>..\..\packages\VSSDK.IDE.8\lib\net45\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf">
+          <HintPath>..\..\packages\VSSDK.IDE.8\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.Text.UI">
+          <HintPath>..\..\packages\VSSDK.IDE.8\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
+          <Private>False</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')) Or ($(TargetFrameworkIdentifier) == 'MonoAndroid') Or ($(TargetFrameworkIdentifier) == 'MonoTouch')">
+      <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Language.Intellisense">
           <HintPath>..\..\packages\VSSDK.Language\lib\net45\Microsoft.VisualStudio.Language.Intellisense.dll</HintPath>
           <Private>False</Private>

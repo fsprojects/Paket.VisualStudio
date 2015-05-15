@@ -10,6 +10,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Paket.VisualStudio.Commands;
 using System.Threading.Tasks;
 using EnvDTE;
+using MadsKristensen.EditorExtensions;
+using System.IO;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -18,6 +20,11 @@ namespace Paket.VisualStudio.SolutionExplorer
         public string DependenciesFileName { get; set; }
         public string ReferencesFileName { get; set; }
         public string PackageName { get; set;}
+    }
+
+    class SolutionInfo
+    {
+        public string Directory { get; set; }
     }
 
     internal class PaketMenuCommandService
@@ -197,6 +204,55 @@ namespace Paket.VisualStudio.SolutionExplorer
         }
 
 
+        private void RunCommandOnPackageAndReloadAllProjects(object sender, EventArgs e, string helpTopic, Action<SolutionInfo> command)
+        {
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
+
+            var info = new SolutionInfo();
+
+            var projectGuids = new System.Collections.Generic.List<Guid>();
+
+            IVsHierarchy hierarchy;
+            IVsSolution solution = serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;
+            string dir = null;
+            string fileName = null;
+            string userOptsFile = null;
+            solution.GetSolutionInfo(out dir, out fileName, out userOptsFile);
+            info.Directory = dir;
+
+            foreach(Project project in DteUtils.DTE.Solution.Projects)
+            {                
+                solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
+
+                if (hierarchy != null)
+                {
+                    Guid projectGuid = Guid.Empty;
+                    solution.GetGuidOfProject(hierarchy, out projectGuid);
+                    projectGuids.Add(projectGuid);
+                }
+            }
+
+            foreach (var projectGuid in projectGuids)
+                SolutionExplorerExtensions.UnloadProject(projectGuid);
+
+            try
+            {
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                StatusBarService.UpdateText("Ready");
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, fileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+            }
+
+            foreach (var projectGuid in projectGuids)
+                SolutionExplorerExtensions.ReloadProject(projectGuid);
+        }
+
         private void RunCommandOnPackageInProject(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
         {
             var node = tracker.SelectedGraphNode;
@@ -333,7 +389,12 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void ConvertFromNuGet(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-convert-from-nuget.html", info =>
+            {
+                var dir = Microsoft.FSharp.Core.FSharpOption<DirectoryInfo>.Some(new DirectoryInfo(info.Directory));
+                Paket.Dependencies
+                    .ConvertFromNuget(true, true, true, Microsoft.FSharp.Core.FSharpOption<string>.None, dir);
+            });
         }
 
         private void RegisterCommand(CommandID commandId, EventHandler invokeHandler, EventHandler beforeQueryStatusHandler)
