@@ -110,14 +110,17 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
 
             System.Threading.Tasks.Task.Run(() =>
             {
                 try
                 {
                     command();
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
-                }catch(Exception ex)
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
+                }
+                catch (Exception ex)
                 {
                     PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName(), helpTopic);
                     PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message +"\r\n");
@@ -133,6 +136,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
 
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -142,7 +146,8 @@ namespace Paket.VisualStudio.SolutionExplorer
                 try
                 {
                     command(info);
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
                 }
                 catch (Exception ex)
                 {
@@ -159,7 +164,8 @@ namespace Paket.VisualStudio.SolutionExplorer
                 return;
 
             PaketOutputPane.OutputPane.Activate();
-            PaketErrorPane.Clear();   
+            PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
 
             var info = new PackageInfo();
             info.DependenciesFileName = node.Id.GetFileName();
@@ -177,7 +183,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             try
             {
                 command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                StatusBarService.UpdateText("Ready");
             }
             catch (Exception ex)
             {
@@ -198,6 +205,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
 
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -208,7 +216,8 @@ namespace Paket.VisualStudio.SolutionExplorer
                 try
                 {
                     command(info);
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
                 }
                 catch (Exception ex)
                 {
@@ -226,6 +235,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
 
             var projectGuid = tracker.GetSelectedProject();
             SolutionExplorerExtensions.UnloadProject(projectGuid);
@@ -237,7 +247,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             try
             {
                 command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Done.\r\n");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                StatusBarService.UpdateText("Ready");
             }
             catch (Exception ex)
             {

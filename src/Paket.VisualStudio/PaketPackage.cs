@@ -29,6 +29,7 @@ namespace Paket.VisualStudio
 
             PaketErrorPane.SetServiceProvider(this);
             SolutionExplorerExtensions.SetServiceProvider(this);
+            StatusBarService.SetServiceProvider(this);
         }
 
         protected override void Dispose(bool disposing)

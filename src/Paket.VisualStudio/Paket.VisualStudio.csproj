@@ -162,6 +162,7 @@
     <Compile Include="IntelliSense\PaketCompletionController.cs" />
     <Compile Include="IntelliSense\ICompletionListProvider.cs" />
     <Compile Include="IntelliSense\PaketCompletionSourceProvider.cs" />
+    <Compile Include="StatusBarService.cs" />
     <Compile Include="TextSpanHelper.cs" />
     <Compile Include="PaketErrorPane.cs" />
     <Compile Include="PaketOutputPane.cs" />
