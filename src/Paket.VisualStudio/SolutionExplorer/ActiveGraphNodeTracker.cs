@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -29,10 +30,33 @@ namespace Paket.VisualStudio.SolutionExplorer
             IVsHierarchy hierarchy = null;
             uint itemid;
             if (!IsSingleProjectItemSelection(out hierarchy, out itemid))
-                return null;
+                return SolutionExplorerExtensions.GetSolutionFileName(); // nothing was selected => sln
 
             ((IVsProject)hierarchy).GetMkDocument(itemid, out itemFullPath);
             return itemFullPath;
+        }
+
+        public Guid GetSelectedProject()
+        {
+            IVsHierarchy hierarchy = null;
+            uint itemid = VSConstants.VSITEMID_NIL;
+            if (!IsSingleProjectItemSelection(out hierarchy, out itemid))
+                return Guid.Empty;
+
+            return GetProjectGuid(hierarchy);
+        }
+
+
+        public Guid GetProjectGuid(IVsHierarchy projectHierarchy)
+        {
+            var VSITEMID_ROOT = 0xFFFFFFFE;
+            Guid projectGuid;
+            int hr;
+
+            hr = projectHierarchy.GetGuidProperty(VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out projectGuid);
+            ErrorHandler.ThrowOnFailure(hr);
+
+            return projectGuid;
         }
 
         public void Register()
