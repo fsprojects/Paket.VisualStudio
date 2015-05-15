@@ -43,6 +43,17 @@ namespace Paket.VisualStudio.SolutionExplorer
             return fileName;
         }
 
+        public static void SaveSolution()
+        {
+            if (DteUtils.DTE.Solution.IsDirty)
+            {
+                StatusBarService.UpdateText("Saving the current solution...");
+
+                IVsSolution solution = _serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;
+                solution.SaveSolutionElement((uint)__VSSLNSAVEOPTIONS.SLNSAVEOPT_ForceSave, null, 0);
+            }
+        }
+
         public static void UnloadProject(Guid projectGuid)
         {
             if (projectGuid == Guid.Empty)

@@ -185,6 +185,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                         .Select(project => project.GetProjectGuid())
                         .ToArray();
 
+            SolutionExplorerExtensions.SaveSolution();
             foreach(var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
@@ -216,6 +217,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();
             var projectGuids = SolutionExplorerExtensions.GetAllProjectGuids();
 
+            SolutionExplorerExtensions.SaveSolution();
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
@@ -276,6 +278,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             StatusBarService.UpdateText("Paket command started.");
 
             var projectGuid = tracker.GetSelectedProject();
+            SolutionExplorerExtensions.SaveSolution();
             SolutionExplorerExtensions.UnloadProject(projectGuid);
 
             var info = new PackageInfo();
