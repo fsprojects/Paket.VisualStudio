@@ -224,20 +224,24 @@ namespace Paket.VisualStudio.SolutionExplorer
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
-            try
+            System.Threading.Tasks.Task.Run(() =>
             {
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
-                StatusBarService.UpdateText("Ready");
-            }
-            catch (Exception ex)
+                try
+                {
+                    command(info);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, info.FileName, helpTopic);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
+            }).ContinueWith(_ =>
             {
-                PaketErrorPane.ShowError(ex.Message, info.FileName, helpTopic);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-            }
-
-            foreach (var projectGuid in projectGuids)
-                SolutionExplorerExtensions.ReloadProject(projectGuid);
+                foreach (var projectGuid in projectGuids)
+                    SolutionExplorerExtensions.ReloadProject(projectGuid);
+            });
         }
 
         private void RunCommandOnPackageInProject(object sender, EventArgs e, string helpTopic, Action<PackageInfo> command)
