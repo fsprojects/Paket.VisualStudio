@@ -41,6 +41,22 @@
           <ButtonText>Update all packages</ButtonText>
         </Strings>
       </Button>
+
+
+      <Button guid="guidCommandSet" id="InstallSolution" priority="0x0100" type="Button">
+        <Parent guid="guidFlyoutMenu" id="FlyoutMenuGroup" />
+        <Strings>
+          <ButtonText>Install all packages</ButtonText>
+        </Strings>
+      </Button>
+
+
+      <Button guid="guidCommandSet" id="RestoreSolution" priority="0x0100" type="Button">
+        <Parent guid="guidFlyoutMenu" id="FlyoutMenuGroup" />
+        <Strings>
+          <ButtonText>Restore all packages</ButtonText>
+        </Strings>
+      </Button>
       
       <Button guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
         <Icon guid="CheckUpdates.bmpGuid" id="CheckUpdates.bmpId" />
@@ -184,6 +200,8 @@
       <IDSymbol name="Simplify" value="0x000F" />
       <IDSymbol name="ConvertFromNuget" value="0x0010" />
       <IDSymbol name="UpdateSolution" value="0x0011" />
+      <IDSymbol name="InstallSolution" value="0x0012" />
+      <IDSymbol name="RestoreSolution" value="0x0013" />
     </GuidSymbol>
 
     <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">
