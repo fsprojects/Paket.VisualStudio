@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using EnvDTE;
 using MadsKristensen.EditorExtensions;
 using System.IO;
+using Microsoft.FSharp.Control;
+using Microsoft.FSharp.Core;
+using System.Threading;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -45,13 +48,14 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void RegisterCommands()
         {
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage, null);
-            RegisterCommand(CommandIDs.RemovePackage, RemovePackage, OnlyBelowDependenciesFileNodes);
+            RegisterCommand(CommandIDs.RemovePackage, RemovePackage, OnlyBelowDependenciesFileNodes);            
             RegisterCommand(CommandIDs.RemovePackageFromProject, RemovePackageFromProject, OnlyBelowReferencesFileNodes);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Update, Update, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Install, Install, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Restore, Restore, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Simplify, Simplify, OnlyDependenciesFileNodes);
+            RegisterCommand(CommandIDs.AddPackage, AddPackage, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.ConvertFromNuget, ConvertFromNuGet, null);
             RegisterCommand(CommandIDs.UpdateSolution, Update, null);
             RegisterCommand(CommandIDs.InstallSolution, Install, null);
@@ -209,7 +213,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         }
 
 
-        private void RunCommandOnPackageAndReloadAllProjects(object sender, EventArgs e, string helpTopic, Action<SolutionInfo> command)
+        private void RunCommandAndReloadAllProjects(object sender, EventArgs e, string helpTopic, Action<SolutionInfo> command)
         {
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
@@ -314,7 +318,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Update(object sender, EventArgs e)
         {
-            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-update.html", _ =>
+            RunCommandAndReloadAllProjects(sender, e, "paket-update.html", _ =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Update(false, false);
@@ -323,7 +327,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Install(object sender, EventArgs e)
         {
-            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-install.html", _ =>
+            RunCommandAndReloadAllProjects(sender, e, "paket-install.html", _ =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Install(false, false);
@@ -366,6 +370,45 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
+        private void AddPackage(object sender, EventArgs e)
+        {
+            RunCommandAndReloadAllProjects(sender, e, "paket-add.html", info =>
+            {
+                var dependenciesFile = Paket.Dependencies.Locate(tracker.GetSelectedFileName());
+                var frm = new Form();
+                frm.Height = 500;
+                frm.Width = 600;
+                var text = new TextBox();
+                text.Dock = DockStyle.Top;
+                var listBox = new ListBox();
+                listBox.Dock = DockStyle.Fill;
+                listBox.SelectionMode = SelectionMode.One;
+                text.TextChanged += (s, ev) =>
+                {
+                    var searchResults = 
+                            FSharpAsync.RunSynchronously(
+                                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, text.Text, 1000),
+                                FSharpOption<int>.None,
+                                FSharpOption<CancellationToken>.None);
+                    listBox.Items.Clear();
+                    foreach (var r in searchResults)
+                        listBox.Items.Add(r);
+                };
+                frm.Controls.Add(text);
+                frm.Controls.Add(listBox);
+                listBox.DoubleClick += (s, ev) =>
+                {
+                    if (listBox.SelectedItem == null)
+                        return;
+                    var packageName = listBox.SelectedItem.ToString();
+                    frm.Close();
+                    dependenciesFile.Add(packageName, "", false, false, false, true);
+                };
+                frm.ShowDialog();
+            });
+        }
+
+
         private void RemovePackageFromProject(object sender, EventArgs e)
         {
             RunCommandOnPackageInUnloadedProject(sender, e, "paket-remove.html#Removing-from-a-single-project", info =>
@@ -377,7 +420,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void ConvertFromNuGet(object sender, EventArgs e)
         {
-            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-convert-from-nuget.html", info =>
+            RunCommandAndReloadAllProjects(sender, e, "paket-convert-from-nuget.html", info =>
             {
                 var dir = Microsoft.FSharp.Core.FSharpOption<DirectoryInfo>.Some(new DirectoryInfo(info.Directory));
                 Paket.Dependencies
