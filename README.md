@@ -14,7 +14,8 @@ Inspired by the [NuGet References](https://visualstudiogallery.msdn.microsoft.co
 Require Visual Studio 2013 and Visual Studio 2013 SDK. 
 Run the `build.cmd` script or `Paket.VisualStudio.sln` to build the solution.
 
-You can download the latest installer [here](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/build/artifacts).
+You can download the installer [here](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/history):
+Choose the latest build and navigate to the "artifacts" tab.
 
 ### Getting involved
 
