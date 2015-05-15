@@ -25,6 +25,7 @@ namespace Paket.VisualStudio.SolutionExplorer
     class SolutionInfo
     {
         public string Directory { get; set; }
+        public string FileName { get; set; }
     }
 
     internal class PaketMenuCommandService
@@ -211,28 +212,9 @@ namespace Paket.VisualStudio.SolutionExplorer
             StatusBarService.UpdateText("Paket command started.");
 
             var info = new SolutionInfo();
-
-            var projectGuids = new System.Collections.Generic.List<Guid>();
-
-            IVsHierarchy hierarchy;
-            IVsSolution solution = serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;
-            string dir = null;
-            string fileName = null;
-            string userOptsFile = null;
-            solution.GetSolutionInfo(out dir, out fileName, out userOptsFile);
-            info.Directory = dir;
-
-            foreach(Project project in DteUtils.DTE.Solution.Projects)
-            {                
-                solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
-
-                if (hierarchy != null)
-                {
-                    Guid projectGuid = Guid.Empty;
-                    solution.GetGuidOfProject(hierarchy, out projectGuid);
-                    projectGuids.Add(projectGuid);
-                }
-            }
+            info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
+            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();
+            var projectGuids = SolutionExplorerExtensions.GetAllProjectGuids();
 
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
@@ -245,7 +227,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
             catch (Exception ex)
             {
-                PaketErrorPane.ShowError(ex.Message, fileName, helpTopic);
+                PaketErrorPane.ShowError(ex.Message, info.FileName, helpTopic);
                 PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
             }
 
