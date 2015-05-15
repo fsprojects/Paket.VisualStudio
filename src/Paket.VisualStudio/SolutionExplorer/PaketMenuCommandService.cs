@@ -311,7 +311,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Update(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-update.html", () =>
+            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-update.html", _ =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Update(false, false);
@@ -320,7 +320,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Install(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-install.html", () =>
+            RunCommandOnPackageAndReloadAllProjects(sender, e, "paket-install.html", _ =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Install(false, false);
@@ -329,7 +329,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Restore(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-restore.html", () =>
+            RunCommand(sender, e, "paket-restore.html", () => // Do we need to unload?
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Restore();
@@ -338,7 +338,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Simplify(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-simplify.html", () =>
+            RunCommand(sender, e, "paket-simplify.html", () => // Should work without unload
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Simplify(false);
@@ -356,7 +356,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void RemovePackage(object sender, EventArgs e)
         {
-            RunCommandOnPackage(sender, e, "paket-remove.html", info =>
+            RunCommandOnPackageAndReloadAllDependendProjects(sender, e, "paket-remove.html", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .Remove(info.PackageName);
