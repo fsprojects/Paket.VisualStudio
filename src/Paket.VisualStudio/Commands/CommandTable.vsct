@@ -33,6 +33,14 @@
           <ButtonText>Convert from NuGet</ButtonText>
         </Strings>
       </Button>
+
+
+      <Button guid="guidCommandSet" id="UpdateSolution" priority="0x0100" type="Button">
+        <Parent guid="guidFlyoutMenu" id="FlyoutMenuGroup" />
+        <Strings>
+          <ButtonText>Update all packages</ButtonText>
+        </Strings>
+      </Button>
       
       <Button guid="guidCommandSet" id="UpdatePackage" priority="0x0100">
         <Icon guid="CheckUpdates.bmpGuid" id="CheckUpdates.bmpId" />
@@ -175,6 +183,7 @@
       <IDSymbol name="RemovePackageFromProject" value="0x000E" />
       <IDSymbol name="Simplify" value="0x000F" />
       <IDSymbol name="ConvertFromNuget" value="0x0010" />
+      <IDSymbol name="UpdateSolution" value="0x0011" />
     </GuidSymbol>
 
     <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">

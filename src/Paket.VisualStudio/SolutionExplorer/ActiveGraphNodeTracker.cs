@@ -30,7 +30,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             IVsHierarchy hierarchy = null;
             uint itemid;
             if (!IsSingleProjectItemSelection(out hierarchy, out itemid))
-                return null;
+                return SolutionExplorerExtensions.GetSolutionFileName(); // nothing was selected => sln
 
             ((IVsProject)hierarchy).GetMkDocument(itemid, out itemFullPath);
             return itemFullPath;

@@ -14,5 +14,6 @@ namespace Paket.VisualStudio.Commands
         public static readonly CommandID Simplify = new CommandID(Guids.CommandSet, 0x000F);
 
         public static readonly CommandID ConvertFromNuget = new CommandID(Guids.CommandSet, 0x0010);
+        public static readonly CommandID UpdateSolution = new CommandID(Guids.CommandSet, 0x0011);
     };
 }

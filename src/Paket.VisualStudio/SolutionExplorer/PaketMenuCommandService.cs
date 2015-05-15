@@ -53,6 +53,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.Restore, Restore, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Simplify, Simplify, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.ConvertFromNuget, ConvertFromNuGet, null);
+            RegisterCommand(CommandIDs.UpdateSolution, Update, null);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)
