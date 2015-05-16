@@ -21,6 +21,34 @@ NUGET
     Paket.Core (1.4.14)
       FSharp.Core
       Newtonsoft.Json
+    reactiveui (6.5.0)
+      reactiveui-core (6.5.0)
+    reactiveui-core (6.5.0)
+      Rx-Main (>= 2.2.5)
+      Rx-WinRT (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
+      Rx-Xaml (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+      Splat (>= 1.0 < 2.0)
+    reactiveui-events (6.5.0)
+      Rx-Main (>= 2.2.5)
+    Rx-Core (2.2.5)
+      Rx-Interfaces (>= 2.2.5)
+    Rx-Interfaces (2.2.5)
+    Rx-Linq (2.2.5)
+      Rx-Core (>= 2.2.5)
+      Rx-Interfaces (>= 2.2.5)
+    Rx-Main (2.2.5)
+      Rx-Core (>= 2.2.5)
+      Rx-Interfaces (>= 2.2.5)
+      Rx-Linq (>= 2.2.5)
+      Rx-PlatformServices (>= 2.2.5)
+    Rx-PlatformServices (2.2.5)
+      Rx-Core (>= 2.2.5)
+      Rx-Interfaces (>= 2.2.5)
+    Rx-WinRT (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
+      Rx-Main (>= 2.2.5)
+    Rx-Xaml (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+      Rx-Main (>= 2.2.5)
+    Splat (1.6.2)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.ComponentModelHost.12 (12.0.4) - copy_local: false

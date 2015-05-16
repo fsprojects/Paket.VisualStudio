@@ -1,6 +1,7 @@
 Paket.Core
 VSSDK.GraphModel.12
-VSSDK.Text.12
 VSSDK.Language.12
 VSSDK.Editor.12
 VSSDK.ComponentModelHost.12
+reactiveui
+reactiveui-events
