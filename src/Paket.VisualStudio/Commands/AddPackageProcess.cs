@@ -1,47 +1,48 @@
-﻿using Microsoft.FSharp.Control;
+﻿using System.Reactive;
+using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Paket.VisualStudio.Commands.PackageGui;
 
 namespace Paket.VisualStudio.Commands
 {
     public class AddPackageProcess
     {
+        public static Task<string[]> SearchPackagesByName(string name)
+        {
+           return FSharpAsync.StartAsTask(NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream,
+                    name, 1000),
+                FSharpOption<TaskCreationOptions>.None,
+                FSharpOption<CancellationToken>.None);
+
+        }
         public static void ShowAddPackageDialog(string selectedFileName, bool addToProject)
         {
             var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
-            var frm = new Form();
-            frm.Height = 500;
-            frm.Width = 600;
-            var text = new TextBox();
-            text.Dock = DockStyle.Top;
-            var listBox = new ListBox();
-            listBox.Dock = DockStyle.Fill;
-            listBox.SelectionMode = SelectionMode.One;
-            text.TextChanged += (s, ev) =>
+
+            var secondWindow = new AddPackage();
+            //TODO: Use interfaces?
+
+            Func<string, CancellationToken, Task<string[]>> findPackages = (search, ct) =>
             {
-                var searchResults =
-                        FSharpAsync.RunSynchronously(
-                            NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, text.Text, 1000),
-                            FSharpOption<int>.None,
-                            FSharpOption<CancellationToken>.None);
-                listBox.Items.Clear();
-                foreach (var r in searchResults)
-                    listBox.Items.Add(r);
+                //TODO: this should probably return a success/failure type to indicate whether the search was successful.  (Like lack of internet, nuget down)
+                return FSharpAsync.StartAsTask(NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream,
+                       search, 1000),
+                   FSharpOption<TaskCreationOptions>.None,
+                   FSharpOption<CancellationToken>.Some(ct));
             };
-            frm.Controls.Add(text);
-            frm.Controls.Add(listBox);
-            listBox.DoubleClick += (s, ev) =>
+
+            Action<NugetResult> addPackageToDependencies = result =>
             {
-                if (listBox.SelectedItem == null)
-                    return;
-                var packageName = listBox.SelectedItem.ToString();
-                frm.Close();
+                var packageName = result.PackageName;
+                secondWindow.Close();
                 Application.DoEvents();
 
                 if (addToProject)
@@ -49,7 +50,9 @@ namespace Paket.VisualStudio.Commands
                 else
                     dependenciesFile.Add(packageName, "", false, false, false, true);
             };
-            frm.ShowDialog();
+
+            secondWindow.ViewModel = new AddPackageViewModel(findPackages,addPackageToDependencies); 
+            secondWindow.ShowDialog();
         }
     }
 }
