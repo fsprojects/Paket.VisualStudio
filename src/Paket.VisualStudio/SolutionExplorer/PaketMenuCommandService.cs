@@ -121,17 +121,20 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void RunCommand(object sender, EventArgs e, string helpTopic, Action command)
+        private void RunCommand(object sender, EventArgs e, string helpTopic, Action<SolutionInfo> command)
         {
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
+            var info = new SolutionInfo();
+            info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
+            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();            
 
             System.Threading.Tasks.Task.Run(() =>
             {
                 try
                 {
-                    command();
+                    command(info);
                     PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
                     StatusBarService.UpdateText("Ready");
                 }
@@ -313,7 +316,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void CheckForUpdates(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-outdated.html", () =>
+            RunCommand(sender, e, "paket-outdated.html", _ =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .ShowOutdated(false, true);
@@ -340,7 +343,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Restore(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-restore.html", () => // Do we need to unload?
+            RunCommand(sender, e, "paket-restore.html", _ => // Do we need to unload?
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Restore();
@@ -349,7 +352,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Simplify(object sender, EventArgs e)
         {
-            RunCommand(sender, e, "paket-simplify.html", () => // Should work without unload
+            RunCommand(sender, e, "paket-simplify.html", _ => // Should work without unload
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Simplify(false);
@@ -376,7 +379,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void AddPackage(object sender, EventArgs e)
         {
-            RunCommandAndReloadAllProjects(sender, e, "paket-add.html", info =>
+            RunCommand(sender, e, "paket-add.html", info =>
             {
                 var dependenciesFile = Paket.Dependencies.Locate(tracker.GetSelectedFileName());
                 var frm = new Form();
