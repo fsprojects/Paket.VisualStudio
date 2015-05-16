@@ -31,6 +31,12 @@ namespace Paket.VisualStudio.SolutionExplorer
         public string FileName { get; set; }
     }
 
+    class ProjectInfo
+    {
+        public string ReferencesFileName { get; set; }
+    }
+
+
     internal class PaketMenuCommandService
     {
         private readonly IServiceProvider serviceProvider;
@@ -60,6 +66,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.UpdateSolution, Update, null);
             RegisterCommand(CommandIDs.InstallSolution, Install, null);
             RegisterCommand(CommandIDs.RestoreSolution, Restore, null);
+            RegisterCommand(CommandIDs.AddPackageToProject, AddPackageToProject, OnlyReferencesFileNodes);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)
@@ -72,6 +79,23 @@ namespace Paket.VisualStudio.SolutionExplorer
 
                 var fileName = tracker.GetSelectedFileName();
                 if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
+                    return;
+
+                menuCommand.Visible = true;
+                menuCommand.Enabled = true;
+            }
+        }
+
+        private void OnlyReferencesFileNodes(object sender, EventArgs e)
+        {
+            var menuCommand = sender as OleMenuCommand;
+            if (menuCommand != null)
+            {
+                menuCommand.Visible = false;
+                menuCommand.Enabled = false;
+
+                var fileName = tracker.GetSelectedFileName();
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.ReferencesFile))
                     return;
 
                 menuCommand.Visible = true;
@@ -314,6 +338,33 @@ namespace Paket.VisualStudio.SolutionExplorer
             SolutionExplorerExtensions.ReloadProject(projectGuid);
         }
 
+        private void RunCommandInUnloadedProject(object sender, EventArgs e, string helpTopic, Action<ProjectInfo> command)
+        {
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
+
+            var projectGuid = tracker.GetSelectedProject();
+            SolutionExplorerExtensions.SaveSolution();
+            SolutionExplorerExtensions.UnloadProject(projectGuid);
+
+            var info = new ProjectInfo();
+            info.ReferencesFileName = tracker.GetSelectedFileName();
+            try
+            {
+                command(info);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                StatusBarService.UpdateText("Ready");
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, info.ReferencesFileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+            }
+
+            SolutionExplorerExtensions.ReloadProject(projectGuid);
+        }
+
         private void CheckForUpdates(object sender, EventArgs e)
         {
             RunCommand(sender, e, "paket-outdated.html", _ =>
@@ -381,40 +432,17 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand(sender, e, "paket-add.html", info =>
             {
-                var dependenciesFile = Paket.Dependencies.Locate(tracker.GetSelectedFileName());
-                var frm = new Form();
-                frm.Height = 500;
-                frm.Width = 600;
-                var text = new TextBox();
-                text.Dock = DockStyle.Top;
-                var listBox = new ListBox();
-                listBox.Dock = DockStyle.Fill;
-                listBox.SelectionMode = SelectionMode.One;
-                text.TextChanged += (s, ev) =>
-                {
-                    var searchResults = 
-                            FSharpAsync.RunSynchronously(
-                                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, text.Text, 1000),
-                                FSharpOption<int>.None,
-                                FSharpOption<CancellationToken>.None);
-                    listBox.Items.Clear();
-                    foreach (var r in searchResults)
-                        listBox.Items.Add(r);
-                };
-                frm.Controls.Add(text);
-                frm.Controls.Add(listBox);
-                listBox.DoubleClick += (s, ev) =>
-                {
-                    if (listBox.SelectedItem == null)
-                        return;
-                    var packageName = listBox.SelectedItem.ToString();
-                    frm.Close();
-                    dependenciesFile.Add(packageName, "", false, false, false, true);
-                };
-                frm.ShowDialog();
+                AddPackageProcess.ShowAddPackageDialog(tracker.GetSelectedFileName(),false);
             });
         }
 
+        private void AddPackageToProject(object sender, EventArgs e)
+        {
+            RunCommandInUnloadedProject(sender, e, "paket-add.html#Adding-to-a-single-project", info =>
+            {
+                AddPackageProcess.ShowAddPackageDialog(info.ReferencesFileName,true);
+            });
+        }
 
         private void RemovePackageFromProject(object sender, EventArgs e)
         {

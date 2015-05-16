@@ -147,6 +147,20 @@
           <ToolTipText>Remove Package</ToolTipText>
         </Strings>
       </Button>
+
+      <Button guid="guidCommandSet" id="AddPackageToProject" priority="0x0100">
+        <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidAddPackageToProject</CommandName>
+          <ButtonText>Add Package</ButtonText>
+          <MenuText>Add Package</MenuText>
+          <ToolTipText>Add Package</ToolTipText>
+        </Strings>
+      </Button>
+      
       <Button guid="guidCommandSet" id="Simplify" priority="0x0100">
         <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -193,6 +207,9 @@
     <CommandPlacement guid="guidCommandSet" id="RemovePackageFromProject" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="AddPackageToProject" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
+    </CommandPlacement>
     <CommandPlacement guid="guidCommandSet" id="Simplify" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
     </CommandPlacement>
@@ -217,7 +234,8 @@
       <IDSymbol name="UpdateSolution" value="0x0011" />
       <IDSymbol name="InstallSolution" value="0x0012" />
       <IDSymbol name="RestoreSolution" value="0x0013" />
-      <IDSymbol name="AddPackage" value="0x0014" />      
+      <IDSymbol name="AddPackage" value="0x0014" />
+      <IDSymbol name="AddPackageToProject" value="0x0015" />
     </GuidSymbol>
 
     <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">

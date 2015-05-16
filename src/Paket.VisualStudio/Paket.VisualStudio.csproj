@@ -143,6 +143,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddPackageProcess.cs" />
     <Compile Include="Commands\CommandIDs.cs" />
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />
     <Compile Include="EditorExtensions\CommentCommandTarget.cs" />
