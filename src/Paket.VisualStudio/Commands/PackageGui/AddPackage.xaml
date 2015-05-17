@@ -27,7 +27,7 @@
                 </ListBox.ItemTemplate>
     
             </ListBox>
-            <TextBlock Visibility="Hidden" FontSize="20" Foreground="Red"  x:Name="Errors" Grid.Row="2"></TextBlock>
+            <TextBlock Visibility="Visible" FontSize="20" Foreground="Red"  x:Name="Errors" Grid.Row="2"></TextBlock>
         </Grid>
         <StackPanel Grid.Column="1">
             <Button x:Name="AddPackageButton" Margin="20,20,20,20" Padding="5,5,5,5">Add Package</Button>
