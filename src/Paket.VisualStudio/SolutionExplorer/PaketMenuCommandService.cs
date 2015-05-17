@@ -260,7 +260,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
 
-            var projectGuid = tracker.GetSelectedProject();
+            var projectGuid = tracker.GetSelectedProjectGuid();
             SolutionExplorerExtensions.SaveSolution();
             SolutionExplorerExtensions.UnloadProject(projectGuid);
 
@@ -295,7 +295,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
 
-            var projectGuid = tracker.GetSelectedProject();
+            var projectGuid = tracker.GetSelectedProjectGuid();
             SolutionExplorerExtensions.SaveSolution();
             SolutionExplorerExtensions.UnloadProject(projectGuid);
 

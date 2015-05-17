@@ -15,6 +15,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         private readonly IServiceProvider serviceProvider;
         private IVsMonitorSelection vsMonitorSelection;
         private uint selectionEventsCookie;
+        private string SelectedFileName;
 
         public GraphNode SelectedGraphNode { get; private set; }
 
@@ -29,14 +30,18 @@ namespace Paket.VisualStudio.SolutionExplorer
             string itemFullPath = null;
             IVsHierarchy hierarchy = null;
             uint itemid;
+            
             if (!IsSingleProjectItemSelection(out hierarchy, out itemid))
+            {
+                if (SelectedFileName != null)
+                    return SelectedFileName;
                 return SolutionExplorerExtensions.GetSolutionFileName(); // nothing was selected => sln
-
+            }
             ((IVsProject)hierarchy).GetMkDocument(itemid, out itemFullPath);
             return itemFullPath;
         }
 
-        public Guid GetSelectedProject()
+        public Guid GetSelectedProjectGuid()
         {
             IVsHierarchy hierarchy = null;
             uint itemid = VSConstants.VSITEMID_NIL;
@@ -95,6 +100,15 @@ namespace Paket.VisualStudio.SolutionExplorer
         int IVsSelectionEvents.OnSelectionChanged(IVsHierarchy pHierOld, uint itemidOld, IVsMultiItemSelect pMISOld, ISelectionContainer pSCOld, IVsHierarchy pHierNew, uint itemidNew, IVsMultiItemSelect pMISNew, ISelectionContainer pSCNew)
         {
             SelectedGraphNode = GetCurrentSelectionGraphNode(pSCNew);
+            SelectedFileName = null;
+            if (pHierNew != null)
+            {
+                string itemName;
+                pHierNew.GetCanonicalName(itemidNew, out itemName);
+                if (itemName != null)
+                    SelectedFileName = itemName.ToString();
+            }
+
             return VSConstants.S_OK;
         }
 
