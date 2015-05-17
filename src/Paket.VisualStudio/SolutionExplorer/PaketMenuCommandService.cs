@@ -363,25 +363,25 @@ namespace Paket.VisualStudio.SolutionExplorer
  
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
-            StatusBarService.UpdateText("Paket command started.");
+
+            var projectFileName = tracker.GetSelectedFileName();
+            StatusBarService.UpdateText("Add NuGet package to " + projectFileName);
 
             var projectGuid = tracker.GetSelectedProjectGuid();
             SolutionExplorerExtensions.SaveSolution();
 
-            var referencesFileName = tracker.GetSelectedFileName();
             try
             {
-                AddPackageProcess.ShowAddPackageDialog(referencesFileName, projectGuid.ToString());
+                AddPackageProcess.ShowAddPackageDialog(projectFileName, projectGuid.ToString());
 
                 PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
                 StatusBarService.UpdateText("Ready");
             }
             catch (Exception ex)
             {
-                PaketErrorPane.ShowError(ex.Message, referencesFileName, helpTopic);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-
                 SolutionExplorerExtensions.ReloadProject(projectGuid);
+                PaketErrorPane.ShowError(ex.Message, projectFileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
             }
         }
 
