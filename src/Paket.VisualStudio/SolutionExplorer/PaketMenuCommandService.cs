@@ -31,10 +31,6 @@ namespace Paket.VisualStudio.SolutionExplorer
         public string FileName { get; set; }
     }
 
-    class ProjectInfo
-    {
-        public string ReferencesFileName { get; set; }
-    }
 
 
     internal class PaketMenuCommandService
@@ -289,32 +285,6 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
-        private void RunCommandInUnloadedProject(string helpTopic, Action<ProjectInfo> command)
-        {
-            PaketOutputPane.OutputPane.Activate();
-            PaketErrorPane.Clear();
-            StatusBarService.UpdateText("Paket command started.");
-
-            var projectGuid = tracker.GetSelectedProjectGuid();
-            SolutionExplorerExtensions.SaveSolution();
-            SolutionExplorerExtensions.UnloadProject(projectGuid);
-
-            var info = new ProjectInfo();
-            info.ReferencesFileName = tracker.GetSelectedFileName();
-            try
-            {
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
-                StatusBarService.UpdateText("Ready");
-            }
-            catch (Exception ex)
-            {
-                PaketErrorPane.ShowError(ex.Message, info.ReferencesFileName, helpTopic);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-            }
-
-            SolutionExplorerExtensions.ReloadProject(projectGuid);
-        }
 
         private void CheckForUpdates(object sender, EventArgs e)
         {
@@ -383,16 +353,36 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand("paket-add.html", info =>
             {
-                AddPackageProcess.ShowAddPackageDialog(tracker.GetSelectedFileName(),false);
+                AddPackageProcess.ShowAddPackageDialog(tracker.GetSelectedFileName());
             });
         }
 
         private void AddPackageToProject(object sender, EventArgs e)
         {
-            RunCommandInUnloadedProject("paket-add.html#Adding-to-a-single-project", info =>
+            var helpTopic = "paket-add.html#Adding-to-a-single-project";
+ 
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
+            StatusBarService.UpdateText("Paket command started.");
+
+            var projectGuid = tracker.GetSelectedProjectGuid();
+            SolutionExplorerExtensions.SaveSolution();
+
+            var referencesFileName = tracker.GetSelectedFileName();
+            try
             {
-                AddPackageProcess.ShowAddPackageDialog(info.ReferencesFileName,true);
-            });
+                AddPackageProcess.ShowAddPackageDialog(referencesFileName, projectGuid.ToString());
+
+                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                StatusBarService.UpdateText("Ready");
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, referencesFileName, helpTopic);
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+
+                SolutionExplorerExtensions.ReloadProject(projectGuid);
+            }
         }
 
         private void RemovePackageFromProject(object sender, EventArgs e)

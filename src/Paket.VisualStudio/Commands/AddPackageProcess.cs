@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Paket.VisualStudio.Commands.PackageGui;
+using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio.Commands
 {
@@ -23,7 +24,7 @@ namespace Paket.VisualStudio.Commands
                 FSharpOption<CancellationToken>.None);
 
         }
-        public static void ShowAddPackageDialog(string selectedFileName, bool addToProject)
+        public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
         {
             var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
 
@@ -45,8 +46,13 @@ namespace Paket.VisualStudio.Commands
                 secondWindow.Close();
                 Application.DoEvents();
 
-                if (addToProject)
+                if (projectGuid != null)
+                {
+                    var guid = Guid.Parse(projectGuid);
+                    SolutionExplorerExtensions.UnloadProject(guid);
                     dependenciesFile.AddToProject(packageName, "", false, false, selectedFileName, true);
+                    SolutionExplorerExtensions.ReloadProject(guid);
+                }
                 else
                     dependenciesFile.Add(packageName, "", false, false, false, true);
             };
