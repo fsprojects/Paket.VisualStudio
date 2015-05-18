@@ -55,6 +55,11 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let buildVersion = sprintf "%s-a%s" release.NugetVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
+let buildDir = "bin"
+let vsixDir = "bin/vsix"
+let tempDir = "temp"
+let buildMergedDir = buildDir @@ "merged"
+
 Target "BuildVersion" (fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" buildVersion) |> ignore
 )
@@ -82,7 +87,7 @@ Target "AssemblyInfo" (fun _ ->
 // Clean build results
 
 Target "Clean" (fun _ ->
-    CleanDirs ["bin"; "bin/vsix"; "temp"; "nuget"]
+    CleanDirs [buildDir; vsixDir; tempDir; "nuget"]
 )
 
 Target "CleanDocs" (fun _ ->
@@ -100,17 +105,38 @@ Target "Build" (fun _ ->
 )
 
 Target "CleanVSIX" (fun _ ->
-    ZipHelper.Unzip "bin/vsix" "bin/Paket.VisualStudio.vsix"
+    ZipHelper.Unzip vsixDir "bin/Paket.VisualStudio.vsix"
     let regex = Regex("bin")
     let filesToKeep =
       Directory.GetFiles("bin", "*.dll")
-      |> Seq.map (fun fileName -> regex.Replace(fileName, "bin/vsix", 1))
+      |> Seq.map (fun fileName -> regex.Replace(fileName, vsixDir, 1))
     let filesToDelete = 
       Seq.fold (--) (!! "bin/vsix/*.dll") filesToKeep
         ++ "bin/vsix/Microsoft.VisualStudio*"
         ++ "bin/vsix/Microsoft.Build*"
     DeleteFiles filesToDelete
-    ZipHelper.Zip "bin/vsix" "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
+
+    CreateDir buildMergedDir
+
+    let filesToPack =
+        ["Paket.VisualStudio.dll"; "Paket.Core.dll"; "FSharp.Core.dll"; "Newtonsoft.Json.dll"; 
+         "ReactiveUI.dll"; "ReactiveUI.Events.dll"; "Splat.dll"; "System.Reactive.Core.dll"; "System.Reactive.Interfaces.dll"; "System.Reactive.Linq.dll"; "System.Reactive.PlatformServices.dll"; "System.Reactive.Windows.Threading.dll"]
+        |> List.map (fun l -> vsixDir @@ l)
+
+    let toPack = filesToPack |> separated " "
+
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- currentDirectory @@ "packages" @@ "ILRepack" @@ "tools" @@ "ILRepack.exe"
+            info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" vsixDir release.AssemblyVersion (buildMergedDir @@ "Paket.VisualStudio.dll") toPack
+            ) (TimeSpan.FromMinutes 5.)
+
+    if result <> 0 then failwithf "Error during ILRepack execution."
+
+    DeleteFiles filesToPack
+    CopyFile vsixDir (buildMergedDir @@ "Paket.VisualStudio.dll")
+
+    ZipHelper.Zip vsixDir "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
 )
 
 // --------------------------------------------------------------------------------------
