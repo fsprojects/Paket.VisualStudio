@@ -11,5 +11,6 @@ nuget reactiveui
 nuget reactiveui-events
 nuget canopy
 nuget PhantomJS
+nuget ILRepack
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
