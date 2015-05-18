@@ -16,8 +16,8 @@ namespace Paket.VisualStudio.Commands
         public static Task<string[]> SearchPackagesByName(string search, CancellationToken ct)
         {
             //TODO: this should probably return a success/failure type to indicate whether the search was successful.  (Like lack of internet, nuget down)
-            return FSharpAsync.StartAsTask(NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream,
-                    search, 1000),
+            return FSharpAsync.StartAsTask(
+                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, search, 1000),
                 FSharpOption<TaskCreationOptions>.None,
                 FSharpOption<CancellationToken>.Some(ct));
         }

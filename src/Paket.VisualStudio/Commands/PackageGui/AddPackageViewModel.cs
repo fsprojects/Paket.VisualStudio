@@ -80,8 +80,9 @@ namespace Paket.VisualStudio.Commands.PackageGui
             _searchNuget = ReactiveCommand.CreateAsyncTask((_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
 
             //TODO: Localization
-            var errorMessage = "Nuget packages couldn't be loaded";
-            var errorResolution = "You may not have internet or nuget may be down.";
+            var errorMessage = "NuGet packages couldn't be loaded";
+            var errorResolution = "You may not have internet or NuGet may be down.";
+
             _searchNuget.ThrownExceptions
                 .Select(ex => new UserError(errorMessage, errorResolution))
                 .SelectMany(UserError.Throw)
