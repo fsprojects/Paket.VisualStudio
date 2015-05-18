@@ -1,0 +1,19 @@
+﻿using System;
+using System.Reactive.Disposables;
+
+namespace Paket.VisualStudio.Commands.PackageGui
+{
+    public static class DisposableHelpers
+    {
+        /// <summary>
+        /// Helper function to add IDisposables to a composible disposable.
+        /// This allows for easy chaining when using Reactive Extensions.
+        /// </summary>
+        /// <param name="disposable"></param>
+        /// <param name="compositeDisposable"></param>
+        public static void AddTo(this IDisposable disposable, CompositeDisposable compositeDisposable)
+        {
+            compositeDisposable.Add(disposable);
+        }
+    }
+}
