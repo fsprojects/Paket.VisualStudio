@@ -18,7 +18,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
         NugetResult SelectedPackage { get; set; }
         IEnumerable<NugetResult> NugetResults { get; }
 
-        ICommand SearchNuget { get; }
+        ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; }
         ReactiveCommand<System.Reactive.Unit> AddPackage { get; }
         IObservable<string> PaketTrace { get; }
     }
@@ -64,8 +64,8 @@ namespace Paket.VisualStudio.Commands.PackageGui
             get { return _results.Value; }
         }
 
-        private ReactiveCommand<IEnumerable<NugetResult>> _searchNuget;
-        public ICommand SearchNuget { get { return _searchNuget; } }
+
+        public ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; private set; }
 
 
         public ReactiveCommand<System.Reactive.Unit> AddPackage { get; private set; }
@@ -77,17 +77,20 @@ namespace Paket.VisualStudio.Commands.PackageGui
         {
             _findPackageCallback = findPackageCallback;
             _paketTraceFunObservable = paketTraceFunObservable;
-            _searchNuget = ReactiveCommand.CreateAsyncTask((_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
+            SearchNuget = ReactiveCommand.CreateAsyncTask(
+                this.ObservableForProperty(x => x.SearchText)
+                .Select(x => !string.IsNullOrEmpty(SearchText)), 
+                (_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
 
             //TODO: Localization
             var errorMessage = "NuGet packages couldn't be loaded";
             var errorResolution = "You may not have internet or NuGet may be down.";
-
-            _searchNuget.ThrownExceptions
+            
+            SearchNuget.ThrownExceptions
                 .Select(ex => new UserError(errorMessage, errorResolution))
                 .SelectMany(UserError.Throw)
                 .Subscribe();
-            _searchNuget.ToProperty(this, x => x.NugetResults, out _results);
+            SearchNuget.ToProperty(this, x => x.NugetResults, out _results);
 
             AddPackage = ReactiveCommand.CreateAsyncTask(
                 this.WhenAnyValue(x => x.SelectedPackage).Select(x => x != null),
