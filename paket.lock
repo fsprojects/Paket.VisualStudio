@@ -9,14 +9,14 @@ NUGET
       FSharpVSPowerTools.Core (1.8.0)
     FSharpVSPowerTools.Core (1.8.0)
       FSharp.Compiler.Service (>= 0.0.87)
-    Microsoft.Bcl (1.1.10) - copy_local: false
+    Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21) - copy_local: false
-    Microsoft.Net.Http (2.2.29) - copy_local: false
+    Microsoft.Bcl.Build (1.0.21)
+    Microsoft.Net.Http (2.2.29)
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Newtonsoft.Json (6.0.8)
-    Octokit (0.11.0) - copy_local: false
+    Octokit (0.11.0)
       Microsoft.Net.Http
     Paket.Core (1.4.14)
       FSharp.Core
