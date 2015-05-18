@@ -1,3 +1,7 @@
+source ./rx-patch
+nuget Rx-Main
+nuget Rx-Xaml
+
 source http://nuget.org/api/v2
 
 nuget FAKE

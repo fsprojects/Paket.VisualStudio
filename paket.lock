@@ -32,35 +32,12 @@ NUGET
     reactiveui-core (6.5.0)
       Rx-Main (>= 2.2.5)
       Rx-WinRT (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
-      Rx-Xaml (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+      Rx-XAML (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Splat (>= 1.0 < 2.0)
     reactiveui-events (6.5.0)
       Rx-Main (>= 2.2.5)
-    Rx-Core (2.2.5)
-      Rx-Interfaces (>= 2.2.5)
-    Rx-Interfaces (2.2.5)
-    Rx-Linq (2.2.5)
-      Rx-Core (>= 2.2.5)
-      Rx-Interfaces (>= 2.2.5)
-    Rx-Main (2.2.5)
-      Rx-Core (>= 2.2.5)
-      Rx-Interfaces (>= 2.2.5)
-      Rx-Linq (>= 2.2.5)
-      Rx-PlatformServices (>= 2.2.5)
-    Rx-PlatformServices (2.2.5)
-      Rx-Core (>= 2.2.5)
-      Rx-Interfaces (>= 2.2.5)
     Rx-WinRT (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
       Rx-Main (>= 2.2.5)
-    Rx-Xaml (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
-      Rx-Main (>= 2.2.5)
-    Selenium.Support (2.45.0)
-      Selenium.WebDriver (>= 2.45.0)
-    Selenium.WebDriver (2.45.0)
-    SizSelCsZzz (0.3.36.0)
-      Newtonsoft.Json (>= 6.0)
-      Selenium.Support (>= 2.40)
-      Selenium.WebDriver (>= 2.40)
     Splat (1.6.2)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
@@ -122,6 +99,24 @@ NUGET
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
       VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
+  remote: ./rx-patch
+  specs:
+    Rx-Core (2.2.5)
+      Rx-Interfaces (>= 2.2.5-custom)
+    Rx-Interfaces (2.2.5)
+    Rx-Linq (2.2.5)
+      Rx-Core (>= 2.2.5-custom)
+      Rx-Interfaces (>= 2.2.5-custom)
+    Rx-Main (2.2.5)
+      Rx-Core (>= 2.2.5-custom)
+      Rx-Interfaces (>= 2.2.5-custom)
+      Rx-Linq (>= 2.2.5-custom)
+      Rx-PlatformServices (>= 2.2.5-custom)
+    Rx-PlatformServices (2.2.5)
+      Rx-Core (>= 2.2.5-custom)
+      Rx-Interfaces (>= 2.2.5-custom)
+    Rx-XAML (2.2.5)
+      Rx-Main (>= 2.2.5-custom)
 GITHUB
   remote: fsharp/FAKE
   specs:
