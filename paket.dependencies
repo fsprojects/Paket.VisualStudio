@@ -9,5 +9,7 @@ nuget VSSDK.Editor.12 copy_local: false
 nuget VSSDK.ComponentModelHost.12 copy_local: false
 nuget reactiveui
 nuget reactiveui-events
+nuget canopy
+nuget PhantomJS
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

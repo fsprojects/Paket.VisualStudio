@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(VisualStudioVersion)' != ''">$(VisualStudioVersion)</MinimumVisualStudioVersion>
@@ -193,6 +193,15 @@
     <Compile Include="SolutionExplorer\PaketMenuCommandService.cs" />
     <Compile Include="Utils\DteHelper.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
+    <Content Include="..\..\RELEASE_NOTES.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\docs\files\img\preview.png">
+      <Link>preview.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

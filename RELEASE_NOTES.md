@@ -1,2 +1,2 @@
-#### 0.1.0 - Unreleased
+#### 0.1.2 - 18.05.2015
 * Initial version

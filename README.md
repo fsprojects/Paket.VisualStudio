@@ -5,9 +5,15 @@ Paket.VisualStudio
 
 Manage your Paket (http://fsprojects.github.io/Paket/) dependencies from Visual Studio!
 
-Inspired by the [NuGet References](https://visualstudiogallery.msdn.microsoft.com/e8d1fcad-5fa5-4353-ba9c-90f4b6a68154) extension by Daniel Cazzulino ([@kzu](https://github.com/kzu)).
-
 ![](https://raw.githubusercontent.com/fsprojects/Paket.VisualStudio/master/docs/files/img/paket.visualstudio.png)
+
+Features
+--------
+
+* Solution Explorer Extensions for Paket files
+* Paket commands in Solution Explorer menu
+* Syntax highlighting in paket.dependencies
+
 
 ### Build [![Build status](https://ci.appveyor.com/api/projects/status/do913wfhcmnit5ps/branch/master?svg=true)](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/branch/master)
 
@@ -18,7 +24,7 @@ You can download the installer [here](https://ci.appveyor.com/project/SteffenFor
 Choose the latest build and navigate to the "artifacts" tab.
 
 ### Getting involved
-
+                                      
 Contributions are always welcome.
 
 ### License
