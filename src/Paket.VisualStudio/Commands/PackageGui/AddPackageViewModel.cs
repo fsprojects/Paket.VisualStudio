@@ -1,13 +1,9 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows.Input;
-using Microsoft.FSharp.Control;
-using Microsoft.FSharp.Core;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -22,8 +18,9 @@ namespace Paket.VisualStudio.Commands.PackageGui
         NugetResult SelectedPackage { get; set; }
         IEnumerable<NugetResult> NugetResults { get; }
 
-        ICommand SearchNuget { get; }
-        ICommand AddPackage { get; }
+        ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; }
+        ReactiveCommand<System.Reactive.Unit> AddPackage { get; }
+        IObservable<string> PaketTrace { get; }
     }
 
     public class NugetResult
@@ -34,6 +31,12 @@ namespace Paket.VisualStudio.Commands.PackageGui
     public class AddPackageViewModel : ReactiveObject, IAddPackageViewModel
     {
         private readonly Func<string, CancellationToken, Task<string[]>> _findPackageCallback;
+        private readonly IObservable<string> _paketTraceFunObservable;
+
+        public IObservable<string> PaketTrace
+        {
+            get { return _paketTraceFunObservable; }
+        }
         string _searchText;
         public string SearchText
         {
@@ -61,30 +64,38 @@ namespace Paket.VisualStudio.Commands.PackageGui
             get { return _results.Value; }
         }
 
-        private ReactiveCommand<IEnumerable<NugetResult>> _searchNuget;
-        public ICommand SearchNuget { get { return _searchNuget; } }
 
-        private ReactiveCommand<object> _addPackage;
-        public ICommand AddPackage { get { return _addPackage; } }
+        public ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; private set; }
+
+
+        public ReactiveCommand<System.Reactive.Unit> AddPackage { get; private set; }
 
         public AddPackageViewModel(
             Func<string, CancellationToken, Task<string[]>> findPackageCallback,
-            Action<NugetResult> addPackageCallback)
+            Action<NugetResult> addPackageCallback,
+            IObservable<string> paketTraceFunObservable)
         {
             _findPackageCallback = findPackageCallback;
-            _searchNuget = ReactiveCommand.CreateAsyncTask((_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
+            _paketTraceFunObservable = paketTraceFunObservable;
+            SearchNuget = ReactiveCommand.CreateAsyncTask(
+                this.ObservableForProperty(x => x.SearchText)
+                .Select(x => !string.IsNullOrEmpty(SearchText)), 
+                (_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
 
             //TODO: Localization
-            var errorMessage = "Nuget packages couldn't be loaded";
-            var errorResolution = "You may not have internet or nuget may be down.";
-            _searchNuget.ThrownExceptions
+            var errorMessage = "NuGet packages couldn't be loaded";
+            var errorResolution = "You may not have internet or NuGet may be down.";
+            
+            SearchNuget.ThrownExceptions
                 .Select(ex => new UserError(errorMessage, errorResolution))
                 .SelectMany(UserError.Throw)
                 .Subscribe();
-            _searchNuget.ToProperty(this, x => x.NugetResults, out _results);
+            SearchNuget.ToProperty(this, x => x.NugetResults, out _results);
 
-            _addPackage = ReactiveCommand.Create(this.WhenAnyValue(x => x.SelectedPackage).Select(x => x != null));
-            _addPackage.Subscribe(_ => addPackageCallback(SelectedPackage));
+            AddPackage = ReactiveCommand.CreateAsyncTask(
+                this.WhenAnyValue(x => x.SelectedPackage).Select(x => x != null),
+                _ => Task.Run(() => addPackageCallback(SelectedPackage)));
+            
             this.ObservableForProperty(x => x.SearchText)
                 .Where(x => !string.IsNullOrEmpty(SearchText))
                 .Throttle(TimeSpan.FromMilliseconds(250))

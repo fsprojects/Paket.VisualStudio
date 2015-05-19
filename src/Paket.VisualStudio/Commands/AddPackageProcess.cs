@@ -1,11 +1,8 @@
-﻿using System.Reactive;
+﻿using System.Reactive.Disposables;
 using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,34 +13,35 @@ namespace Paket.VisualStudio.Commands
 {
     public class AddPackageProcess
     {
-        public static Task<string[]> SearchPackagesByName(string name)
+        public static Task<string[]> SearchPackagesByName(string search, CancellationToken ct)
         {
-           return FSharpAsync.StartAsTask(NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream,
-                    name, 1000),
+            //TODO: this should probably return a success/failure type to indicate whether the search was successful.  (Like lack of internet, nuget down)
+            return FSharpAsync.StartAsTask(
+                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, search, 1000),
                 FSharpOption<TaskCreationOptions>.None,
-                FSharpOption<CancellationToken>.None);
-
+                FSharpOption<CancellationToken>.Some(ct));
         }
+
         public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
         {
             var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
 
             var secondWindow = new AddPackage();
-            //TODO: Use interfaces?
 
-            Func<string, CancellationToken, Task<string[]>> findPackages = (search, ct) =>
+            //Create observable paket trace
+            var paketTraceObs = Observable.Create<string>(observer =>
             {
-                //TODO: this should probably return a success/failure type to indicate whether the search was successful.  (Like lack of internet, nuget down)
-                return FSharpAsync.StartAsTask(NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream,
-                       search, 1000),
-                   FSharpOption<TaskCreationOptions>.None,
-                   FSharpOption<CancellationToken>.Some(ct));
-            };
+                Paket.Logging.RegisterTraceFunction(observer.OnNext);
+                return Disposable.Create(() =>
+                {
+                    Paket.Logging.RemoveTraceFunction(observer.OnNext);
+                });
+            });
 
             Action<NugetResult> addPackageToDependencies = result =>
             {
                 var packageName = result.PackageName;
-                secondWindow.Close();
+                //secondWindow.Close();
                 Application.DoEvents();
 
                 if (projectGuid != null)
@@ -56,8 +54,8 @@ namespace Paket.VisualStudio.Commands
                 else
                     dependenciesFile.Add(packageName, "", false, false, false, true);
             };
-
-            secondWindow.ViewModel = new AddPackageViewModel(findPackages,addPackageToDependencies); 
+            //TODO: Use interfaces?
+            secondWindow.ViewModel = new AddPackageViewModel(SearchPackagesByName, addPackageToDependencies, paketTraceObs);
             secondWindow.ShowDialog();
         }
     }

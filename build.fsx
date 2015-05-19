@@ -29,7 +29,7 @@ let summary = "Manage your Paket dependencies from Visual Studio!"
 // (used as a description for NuGet package; line breaks are automatically cleaned up)
 let description = "Manage your Paket dependencies from Visual Studio!"
 // List of author names (for NuGet package)
-let authors = [ "Igal Tabachnik" ]
+let authors = [ "Igal Tabachnik"; "Steffen Forkmann" ]
 // Tags for your project (for NuGet package)
 let tags = "package management paket nuget"
 
@@ -55,6 +55,11 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let buildVersion = sprintf "%s-a%s" release.NugetVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
+let buildDir = "bin"
+let vsixDir = "bin/vsix"
+let tempDir = "temp"
+let buildMergedDir = buildDir @@ "merged"
+
 Target "BuildVersion" (fun _ ->
     Shell.Exec("appveyor", sprintf "UpdateBuild -Version \"%s\"" buildVersion) |> ignore
 )
@@ -69,13 +74,20 @@ Target "AssemblyInfo" (fun _ ->
 
   CreateCSharpAssemblyInfo "src/Paket.VisualStudio/Properties/AssemblyInfo.cs"
       (Attribute.InternalsVisibleTo "Paket.VisualStudio.Tests" :: Attribute.Title "Paket.VisualStudio" :: shared)
+
+  let manifest = "src/Paket.VisualStudio/source.extension.vsixmanifest"
+  File.WriteAllLines(
+      manifest,
+      File.ReadAllLines manifest
+      |> Array.map (fun l -> if l.Contains("<Version>") then sprintf "    <Version>%s</Version>" release.NugetVersion else l))
+      
 )
 
 // --------------------------------------------------------------------------------------
 // Clean build results
 
 Target "Clean" (fun _ ->
-    CleanDirs ["bin"; "bin/vsix"; "temp"; "nuget"]
+    CleanDirs [buildDir; vsixDir; tempDir; "nuget"]
 )
 
 Target "CleanDocs" (fun _ ->
@@ -93,17 +105,38 @@ Target "Build" (fun _ ->
 )
 
 Target "CleanVSIX" (fun _ ->
-    ZipHelper.Unzip "bin/vsix" "bin/Paket.VisualStudio.vsix"
+    ZipHelper.Unzip vsixDir "bin/Paket.VisualStudio.vsix"
     let regex = Regex("bin")
     let filesToKeep =
       Directory.GetFiles("bin", "*.dll")
-      |> Seq.map (fun fileName -> regex.Replace(fileName, "bin/vsix", 1))
+      |> Seq.map (fun fileName -> regex.Replace(fileName, vsixDir, 1))
     let filesToDelete = 
       Seq.fold (--) (!! "bin/vsix/*.dll") filesToKeep
         ++ "bin/vsix/Microsoft.VisualStudio*"
         ++ "bin/vsix/Microsoft.Build*"
     DeleteFiles filesToDelete
-    ZipHelper.Zip "bin/vsix" "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
+
+    CreateDir buildMergedDir
+
+    let filesToPack =
+        ["Paket.VisualStudio.dll"; "Paket.Core.dll"; "FSharp.Core.dll"; "Newtonsoft.Json.dll"; 
+         "ReactiveUI.dll"; "ReactiveUI.Events.dll"; "Splat.dll"; "System.Reactive.Core.dll"; "System.Reactive.Interfaces.dll"; "System.Reactive.Linq.dll"; "System.Reactive.PlatformServices.dll"; "System.Reactive.Windows.Threading.dll"]
+        |> List.map (fun l -> vsixDir @@ l)
+
+    let toPack = filesToPack |> separated " "
+
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- currentDirectory @@ "packages" @@ "ILRepack" @@ "tools" @@ "ILRepack.exe"
+            info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" vsixDir release.AssemblyVersion (buildMergedDir @@ "Paket.VisualStudio.dll") toPack
+            ) (TimeSpan.FromMinutes 5.)
+
+    if result <> 0 then failwithf "Error during ILRepack execution."
+
+    DeleteFiles filesToPack
+    CopyFile vsixDir (buildMergedDir @@ "Paket.VisualStudio.dll")
+
+    ZipHelper.Zip vsixDir "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
 )
 
 // --------------------------------------------------------------------------------------
@@ -131,6 +164,48 @@ Target "ReleaseDocs" (fun _ ->
 #load "paket-files/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
 
+#r @"packages/Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll"
+#r @"packages/Selenium.WebDriver/lib/net40/WebDriver.dll"
+#r @"packages/Selenium.Support/lib/net40/WebDriver.Support.dll"
+#r @"packages/canopy/lib/canopy.dll"
+#r @"packages/SizSelCsZzz/lib/SizSelCsZzz.dll"
+open canopy
+open runner
+open System
+
+
+Target "UploadToGallery" (fun _ ->
+    start chrome
+
+    let vsixGuid = "ce104917-e8b3-4365-9490-8432c6e75c36"
+    let galleryUrl = sprintf "https://visualstudiogallery.msdn.microsoft.com/%s/edit?newSession=True" vsixGuid
+
+    let username,password =
+        let lines = File.ReadAllLines("gallerycredentials.txt")
+        lines.[0],lines.[1]
+
+    // log in to msdn
+    url galleryUrl    
+    "#i0116" << username
+    "#i0118" << password
+
+    click "#idSIButton9"
+
+    // start a new upload session - via hacky form link
+    js (sprintf "$('form[action=\"/%s/edit/changeContributionUpload\"]').submit();" vsixGuid) |> ignore
+
+    // select "upload the vsix"    
+    let fi = System.IO.FileInfo("bin/Paket.VisualStudio.vsix")
+    
+    ".uploadFileInput" << fi.FullName 
+    click "#setContributionTypeButton"
+    
+    click "#uploadButton"
+
+    quit()
+)
+
+
 Target "Release" (fun _ ->
     StageAll ""
     Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
@@ -142,7 +217,7 @@ Target "Release" (fun _ ->
     // release on github
     createClient (getBuildParamOrDefault "github-user" "") (getBuildParamOrDefault "github-pw" "")
     |> createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes 
-    |> uploadFile "./bin/FSharpVSPowerTools.vsix"
+    |> uploadFile "./bin/Paket.VisualStudio.vsix"
     |> releaseDraft
     |> Async.RunSynchronously
 )
@@ -161,6 +236,7 @@ Target "Default" DoNothing
   ==> "CleanDocs"
   ==> "GenerateDocs"
   ==> "ReleaseDocs"
+  ==> "UploadToGallery"
   ==> "Release"
 
 RunTargetOrDefault "Default"

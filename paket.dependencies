@@ -1,6 +1,7 @@
 source http://nuget.org/api/v2
 
 nuget FAKE
+nuget MahApps.Metro
 nuget Paket.Core
 nuget FSharp.Formatting
 nuget VSSDK.GraphModel.12 copy_local: false
@@ -9,5 +10,8 @@ nuget VSSDK.Editor.12 copy_local: false
 nuget VSSDK.ComponentModelHost.12 copy_local: false
 nuget reactiveui
 nuget reactiveui-events
+nuget canopy
+nuget PhantomJS
+nuget ILRepack
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
