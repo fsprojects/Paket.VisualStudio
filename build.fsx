@@ -100,7 +100,7 @@ Target "CleanDocs" (fun _ ->
 Target "Build" (fun _ ->
     // We would like to build only one solution
     !! (solutionFile + ".sln")
-    |> MSBuildRelease "" "Rebuild"
+    |> MSBuildReleaseExt  "" ["VisualStudioVersion", "12.0"] "Rebuild"
     |> ignore
 )
 
