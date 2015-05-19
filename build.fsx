@@ -46,7 +46,7 @@ let gitHome = "https://github.com/" + gitOwner
 
 // The name of the project on GitHub
 let gitName = "Paket.VisualStudio"
-let cloneUrl = "git@github.com:fsprojects/Paket.VisualStudio.git"
+let cloneUrl = "https://github.com/fsprojects/Paket.VisualStudio.git"
 
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
