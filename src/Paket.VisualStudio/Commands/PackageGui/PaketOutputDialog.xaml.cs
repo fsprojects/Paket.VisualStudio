@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace Paket.VisualStudio.Commands.PackageGui
 {
     /// <summary>
     /// Interaction logic for PaketOutputDialog.xaml
     /// </summary>
-    public partial class PaketOutputDialog : Window
+    public partial class PaketOutputDialog : MetroWindow
     {
         public PaketOutputDialog()
         {

@@ -1,38 +1,166 @@
-﻿<Window x:Class="Paket.VisualStudio.Commands.PackageGui.AddPackage"
+﻿<controls:MetroWindow x:Class="Paket.VisualStudio.Commands.PackageGui.AddPackage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:local="clr-namespace:Paket.VisualStudio.Commands.PackageGui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         d:DataContext="{d:DesignInstance {x:Type local:DesignTimeViewModel}, IsDesignTimeCreatable=True}"
-        Title="AddPackage" Height="400" Width="600">
+        Title="Paket Manager" 
+        TitleCaps="False" 
+        Height="400" 
+        Width="600"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        Icon="Resources/logo.png"
+        >
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout Position="Right"
+                             AreAnimationsEnabled="True"
+                             Header="Output"
+                             IsModal="True"
+                             x:Name="OutputFlyout"
+                             Width="500">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <controls:ProgressRing 
+                        x:Name="OutProgressRing"
+                        IsActive="True"
+                        Height="64"
+                        Width="64"
+                        Margin="10"/>
+
+                    <Grid x:Name="PaketAddSuccess" Visibility="Hidden" Margin="10">
+                        <Grid Name="backgroundGrid" Width="64" Height="64" Visibility="Visible">
+                            <Path Data="M50.5,4.7500001C25.232973,4.75 4.75,25.232973 4.7500001,50.5 4.75,75.767029 25.232973,96.25 50.5,96.25 75.767029,96.25 96.25,75.767029 96.25,50.5 96.25,25.232973 75.767029,4.75 50.5,4.7500001z M50.5,0C78.390381,0 101,22.609621 101,50.5 101,78.390381 78.390381,101 50.5,101 22.609621,101 0,78.390381 0,50.5 0,22.609621 22.609621,0 50.5,0z" Stretch="Fill" Fill="#FF1D9955" Name="Stroke" Visibility="Visible" />
+                        </Grid>
+                        <Path Data="M-150.204,626.126C-152.317,626.126 -154.429,626.126 -156.541,626.126 -167.642,633.42 -180.629,646.047 -189.668,657.238 -190.916,658.782 -192.945,662.362 -193.701,662.422 -194.041,662.448 -198.024,659.719 -198.614,659.297 -202.818,656.279 -205.779,653.709 -209.257,650.899 -211.248,652.172 -212.879,653.805 -214.153,655.797 -206.627,665.074 -200.283,675.534 -193.124,685.18 -181.491,665.11 -168.473,644.683 -152.796,629.006 -151.735,627.946 -149.817,626.933 -150.204,626.126z" Stretch="Uniform" Fill="#FF1D9955" Width="36" Height="36" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <TextBox 
+                        x:Name="OutputDialogBox" 
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        TextWrapping="Wrap" 
+                        IsReadOnly="True" 
+                        AcceptsReturn="True" 
+                        VerticalScrollBarVisibility="Auto"  />
+                </Grid>
+
+
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBox x:Name="SearchTextBox" Grid.Row="0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
-            <ListBox x:Name="NugetResults" Grid.Row="1" ItemsSource="{Binding NugetResults}">
+            <TextBox x:Name="SearchTextBox" 
+                     Grid.Row="0" 
+                     controls:TextBoxHelper.Watermark="Search NuGet"
+                     controls:TextBoxHelper.ClearTextButton="True"
+                     Margin="5,20,5,5"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            <controls:MetroProgressBar Grid.Row="1" 
+                                       IsIndeterminate="True"
+                                       x:Name="SearchProgressBar"></controls:MetroProgressBar>
+            <ListBox x:Name="NugetResults" 
+                     Grid.Row="2" 
+                     ItemsSource="{Binding NugetResults}"
+                     Margin="5,0,5,0">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding PackageName}"></TextBlock>
+                        <TextBlock Text="{Binding PackageName}"
+                        Opacity="0">
+                            <TextBlock.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                    Duration="00:00:01"
+                                                    From="0"
+                                                    To="1" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="FrameworkElement.Unloaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                    Duration="00:00:01"
+                                                    From="1"
+                                                    To="0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </TextBlock.Triggers>
+                        </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-    
+
+
+
             </ListBox>
-            <TextBlock Visibility="Visible" FontSize="20" Foreground="Red"  x:Name="Errors" Grid.Row="2"></TextBlock>
+
         </Grid>
-        <StackPanel Grid.Column="1">
-            <Button x:Name="AddPackageButton" Margin="20,20,20,20" Padding="5,5,5,5">Add Package</Button>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Button x:Name="AddPackageButton" 
+                    Margin="20,20,20,20" 
+                    Padding="5,5,5,5"
+                    controls:ButtonHelper.PreserveTextCase="True">
+                Add Package
+            </Button>
         </StackPanel>
-        
+        <StatusBar Grid.Row="1" 
+                   Grid.Column="0" 
+                   Grid.ColumnSpan="2" 
+                   Visibility="Visible" 
+                   x:Name="Errors" >
+            <StatusBarItem ></StatusBarItem>
+        </StatusBar>
     </Grid>
-    
-</Window>
+
+</controls:MetroWindow>

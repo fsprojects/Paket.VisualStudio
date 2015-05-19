@@ -1,6 +1,7 @@
 source http://nuget.org/api/v2
 
 nuget FAKE
+nuget MahApps.Metro
 nuget Paket.Core
 nuget FSharp.Formatting
 nuget VSSDK.GraphModel.12 copy_local: false
