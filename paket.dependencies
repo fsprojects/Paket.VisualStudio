@@ -11,7 +11,7 @@ nuget VSSDK.ComponentModelHost.12 copy_local: false
 nuget reactiveui
 nuget reactiveui-events
 nuget canopy
-nuget PhantomJS
+nuget Selenium.WebDriver.ChromeDriver
 nuget ILRepack
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
