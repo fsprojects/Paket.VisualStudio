@@ -20,7 +20,12 @@ Features
 Require Visual Studio 2013 and Visual Studio 2013 SDK. 
 Run the `build.cmd` script or `Paket.VisualStudio.sln` to build the solution.
 
-You can download the installer [here](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/history):
+Installation
+------------
+
+Paket.VisualStudio is available in the [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/ce104917-e8b3-4365-9490-8432c6e75c36).
+
+You can also download the lastest (unreleased) installer from [AppVeyor](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/history):
 Choose the latest build and navigate to the "artifacts" tab.
 
 ### Getting involved
