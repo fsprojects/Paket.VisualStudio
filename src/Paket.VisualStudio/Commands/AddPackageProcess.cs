@@ -41,8 +41,6 @@ namespace Paket.VisualStudio.Commands
             Action<NugetResult> addPackageToDependencies = result =>
             {
                 var packageName = result.PackageName;
-                //secondWindow.Close();
-                Application.DoEvents();
 
                 if (projectGuid != null)
                 {

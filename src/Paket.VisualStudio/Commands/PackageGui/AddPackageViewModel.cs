@@ -83,7 +83,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 (_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
 
             //TODO: Localization
-            var errorMessage = "NuGet packages couldn't be loaded";
+            var errorMessage = "NuGet packages couldn't be loaded.";
             var errorResolution = "You may not have internet or NuGet may be down.";
             
             SearchNuget.ThrownExceptions
