@@ -6,6 +6,8 @@
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
         d:DataContext="{d:DesignInstance {x:Type local:DesignTimeViewModel}, IsDesignTimeCreatable=True}"
         Title="Paket Manager" 
         TitleCaps="False" 
@@ -14,6 +16,23 @@
         GlowBrush="{DynamicResource AccentColorBrush}"
         Icon="Resources/logo.png"
         >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+          
+        </ResourceDictionary>
+        
+    </Window.Resources>
+
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Position="Right"
@@ -35,13 +54,34 @@
                         IsActive="True"
                         Height="64"
                         Width="64"
-                        Margin="10"/>
+                        Margin="10"
+                        Grid.Row="0"
+                        />
 
-                    <Grid x:Name="PaketAddSuccess" Visibility="Hidden" Margin="10">
-                        <Grid Name="backgroundGrid" Width="64" Height="64" Visibility="Visible">
-                            <Path Data="M50.5,4.7500001C25.232973,4.75 4.75,25.232973 4.7500001,50.5 4.75,75.767029 25.232973,96.25 50.5,96.25 75.767029,96.25 96.25,75.767029 96.25,50.5 96.25,25.232973 75.767029,4.75 50.5,4.7500001z M50.5,0C78.390381,0 101,22.609621 101,50.5 101,78.390381 78.390381,101 50.5,101 22.609621,101 0,78.390381 0,50.5 0,22.609621 22.609621,0 50.5,0z" Stretch="Fill" Fill="#FF1D9955" Name="Stroke" Visibility="Visible" />
+                    <Grid x:Name="PaketAddSuccess" 
+                          Margin="10"
+                          Grid.Row="0">
+                        <Grid Width="64" Height="64" Visibility="Visible">
+                            <Path Data="M50.5,4.7500001C25.232973,4.75 4.75,25.232973 4.7500001,50.5 4.75,75.767029 25.232973,96.25 50.5,96.25 75.767029,96.25 96.25,75.767029 96.25,50.5 96.25,25.232973 75.767029,4.75 50.5,4.7500001z M50.5,0C78.390381,0 101,22.609621 101,50.5 101,78.390381 78.390381,101 50.5,101 22.609621,101 0,78.390381 0,50.5 0,22.609621 22.609621,0 50.5,0z" Stretch="Fill" Fill="#009900"  Visibility="Visible" />
                         </Grid>
-                        <Path Data="M-150.204,626.126C-152.317,626.126 -154.429,626.126 -156.541,626.126 -167.642,633.42 -180.629,646.047 -189.668,657.238 -190.916,658.782 -192.945,662.362 -193.701,662.422 -194.041,662.448 -198.024,659.719 -198.614,659.297 -202.818,656.279 -205.779,653.709 -209.257,650.899 -211.248,652.172 -212.879,653.805 -214.153,655.797 -206.627,665.074 -200.283,675.534 -193.124,685.18 -181.491,665.11 -168.473,644.683 -152.796,629.006 -151.735,627.946 -149.817,626.933 -150.204,626.126z" Stretch="Uniform" Fill="#FF1D9955" Width="36" Height="36" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                        <Path Data="M-150.204,626.126C-152.317,626.126 -154.429,626.126 -156.541,626.126 -167.642,633.42 -180.629,646.047 -189.668,657.238 -190.916,658.782 -192.945,662.362 -193.701,662.422 -194.041,662.448 -198.024,659.719 -198.614,659.297 -202.818,656.279 -205.779,653.709 -209.257,650.899 -211.248,652.172 -212.879,653.805 -214.153,655.797 -206.627,665.074 -200.283,675.534 -193.124,685.18 -181.491,665.11 -168.473,644.683 -152.796,629.006 -151.735,627.946 -149.817,626.933 -150.204,626.126z" Stretch="Uniform" Fill="#009900" Width="36" Height="36" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <Grid x:Name="PaketAddFailure"  
+                          Margin="10"
+                          Grid.Row="0">
+                        <Grid Width="64" Height="64" Visibility="Visible">
+                            <Path Data="M50.5,4.7500001C25.232973,4.75 4.75,25.232973 4.7500001,50.5 4.75,75.767029 25.232973,96.25 50.5,96.25 75.767029,96.25 96.25,75.767029 96.25,50.5 96.25,25.232973 75.767029,4.75 50.5,4.7500001z M50.5,0C78.390381,0 101,22.609621 101,50.5 101,78.390381 78.390381,101 50.5,101 22.609621,101 0,78.390381 0,50.5 0,22.609621 22.609621,0 50.5,0z" Stretch="Fill" Fill="#FFFF0000"  Visibility="Visible" />
+                        </Grid>
+                        <Path Data="F1M-1774.05,-6263.81L-1787.51,-6277.27 -1773.22,-6291.56C-1769.23,-6295.55 -1769.24,-6302.03 -1773.21,-6306.01 -1777.19,-6309.98 -1783.67,-6309.99 -1787.66,-6305.99L-1801.95,-6291.71 -1816.79,-6306.55C-1820.79,-6310.55 -1827.26,-6310.54 -1831.24,-6306.55 -1835.22,-6302.58 -1835.23,-6296.11 -1831.24,-6292.12L-1816.39,-6277.27 -1830.4,-6263.25C-1834.4,-6259.26 -1834.38,-6252.8 -1830.4,-6248.82 -1826.42,-6244.84 -1819.96,-6244.82 -1815.96,-6248.82L-1801.95,-6262.83 -1788.49,-6249.37C-1784.5,-6245.38 -1778.03,-6245.39 -1774.06,-6249.37 -1770.07,-6253.35 -1770.06,-6259.82 -1774.05,-6263.81" Stretch="Uniform" Fill="#FFFF0000" Width="36" Height="36" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
                             <Path.RenderTransform>
                                 <TransformGroup>
                                     <TransformGroup.Children>
@@ -67,21 +107,6 @@
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-
-            </ResourceDictionary.MergedDictionaries>
-
-
-        </ResourceDictionary>
-
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>

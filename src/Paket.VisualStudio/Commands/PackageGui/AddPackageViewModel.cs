@@ -1,11 +1,11 @@
 ﻿using System.Threading;
-using System.Windows.Input;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Splat;
 
 namespace Paket.VisualStudio.Commands.PackageGui
 {
@@ -21,11 +21,19 @@ namespace Paket.VisualStudio.Commands.PackageGui
         ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; }
         ReactiveCommand<System.Reactive.Unit> AddPackage { get; }
         IObservable<string> PaketTrace { get; }
+        LoadingState AddPackageState { get; }
     }
 
     public class NugetResult
     {
         public string PackageName { get; set; }
+    }
+
+    public enum LoadingState
+    {
+        Loading,
+        Success,
+        Failure
     }
 
     public class AddPackageViewModel : ReactiveObject, IAddPackageViewModel
@@ -57,6 +65,13 @@ namespace Paket.VisualStudio.Commands.PackageGui
             }
         }
 
+        private ObservableAsPropertyHelper<LoadingState> _addPackageState;
+
+        public LoadingState AddPackageState
+        {
+            get { return _addPackageState.Value; }
+        }
+
         private ObservableAsPropertyHelper<IEnumerable<NugetResult>> _results;
 
         public IEnumerable<NugetResult> NugetResults
@@ -75,6 +90,9 @@ namespace Paket.VisualStudio.Commands.PackageGui
             Action<NugetResult> addPackageCallback,
             IObservable<string> paketTraceFunObservable)
         {
+            var logger = new DebugLogger() {Level = LogLevel.Debug};
+            Splat.Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
+
             _findPackageCallback = findPackageCallback;
             _paketTraceFunObservable = paketTraceFunObservable;
             SearchNuget = ReactiveCommand.CreateAsyncTask(
@@ -87,14 +105,40 @@ namespace Paket.VisualStudio.Commands.PackageGui
             var errorResolution = "You may not have internet or NuGet may be down.";
             
             SearchNuget.ThrownExceptions
+                .Log(this, "Search NuGet exception:", e => e.ToString())
                 .Select(ex => new UserError(errorMessage, errorResolution))
                 .SelectMany(UserError.Throw)
                 .Subscribe();
-            SearchNuget.ToProperty(this, x => x.NugetResults, out _results);
+            this.WhenAnyObservable(x => x._results.ThrownExceptions)
+                .Log(this, "Results observable property exception:", e => e.ToString())
+                .Subscribe();
+
+            _results = SearchNuget.ToProperty(this, x => x.NugetResults, out _results);
 
             AddPackage = ReactiveCommand.CreateAsyncTask(
                 this.WhenAnyValue(x => x.SelectedPackage).Select(x => x != null),
                 _ => Task.Run(() => addPackageCallback(SelectedPackage)));
+
+            _addPackageState = AddPackage
+                .ThrownExceptions
+                .Log(this, "Add Package exception:", e => e.ToString())
+                .Select(_ => LoadingState.Failure)
+                .Merge(
+                   AddPackage
+                    .IsExecuting
+                    .Where(isExecuting => isExecuting)
+                    .Select(_ => LoadingState.Loading))
+                .Merge(
+                     AddPackage
+                        .Select(_ => LoadingState.Success))
+                .ToProperty(this, v => v.AddPackageState, out _addPackageState);
+
+            _addPackageState
+                .ThrownExceptions
+                .Log(this, "Add package state exception:", e => e.ToString())
+                .Select(ex => new UserError("", errorResolution))
+                .SelectMany(UserError.Throw)
+                .Subscribe();
             
             this.ObservableForProperty(x => x.SearchText)
                 .Where(x => !string.IsNullOrEmpty(SearchText))

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
 
-namespace Paket.VisualStudio.Commands.PackageGui
+namespace Paket.VisualStudio.Utils
 {
     public static class DisposableHelpers
     {
