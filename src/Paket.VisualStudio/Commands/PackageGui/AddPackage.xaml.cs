@@ -155,12 +155,13 @@ namespace Paket.VisualStudio.Commands.PackageGui
         public DesignTimeViewModel()
         {
             SearchText = "Xunit";
-            NugetResults = new List<NugetResult> { new NugetResult { PackageName = "Xunit" }, new NugetResult { PackageName = "Xunit.Runners" } };
+            NugetResults = new ReactiveList<NugetResult> { new NugetResult { PackageName = "Xunit" }, new NugetResult { PackageName = "Xunit.Runners" } };
         }
         public string SearchText { get; set; }
         public NugetResult SelectedPackage { get; set; }
-        public IEnumerable<NugetResult> NugetResults { get; private set; }
-        public ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; private set; }
+        public ReactiveList<NugetResult> NugetResults { get; private set; }
+        public ReactiveCommand<NugetResult> SearchNuget { get; private set; }
+
 
         public ReactiveCommand<Unit> AddPackage { get; private set; }
         public IObservable<string> PaketTrace { get; private set; }
