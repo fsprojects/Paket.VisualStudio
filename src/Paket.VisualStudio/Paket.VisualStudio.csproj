@@ -149,10 +149,8 @@
       <DependentUpon>AddPackage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\PackageGui\AddPackageViewModel.cs" />
+    <Compile Include="Commands\PackageGui\Converters\LoadingSuccessFailureVisiblityConverter.cs" />
     <Compile Include="Utils\DisposableHelpers.cs" />
-    <Compile Include="Commands\PackageGui\PaketOutputDialog.xaml.cs">
-      <DependentUpon>PaketOutputDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />
     <Compile Include="EditorExtensions\CommentCommandTarget.cs" />
     <Compile Include="EditorExtensions\Disposable.cs" />
@@ -269,10 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Commands\PackageGui\AddPackage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Commands\PackageGui\PaketOutputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
