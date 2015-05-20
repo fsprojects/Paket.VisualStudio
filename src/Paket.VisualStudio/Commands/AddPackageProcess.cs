@@ -14,17 +14,6 @@ namespace Paket.VisualStudio.Commands
 {
     public class AddPackageProcess
     {
-        public static IObservable<string> SearchPackagesByName(Paket.Dependencies dependenciesFile, string search, CancellationToken ct)
-        {
-            return
-                dependenciesFile
-                    .SearchPackagesByName(
-                        search,
-                        FSharpOption<CancellationToken>.Some(ct),
-                        FSharpOption<int>.None)
-                    .SelectMany(x => x);                
-        }
-
         public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
         {
             var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
@@ -56,7 +45,7 @@ namespace Paket.VisualStudio.Commands
                     dependenciesFile.Add(packageName, "", false, false, false, true);
             };
             //TODO: Use interfaces?
-            //secondWindow.ViewModel = new AddPackageViewModel(SearchPackagesByName, addPackageToDependencies, paketTraceObs);
+            secondWindow.ViewModel = new AddPackageViewModel(dependenciesFile, addPackageToDependencies, paketTraceObs);
             secondWindow.ShowDialog();
         }
     }
