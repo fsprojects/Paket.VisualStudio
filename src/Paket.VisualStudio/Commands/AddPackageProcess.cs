@@ -16,24 +16,13 @@ namespace Paket.VisualStudio.Commands
     {
         public static IObservable<string> SearchPackagesByName(Paket.Dependencies dependenciesFile, string search, CancellationToken ct)
         {
-            var set = new HashSet<PackageSources.PackageSource>();
-
-            foreach (var source in dependenciesFile.GetSources())
-                set.Add(source);
-
-            set.Add(PackageSources.DefaultNugetSource);
-
-            return 
-                set.ToObservable()
-                .Where(source => source.IsNuget)
-                .Select(source =>
-                    FSharpAsync.StartAsTask(
-                        NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, source.Url, search, 1000),
-                        FSharpOption<TaskCreationOptions>.None,
-                        FSharpOption<CancellationToken>.Some(ct))
-                        .ToObservable())
-                .Merge()
-                .SelectMany(x => x);                
+            return
+                dependenciesFile
+                    .SearchPackagesByName(
+                        search,
+                        FSharpOption<CancellationToken>.Some(ct),
+                        FSharpOption<int>.None)
+                    .SelectMany(x => x);                
         }
 
         public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
