@@ -1,11 +1,9 @@
-﻿using System.Threading;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Splat;
+
 
 namespace Paket.VisualStudio.Commands.PackageGui
 {
@@ -16,9 +14,9 @@ namespace Paket.VisualStudio.Commands.PackageGui
     {
         string SearchText { get; set; }
         NugetResult SelectedPackage { get; set; }
-        IEnumerable<NugetResult> NugetResults { get; }
+        ReactiveList<NugetResult> NugetResults { get; }
 
-        ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; }
+        ReactiveCommand<NugetResult> SearchNuget { get; }
         ReactiveCommand<System.Reactive.Unit> AddPackage { get; }
         IObservable<string> PaketTrace { get; }
         LoadingState AddPackageState { get; }
@@ -38,7 +36,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
 
     public class AddPackageViewModel : ReactiveObject, IAddPackageViewModel
     {
-        private readonly Func<string, CancellationToken, Task<string[]>> _findPackageCallback;
+        private readonly Paket.Dependencies _dependenciesFile;
         private readonly IObservable<string> _paketTraceFunObservable;
 
         public IObservable<string> PaketTrace
@@ -72,33 +70,33 @@ namespace Paket.VisualStudio.Commands.PackageGui
             get { return _addPackageState.Value; }
         }
 
-        private ObservableAsPropertyHelper<IEnumerable<NugetResult>> _results;
 
-        public IEnumerable<NugetResult> NugetResults
-        {
-            get { return _results.Value; }
-        }
-
-
-        public ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; private set; }
+        private ReactiveList<NugetResult> _nugetResults  = new ReactiveList<NugetResult>();
+        public ReactiveList<NugetResult> NugetResults { get { return _nugetResults; } }
+        public ReactiveCommand<NugetResult> SearchNuget { get; private set; }
 
 
         public ReactiveCommand<System.Reactive.Unit> AddPackage { get; private set; }
 
         public AddPackageViewModel(
-            Func<string, CancellationToken, Task<string[]>> findPackageCallback,
+            Func<string ,IObservable<string>> searchForPackages,
             Action<NugetResult> addPackageCallback,
             IObservable<string> paketTraceFunObservable)
         {
+
             var logger = new DebugLogger() {Level = LogLevel.Debug};
             Splat.Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
 
-            _findPackageCallback = findPackageCallback;
+
             _paketTraceFunObservable = paketTraceFunObservable;
-            SearchNuget = ReactiveCommand.CreateAsyncTask(
-                this.ObservableForProperty(x => x.SearchText)
-                .Select(x => !string.IsNullOrEmpty(SearchText)), 
-                (_, cancellationToken) => SearchPackagesByName(SearchText, cancellationToken));
+            SearchNuget =
+                ReactiveCommand.CreateAsyncObservable(
+                    this.ObservableForProperty(x => x.SearchText)
+                        .Select(x => !string.IsNullOrEmpty(SearchText)),
+                    _ =>
+                        searchForPackages(SearchText)
+                            .Select(x => new NugetResult {PackageName = x}));
+                            
 
             //TODO: Localization
             var errorMessage = "NuGet packages couldn't be loaded.";
@@ -109,11 +107,17 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 .Select(ex => new UserError(errorMessage, errorResolution))
                 .SelectMany(UserError.Throw)
                 .Subscribe();
-            this.WhenAnyObservable(x => x._results.ThrownExceptions)
-                .Log(this, "Results observable property exception:", e => e.ToString())
-                .Subscribe();
 
-            _results = SearchNuget.ToProperty(this, x => x.NugetResults, out _results);
+            SearchNuget.IsExecuting
+               .Where(isExecuting => isExecuting)
+               .ObserveOn(RxApp.MainThreadScheduler)
+               .Subscribe(_ =>
+               {
+                   NugetResults.Clear();
+               });
+
+            SearchNuget.Subscribe(NugetResults.Add);
+
 
             AddPackage = ReactiveCommand.CreateAsyncTask(
                 this.WhenAnyValue(x => x.SelectedPackage).Select(x => x != null),
@@ -144,13 +148,6 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 .Where(x => !string.IsNullOrEmpty(SearchText))
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .InvokeCommand(SearchNuget);
-        }
-
-        private async Task<IEnumerable<NugetResult>>  SearchPackagesByName(string name, CancellationToken cancellationToken)
-        {
-            var results = await _findPackageCallback(name, cancellationToken);
-
-            return results.Select(r => new NugetResult { PackageName = r });
         }
     }
 }
