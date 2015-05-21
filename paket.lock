@@ -127,5 +127,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (2d2071cddcaf768340e5893363a0e121f373a999)
+    modules/Octokit/Octokit.fsx (8e65e2fc1406f326b44f3f87ec9ca9b3127a6e78)
       Octokit
