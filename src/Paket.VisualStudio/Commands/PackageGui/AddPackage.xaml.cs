@@ -4,13 +4,10 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using Chessie.ErrorHandling;
 using MahApps.Metro.Controls.Dialogs;
+using Paket.VisualStudio.Commands.PackageGui.Converters;
+using Paket.VisualStudio.Utils;
 using ReactiveUI;
 using MahApps.Metro.Controls;
 
@@ -35,8 +32,13 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 this.Bind(ViewModel, vm => vm.SearchText, v => v.SearchTextBox.Text);
                 this.Bind(ViewModel, vm => vm.SelectedPackage, v => v.NugetResults.SelectedItem);
                 this.BindCommand(ViewModel, x => x.AddPackage, v => v.AddPackageButton);
-
-
+                this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.OutProgressRing.Visibility,
+                    () => LoadingState.Loading, LoadingState.Loading, new LoadingSuccessFailureVisiblityConverter());
+                this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.PaketAddSuccess.Visibility,
+                    () => LoadingState.Loading, LoadingState.Success, new LoadingSuccessFailureVisiblityConverter());
+                this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.PaketAddFailure.Visibility,
+                    () => LoadingState.Loading, LoadingState.Failure, new LoadingSuccessFailureVisiblityConverter());
+                
 
                 //TODO: These visual states should be handled more elegantly
                 //Show progress bar when searching for packages
@@ -55,9 +57,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .Subscribe(async _ =>
                     {
-                        PaketAddSuccess.Visibility = Visibility.Collapsed;
-                        OutProgressRing.Visibility = Visibility.Visible;
-                        OutProgressRing.IsActive = true;
+
                         OutputDialogBox.Clear();
                         OutputFlyout.IsOpen = true;
                      
@@ -71,43 +71,30 @@ namespace Paket.VisualStudio.Commands.PackageGui
                     //OnNext gets called when the AddPackage command finishes
                      .Subscribe(_ =>
                      {
-
-                         OutProgressRing.IsActive = false;
-                         OutProgressRing.Visibility = Visibility.Collapsed;
-                         PaketAddSuccess.Visibility = Visibility.Visible;
-                         //dialog.ProgressBar.Value = 100;
                          //Close the dialog after 5 seconds after adding a package executes
                          //TODO: Should give use visual cue this will happen
                          Observable.Timer(TimeSpan.FromSeconds(5))
                              .ObserveOn(RxApp.MainThreadScheduler)
                              .Subscribe(___ => { OutputFlyout.IsOpen = false; })
                              .AddTo(_compositeDisposable);
-                     },
-                         _ =>
-                         {
-                             //dialog.ProgressBar.IsIndeterminate = false;
-                             //dialog.ProgressBar.Value = 100;
-                             //dialog.ProgressBar.Foreground = Brushes.Red;
-                         })
+                     })
                 .AddTo(_compositeDisposable);
 
 
 
-
+                ViewModel
+                    .AddPackage
+                    .ThrownExceptions
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Select(ex => ex.ToString())
+                    .Subscribe(AppendMessageToOutputbox);
 
 
 
                 //Listen to the paket trace and put it in the dialog box
                 ViewModel.PaketTrace
                     .ObserveOn(RxApp.MainThreadScheduler)
-                    .Subscribe(text =>
-                    {
-
-
-                        OutputDialogBox.Text += string.Format("{0}{1}", text, Environment.NewLine);
-                        OutputDialogBox.CaretIndex = OutputDialogBox.Text.Length;
-                        OutputDialogBox.ScrollToEnd();
-                    })
+                    .Subscribe(AppendMessageToOutputbox)
                     .AddTo(_compositeDisposable);
 
                 var disconnectHandler = UserError.RegisterHandler(async error =>
@@ -116,6 +103,12 @@ namespace Paket.VisualStudio.Commands.PackageGui
                     // need to move things to the Main thread.
                     RxApp.MainThreadScheduler.Schedule(async () =>
                     {
+                        //Ugly
+                        MessageBox.Show(error.ErrorMessage, error.ErrorCauseOrResolution);
+                        //awaiting https://github.com/MahApps/MahApps.Metro/issues/1931
+                        //await this.ShowMessageAsync(error.ErrorMessage, error.ErrorCauseOrResolution);
+
+
                         // NOTE: This code is Incorrect, as it throws away 
                         // Recovery Options and just returns Cancel. This is Bad™.
 
@@ -137,6 +130,13 @@ namespace Paket.VisualStudio.Commands.PackageGui
             });
         }
 
+        private void AppendMessageToOutputbox(string message)
+        {
+            OutputDialogBox.Text += string.Format("{0}{1}", message, Environment.NewLine);
+            OutputDialogBox.CaretIndex = OutputDialogBox.Text.Length;
+            OutputDialogBox.ScrollToEnd();
+        }
+
 
 
 
@@ -155,14 +155,16 @@ namespace Paket.VisualStudio.Commands.PackageGui
         public DesignTimeViewModel()
         {
             SearchText = "Xunit";
-            NugetResults = new List<NugetResult> { new NugetResult { PackageName = "Xunit" }, new NugetResult { PackageName = "Xunit.Runners" } };
+            NugetResults = new ReactiveList<NugetResult> { new NugetResult { PackageName = "Xunit" }, new NugetResult { PackageName = "Xunit.Runners" } };
         }
         public string SearchText { get; set; }
         public NugetResult SelectedPackage { get; set; }
-        public IEnumerable<NugetResult> NugetResults { get; private set; }
-        public ReactiveCommand<IEnumerable<NugetResult>> SearchNuget { get; private set; }
+        public ReactiveList<NugetResult> NugetResults { get; private set; }
+        public ReactiveCommand<NugetResult> SearchNuget { get; private set; }
+
 
         public ReactiveCommand<Unit> AddPackage { get; private set; }
         public IObservable<string> PaketTrace { get; private set; }
+        public LoadingState AddPackageState { get; private set; }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Reactive.Disposables;
-using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Microsoft.FSharp.Control;
 using Paket.VisualStudio.Commands.PackageGui;
 using Paket.VisualStudio.SolutionExplorer;
 
@@ -13,15 +14,6 @@ namespace Paket.VisualStudio.Commands
 {
     public class AddPackageProcess
     {
-        public static Task<string[]> SearchPackagesByName(string search, CancellationToken ct)
-        {
-            //TODO: this should probably return a success/failure type to indicate whether the search was successful.  (Like lack of internet, nuget down)
-            return FSharpAsync.StartAsTask(
-                NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, search, 1000),
-                FSharpOption<TaskCreationOptions>.None,
-                FSharpOption<CancellationToken>.Some(ct));
-        }
-
         public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
         {
             var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
@@ -52,8 +44,21 @@ namespace Paket.VisualStudio.Commands
                 else
                     dependenciesFile.Add(packageName, "", false, false, false, true);
             };
+            Func<string, IObservable<string>> searchNuGet = searchText => Observable.Create<string[]>(obs =>
+            {
+                var disposable = new CancellationDisposable();
+
+                dependenciesFile
+                    .SearchPackagesByName(
+                        searchText,
+                        FSharpOption<CancellationToken>.Some(disposable.Token),
+                        FSharpOption<int>.None).Subscribe(obs);
+
+                return disposable;
+            }).SelectMany(x => x);
+          
             //TODO: Use interfaces?
-            secondWindow.ViewModel = new AddPackageViewModel(SearchPackagesByName, addPackageToDependencies, paketTraceObs);
+            secondWindow.ViewModel = new AddPackageViewModel(searchNuGet, addPackageToDependencies, paketTraceObs);
             secondWindow.ShowDialog();
         }
     }
