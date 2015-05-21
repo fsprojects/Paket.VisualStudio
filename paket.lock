@@ -1,12 +1,12 @@
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    canopy (0.9.22)
+    canopy (0.9.23)
       FSharp.Core (>= 3.0.2)
       Selenium.Support (2.45.0)
       Selenium.WebDriver (2.45.0)
       SizSelCsZzz (0.3.36.0)
-    FAKE (3.31.4)
+    FAKE (3.32.4)
     FSharp.Compiler.Service (0.0.89)
     FSharp.Core (3.1.2.1)
     FSharp.Formatting (2.9.6)
@@ -16,19 +16,18 @@ NUGET
       FSharp.Compiler.Service (>= 0.0.87)
     ILRepack (1.26.0)
     MahApps.Metro (1.1.2.0)
-    Microsoft.Bcl (1.1.10) 
+    Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Build (1.0.21)
     Microsoft.Net.Http (2.2.29)
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Newtonsoft.Json (6.0.8)
-    Octokit (0.11.0)
+    Octokit (0.12.0)
       Microsoft.Net.Http
     Paket.Core (1.4.14)
       FSharp.Core
       Newtonsoft.Json
-    PhantomJS (2.0.0)
     reactiveui (6.5.0)
       reactiveui-core (6.5.0)
     reactiveui-core (6.5.0)
@@ -59,6 +58,7 @@ NUGET
     Selenium.Support (2.45.0)
       Selenium.WebDriver (>= 2.45.0)
     Selenium.WebDriver (2.45.0)
+    Selenium.WebDriver.ChromeDriver (2.15.0.0)
     SizSelCsZzz (0.3.36.0)
       Newtonsoft.Json (>= 6.0)
       Selenium.Support (>= 2.40)

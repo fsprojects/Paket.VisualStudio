@@ -175,6 +175,7 @@ open System
 
 
 Target "UploadToGallery" (fun _ ->
+    canopy.configuration.chromeDir <- @"./packages/Selenium.WebDriver.ChromeDriver/driver"
     start chrome
 
     let vsixGuid = "ce104917-e8b3-4365-9490-8432c6e75c36"

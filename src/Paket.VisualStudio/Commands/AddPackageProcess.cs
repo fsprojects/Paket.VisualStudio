@@ -40,17 +40,15 @@ namespace Paket.VisualStudio.Commands
 
             Action<NugetResult> addPackageToDependencies = result =>
             {
-                var packageName = result.PackageName;
-
                 if (projectGuid != null)
                 {
                     var guid = Guid.Parse(projectGuid);
                     SolutionExplorerExtensions.UnloadProject(guid);
-                    dependenciesFile.AddToProject(packageName, "", false, false, selectedFileName, true);
+                    dependenciesFile.AddToProject(result.PackageName, "", false, false, selectedFileName, true);
                     SolutionExplorerExtensions.ReloadProject(guid);
                 }
                 else
-                    dependenciesFile.Add(packageName, "", false, false, false, true);
+                    dependenciesFile.Add(result.PackageName, "", false, false, false, true);
             };
             //TODO: Use interfaces?
             secondWindow.ViewModel = new AddPackageViewModel(SearchPackagesByName, addPackageToDependencies, paketTraceObs);
