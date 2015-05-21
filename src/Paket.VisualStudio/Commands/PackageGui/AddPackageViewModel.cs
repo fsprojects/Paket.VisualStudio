@@ -1,11 +1,8 @@
-﻿using System.Reactive.Disposables;
-using System.Threading;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Splat;
-using Microsoft.FSharp.Core;
 
 
 namespace Paket.VisualStudio.Commands.PackageGui
@@ -82,7 +79,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
         public ReactiveCommand<System.Reactive.Unit> AddPackage { get; private set; }
 
         public AddPackageViewModel(
-            Paket.Dependencies dependenciesFile,
+            Func<string ,IObservable<string>> searchForPackages,
             Action<NugetResult> addPackageCallback,
             IObservable<string> paketTraceFunObservable)
         {
@@ -90,9 +87,6 @@ namespace Paket.VisualStudio.Commands.PackageGui
             var logger = new DebugLogger() {Level = LogLevel.Debug};
             Splat.Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
 
-            ;
-
-            _dependenciesFile = dependenciesFile;
 
             _paketTraceFunObservable = paketTraceFunObservable;
             SearchNuget =
@@ -100,18 +94,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
                     this.ObservableForProperty(x => x.SearchText)
                         .Select(x => !string.IsNullOrEmpty(SearchText)),
                     _ =>
-                        Observable.Create<string[]>(obs =>
-                        {
-                            var disposable = new CancellationDisposable();
-
-                            dependenciesFile
-                                .SearchPackagesByName(
-                                    SearchText,
-                                    FSharpOption<CancellationToken>.Some(disposable.Token),
-                                    FSharpOption<int>.None).Subscribe(obs);
-
-                            return disposable;
-                        }).SelectMany(x => x)
+                        searchForPackages(SearchText)
                             .Select(x => new NugetResult {PackageName = x}));
                             
 
