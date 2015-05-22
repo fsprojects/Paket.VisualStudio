@@ -74,15 +74,21 @@ namespace Paket.VisualStudio
 
                 task.Navigate += (s, e) =>
                 {
-                    IVsUIHierarchy hierarchy;
-                    uint itemID;
-                    IVsWindowFrame docFrame;
-                    IVsTextView textView;
-                    VsShell.OpenDocument(serviceProvider,document, Guids.LOGVIEWID_Code, out hierarchy, out itemID, out docFrame, out textView);
-                    ThrowOnFailure(docFrame.Show());
-                    if (textView != null)
+                    try
                     {
-                        ThrowOnFailure(textView.SetCaretPos(lineNo, column));
+                        IVsUIHierarchy hierarchy;
+                        uint itemID;
+                        IVsWindowFrame docFrame;
+                        IVsTextView textView;
+                        VsShell.OpenDocument(serviceProvider, document, Guids.LOGVIEWID_Code, out hierarchy, out itemID, out docFrame, out textView);
+                        ThrowOnFailure(docFrame.Show());
+                        if (textView != null)
+                        {
+                            ThrowOnFailure(textView.SetCaretPos(lineNo, column));
+                        }
+                    }catch(Exception)
+                    {
+                        // don't trow crazy exceptions when trying to navigate to errors
                     }
                 };
             }
