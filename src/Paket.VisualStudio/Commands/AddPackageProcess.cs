@@ -42,18 +42,21 @@ namespace Paket.VisualStudio.Commands
                 else
                     dependenciesFile.Add(result.PackageName, "", false, false, false, true);
             };
-            Func<string, IObservable<string>> searchNuGet = searchText => Observable.Create<string>(obs =>
-            {
-                var disposable = new CancellationDisposable();
 
-                dependenciesFile
-                    .SearchPackagesByName(
-                        searchText,
-                        FSharpOption<CancellationToken>.Some(disposable.Token),
-                        FSharpOption<int>.None).Subscribe(obs);
+            Func<string, IObservable<string>> searchNuGet = 
+                searchText => Observable.Create<string>(obs =>
+                {
+                    var disposable = new CancellationDisposable();
 
-                return disposable;
-            });
+                    dependenciesFile
+                        .SearchPackagesByName(
+                            searchText,
+                            FSharpOption<CancellationToken>.Some(disposable.Token),
+                            FSharpOption<int>.None)
+                        .Subscribe(obs);
+
+                    return disposable;
+                });
           
             //TODO: Use interfaces?
             secondWindow.ViewModel = new AddPackageViewModel(searchNuGet, addPackageToDependencies, paketTraceObs);
