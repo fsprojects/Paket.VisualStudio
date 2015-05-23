@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Text.Editor;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
-    [GraphProvider(Name = "PaketGraphProvider")]
+    //[GraphProvider(Name = "PaketGraphProvider")]
     public class PaketGraphProvider : IGraphProvider
     {
         private readonly List<IGraphContext> trackingContext = new List<IGraphContext>();

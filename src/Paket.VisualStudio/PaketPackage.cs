@@ -3,7 +3,6 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Paket.VisualStudio.Commands;
 using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio

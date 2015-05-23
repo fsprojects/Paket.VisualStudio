@@ -3,6 +3,8 @@ VSSDK.GraphModel.12
 VSSDK.Language.12
 VSSDK.Editor.12
 VSSDK.ComponentModelHost.12
+Microsoft.VisualStudio.ImageCatalog 
 reactiveui
 reactiveui-events
 MahApps.Metro
+System.Collections.Immutable

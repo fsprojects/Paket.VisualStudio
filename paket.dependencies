@@ -4,6 +4,7 @@ nuget FAKE
 nuget MahApps.Metro
 nuget Paket.Core
 nuget FSharp.Formatting
+nuget System.Collections.Immutable
 nuget VSSDK.GraphModel.12 copy_local: false
 nuget VSSDK.Language.12 copy_local: false
 nuget VSSDK.Editor.12 copy_local: false
@@ -13,5 +14,6 @@ nuget reactiveui-events
 nuget canopy
 nuget PhantomJS
 nuget ILRepack
+nuget Microsoft.VisualStudio.ImageCatalog prerelease copy_local: false
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

@@ -16,16 +16,61 @@ NUGET
       FSharp.Compiler.Service (>= 0.0.87)
     ILRepack (1.26.0)
     MahApps.Metro (1.1.2.0)
-    Microsoft.Bcl (1.1.10)
+    Microsoft.Bcl (1.1.10) - copy_local: false
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21)
-    Microsoft.Net.Http (2.2.29)
+    Microsoft.Bcl.Build (1.0.21) - copy_local: false
+    Microsoft.Net.Http (2.2.29) - copy_local: false
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
+    Microsoft.VisualStudio.ImageCatalog (14.0.22823-RC) - copy_local: false
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+    Microsoft.VisualStudio.OLE.Interop (7.10.6070-pre) - copy_local: false
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+    Microsoft.VisualStudio.SDK.VsixSuppression (14.0.50420-pre) - copy_local: false
+    Microsoft.VisualStudio.Shell.Interop (7.10.6071-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.TextManager.Interop (>= 7.10.6070-pre)
+    Microsoft.VisualStudio.Shell.Interop.10.0 (10.0.30319-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+    Microsoft.VisualStudio.Shell.Interop.11.0 (11.0.61030-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+      Microsoft.VisualStudio.Shell.Interop.10.0 (>= 10.0.30319-pre)
+      Microsoft.VisualStudio.Shell.Interop.8.0 (>= 8.0.50727-pre)
+    Microsoft.VisualStudio.Shell.Interop.12.0 (12.0.30110-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+      Microsoft.VisualStudio.Shell.Interop.10.0 (>= 10.0.30319-pre)
+      Microsoft.VisualStudio.Shell.Interop.11.0 (>= 11.0.61030-pre)
+      Microsoft.VisualStudio.Shell.Interop.8.0 (>= 8.0.50727-pre)
+    Microsoft.VisualStudio.Shell.Interop.12.1.DesignTime (12.1.30328-pre) - copy_local: false
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+      Microsoft.VisualStudio.Shell.Interop.11.0 (>= 11.0.61030-pre)
+      Microsoft.VisualStudio.Shell.Interop.12.0 (>= 12.0.30110-pre)
+    Microsoft.VisualStudio.Shell.Interop.8.0 (8.0.50727-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+      Microsoft.VisualStudio.TextManager.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.TextManager.Interop.8.0 (>= 8.0.50727-pre)
+    Microsoft.VisualStudio.TextManager.Interop (7.10.6070-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+    Microsoft.VisualStudio.TextManager.Interop.8.0 (8.0.50727-pre) - copy_local: false
+      Microsoft.VisualStudio.OLE.Interop (>= 7.10.6070-pre)
+      Microsoft.VisualStudio.SDK.VsixSuppression (>= 14.0.50420-pre)
+      Microsoft.VisualStudio.Shell.Interop (>= 7.10.6071-pre)
+      Microsoft.VisualStudio.TextManager.Interop (>= 7.10.6070-pre)
     Newtonsoft.Json (6.0.8)
-    Octokit (0.12.0)
+    Octokit (0.12.0) - copy_local: false
       Microsoft.Net.Http
-    Paket.Core (1.4.18)
+    Paket.Core (1.5.3)
       FSharp.Core
       Newtonsoft.Json
     PhantomJS (2.0.0)
@@ -64,6 +109,7 @@ NUGET
       Selenium.Support (>= 2.40)
       Selenium.WebDriver (>= 2.40)
     Splat (1.6.2)
+    System.Collections.Immutable (1.1.36)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.ComponentModelHost.12 (12.0.4) - copy_local: false
@@ -127,5 +173,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (8e65e2fc1406f326b44f3f87ec9ca9b3127a6e78)
+    modules/Octokit/Octokit.fsx (891840ae812cd0b6bec90e143c653b1c0cc95789)
       Octokit
