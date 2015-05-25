@@ -1,3 +1,7 @@
+#### 0.4.1 - 25.05.2015
+* Allow to "add package" on references nodes
+* Allow to "add package" even if the solution is not initialized
+
 #### 0.4.0 - 21.05.2015
 * New error handling in "add package" dialog
 
