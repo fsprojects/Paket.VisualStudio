@@ -63,6 +63,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.InstallSolution, Install, null);
             RegisterCommand(CommandIDs.RestoreSolution, Restore, null);
             RegisterCommand(CommandIDs.AddPackageToProject, AddPackageToProject, OnlyReferencesFileNodes);
+            RegisterCommand(CommandIDs.AddPackageToProjectOnReferences, AddPackageToProject, null);
         }
 
         private void OnlyDependenciesFileNodes(object sender, EventArgs e)

@@ -161,6 +161,19 @@
         </Strings>
       </Button>
       
+      <Button guid="guidCommandSet" id="AddPackageToProjectOnReferences" priority="0x0100">
+        <Icon guid="Uninstall.bmpGuid" id="Uninstall.bmpId" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+
+        <Strings>
+          <CommandName>cmdidAddPackageToProjectOnReferences</CommandName>
+          <ButtonText>Add Package</ButtonText>
+          <MenuText>Add Package</MenuText>
+          <ToolTipText>Add Package</ToolTipText>
+        </Strings>
+      </Button>
+      
       <Button guid="guidCommandSet" id="Simplify" priority="0x0100">
         <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -213,6 +226,9 @@
     <CommandPlacement guid="guidCommandSet" id="Simplify" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_SCOPE" />
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="AddPackageToProjectOnReferences" priority="0xF100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_REFROOT_ADD"/>
+    </CommandPlacement>
   </CommandPlacements>
 
 
@@ -236,6 +252,7 @@
       <IDSymbol name="RestoreSolution" value="0x0013" />
       <IDSymbol name="AddPackage" value="0x0014" />
       <IDSymbol name="AddPackageToProject" value="0x0015" />
+      <IDSymbol name="AddPackageToProjectOnReferences" value="0x0016" />
     </GuidSymbol>
 
     <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">

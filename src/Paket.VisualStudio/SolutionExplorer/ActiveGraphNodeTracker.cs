@@ -38,7 +38,12 @@ namespace Paket.VisualStudio.SolutionExplorer
                 return SolutionExplorerExtensions.GetSolutionFileName(); // nothing was selected => sln
             }
             ((IVsProject)hierarchy).GetMkDocument(itemid, out itemFullPath);
-            return itemFullPath;
+            if (itemFullPath != null)
+                return itemFullPath;
+            ((IVsProject)hierarchy).GetMkDocument(VSConstants.VSITEMID_ROOT, out itemFullPath);
+            if (itemFullPath != null)
+                return itemFullPath;
+            return SelectedFileName;
         }
 
         public Guid GetSelectedProjectGuid()
