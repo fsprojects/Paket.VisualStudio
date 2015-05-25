@@ -16,7 +16,18 @@ namespace Paket.VisualStudio.Commands
     {
         public static void ShowAddPackageDialog(string selectedFileName, string projectGuid = null)
         {
-            var dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
+            Paket.Dependencies dependenciesFile = null;
+
+            try
+            {
+                dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
+            }
+            catch (Exception)
+            {
+                var dir = new System.IO.FileInfo(SolutionExplorerExtensions.GetSolutionFileName()).Directory.FullName;
+                Dependencies.Init(dir);
+                dependenciesFile = Paket.Dependencies.Locate(selectedFileName);
+            }
 
             var secondWindow = new AddPackage();
 
