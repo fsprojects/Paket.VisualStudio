@@ -1,3 +1,6 @@
+#### 0.4.2 - 08.06.2015
+* Search only in configured NuGet feeds 
+
 #### 0.4.1 - 25.05.2015
 * Allow to "add package" on references nodes
 * Allow to "add package" even if the solution is not initialized

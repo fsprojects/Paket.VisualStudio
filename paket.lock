@@ -1,12 +1,12 @@
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    canopy (0.9.24)
+    canopy (0.9.26)
       FSharp.Core (>= 3.0.2)
       Selenium.Support (2.45.0)
       Selenium.WebDriver (2.45.0)
       SizSelCsZzz (0.3.36.0)
-    FAKE (3.33.0)
+    FAKE (3.34.7)
     FSharp.Compiler.Service (0.0.89)
     FSharp.Core (3.1.2.1)
     FSharp.Formatting (2.9.6)
@@ -127,5 +127,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (891840ae812cd0b6bec90e143c653b1c0cc95789)
+    modules/Octokit/Octokit.fsx (83f137969eb0ad8656426b2998bea5227a7bcc27)
       Octokit
