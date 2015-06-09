@@ -128,7 +128,7 @@ Target "CleanVSIX" (fun _ ->
     let result =
         ExecProcess (fun info ->
             info.FileName <- currentDirectory @@ "packages" @@ "ILRepack" @@ "tools" @@ "ILRepack.exe"
-            info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" vsixDir release.AssemblyVersion (buildMergedDir @@ "Paket.VisualStudio.dll") toPack
+            info.Arguments <- sprintf "/verbose /lib:%s /out:%s %s" vsixDir (buildMergedDir @@ "Paket.VisualStudio.dll") toPack
             ) (TimeSpan.FromMinutes 5.)
 
     if result <> 0 then failwithf "Error during ILRepack execution."
