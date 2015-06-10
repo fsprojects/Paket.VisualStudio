@@ -22,7 +22,7 @@ namespace Paket.VisualStudio.SolutionExplorer
     {
         public string DependenciesFileName { get; set; }
         public string ReferencesFileName { get; set; }
-        public string PackageName { get; set;}
+        public string PackageName { get; set; }
     }
 
     class SolutionInfo
@@ -142,7 +142,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void RunCommand(string helpTopic, 
+        private void RunCommand(string helpTopic,
             Action<SolutionInfo> command,
             TaskScheduler taskScheduler = null)
         {
@@ -152,9 +152,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             StatusBarService.UpdateText("Paket command started.");
             var info = new SolutionInfo();
             info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
-            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();            
+            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();
             System.Threading.Tasks.Task.Factory.StartNew(() =>
-
                 {
                     try
                     {
@@ -170,7 +169,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }, CancellationToken.None, TaskCreationOptions.None, taskScheduler);
             System.Threading.Tasks.Task.Run(() =>
             {
-                
+
             });
         }
 
@@ -184,37 +183,37 @@ namespace Paket.VisualStudio.SolutionExplorer
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
 
-                var info = new PackageInfo();
-                info.DependenciesFileName = node.Id.GetFileName();
-                info.PackageName = node.GetPackageName();
+            var info = new PackageInfo();
+            info.DependenciesFileName = node.Id.GetFileName();
+            info.PackageName = node.GetPackageName();
 
-            var projectGuids = 
+            var projectGuids =
                     Paket.Dependencies.Locate(info.DependenciesFileName)
                         .FindProjectsFor(info.PackageName)
                         .Select(project => project.GetProjectGuid())
                         .ToArray();
 
             SolutionExplorerExtensions.SaveSolution();
-            foreach(var projectGuid in projectGuids)
+            foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
             System.Threading.Tasks.Task.Run(() =>
             {
-            try
-            {
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
-                StatusBarService.UpdateText("Ready");
-            }
-            catch (Exception ex)
-            {
-                PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-            }
+                try
+                {
+                    command(info);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
             }).ContinueWith(_ =>
             {
-            foreach (var projectGuid in projectGuids)
-                SolutionExplorerExtensions.ReloadProject(projectGuid);
+                foreach (var projectGuid in projectGuids)
+                    SolutionExplorerExtensions.ReloadProject(projectGuid);
             });
         }
 
@@ -275,21 +274,21 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             System.Threading.Tasks.Task.Run(() =>
             {
-            try
-            {
-                command(info);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
-                StatusBarService.UpdateText("Ready");
-            }
-            catch (Exception ex)
-            {
-                PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
-                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-            }
+                try
+                {
+                    command(info);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                    StatusBarService.UpdateText("Ready");
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, info.DependenciesFileName, helpTopic);
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
 
             }).ContinueWith(_ =>
             {
-            SolutionExplorerExtensions.ReloadProject(projectGuid);
+                SolutionExplorerExtensions.ReloadProject(projectGuid);
             });
         }
 
@@ -342,7 +341,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void UpdatePackage(object sender, EventArgs e)
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
-            {             
+            {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .UpdatePackage(info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
             });
@@ -368,7 +367,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void AddPackageToProject(object sender, EventArgs e)
         {
             var helpTopic = "paket-add.html#Adding-to-a-single-project";
- 
+
             PaketOutputPane.OutputPane.Activate();
             PaketErrorPane.Clear();
 
@@ -416,7 +415,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             menuCommandService.AddCommand(new OleMenuCommand(
                 id: commandId,
-                invokeHandler: invokeHandler, 
+                invokeHandler: invokeHandler,
                 changeHandler: null,
                 beforeQueryStatus: beforeQueryStatusHandler));
         }
