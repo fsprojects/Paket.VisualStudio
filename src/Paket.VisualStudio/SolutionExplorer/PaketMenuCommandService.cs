@@ -142,28 +142,35 @@ namespace Paket.VisualStudio.SolutionExplorer
             }
         }
 
-        private void RunCommand(string helpTopic, Action<SolutionInfo> command)
+        private void RunCommand(string helpTopic, 
+            Action<SolutionInfo> command,
+            TaskScheduler taskScheduler = null)
         {
             PaketOutputPane.OutputPane.Activate();
+            taskScheduler = taskScheduler ?? TaskScheduler.Default;
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
             var info = new SolutionInfo();
             info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
             info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();            
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
 
+                {
+                    try
+                    {
+                        command(info);
+                        PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
+                        StatusBarService.UpdateText("Ready");
+                    }
+                    catch (Exception ex)
+                    {
+                        PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName(), helpTopic);
+                        PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                    }
+                }, CancellationToken.None, TaskCreationOptions.None, taskScheduler);
             System.Threading.Tasks.Task.Run(() =>
             {
-                try
-                {
-                    command(info);
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
-                    StatusBarService.UpdateText("Ready");
-                }
-                catch (Exception ex)
-                {
-                    PaketErrorPane.ShowError(ex.Message, tracker.GetSelectedFileName(), helpTopic);
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message +"\r\n");
-                }
+                
             });
         }
 
@@ -355,7 +362,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommand("paket-add.html", info =>
             {
                 AddPackageProcess.ShowAddPackageDialog(tracker.GetSelectedFileName());
-            });
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void AddPackageToProject(object sender, EventArgs e)
