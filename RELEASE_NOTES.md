@@ -1,3 +1,6 @@
+#### 0.4.5 - 23.06.2015
+* Update to Paket 1.18 
+
 #### 0.4.4 - 10.06.2015
 * BUGFIX: AddPackage STA thread bug fixed - https://github.com/fsprojects/Paket.VisualStudio/pull/58
 
