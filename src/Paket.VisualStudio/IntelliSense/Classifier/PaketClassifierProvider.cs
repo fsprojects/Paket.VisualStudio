@@ -12,7 +12,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 {
     [Export(typeof(IVsTextViewCreationListener))]
     [Export(typeof(IClassifierProvider))]
-    [ContentType("text")]
+    [ContentType("Paket")]
     [TextViewRole(PredefinedTextViewRoles.Document)]
     internal class PaketClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
     {
