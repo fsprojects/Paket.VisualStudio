@@ -15,7 +15,7 @@ using Paket.VisualStudio.IntelliSense.Classifier;
 namespace Paket.VisualStudio.IntelliSense
 {
     [Export(typeof(IVsTextViewCreationListener))]
-    [ContentType("plaintext")]
+    [ContentType(PaketFileContentType.ContentType)]
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
     internal sealed class PaketCompletionController : IVsTextViewCreationListener
     {

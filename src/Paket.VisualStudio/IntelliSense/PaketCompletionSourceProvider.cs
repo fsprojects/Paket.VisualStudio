@@ -13,7 +13,7 @@ using Paket.VisualStudio.Utils;
 namespace Paket.VisualStudio.IntelliSense
 {
     [Export(typeof(ICompletionSourceProvider))]
-    [ContentType("Paket")]
+    [ContentType(PaketFileContentType.ContentType)]
     [Name("Paket IntelliSense Provider")]
     internal class PaketCompletionSourceProvider : ICompletionSourceProvider
     {

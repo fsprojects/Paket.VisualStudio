@@ -12,14 +12,16 @@ namespace Paket.VisualStudio
 {
     internal static class PaketFileContentType
     {
+        public const string ContentType = "Paket";
+
         [Export]
-        [Name("Paket")]
+        [Name(ContentType)]
         [BaseDefinition("text")]
         internal static ContentTypeDefinition PaketContentTypeDefinition;
 
         [Export]
         [FileExtension(".dependencies")]
-        [ContentType("Paket")]
+        [ContentType(ContentType)]
         internal static FileExtensionToContentTypeDefinition PaketFileExtensionDefinition;
     }
 }
