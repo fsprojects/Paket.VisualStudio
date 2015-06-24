@@ -94,6 +94,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 //Listen to the paket trace and put it in the dialog box
                 ViewModel.PaketTrace
                     .ObserveOn(RxApp.MainThreadScheduler)
+                    .Select(x => x.Text)
                     .Subscribe(AppendMessageToOutputbox)
                     .AddTo(_compositeDisposable);
 
@@ -164,7 +165,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
 
 
         public ReactiveCommand<Unit> AddPackage { get; private set; }
-        public IObservable<string> PaketTrace { get; private set; }
+        public IObservable<Logging.Trace> PaketTrace { get; private set; }
         public LoadingState AddPackageState { get; private set; }
     }
 }

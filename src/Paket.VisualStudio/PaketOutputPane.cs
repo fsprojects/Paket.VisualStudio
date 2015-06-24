@@ -36,7 +36,7 @@ namespace Paket.VisualStudio
                         OutputWindow.CreatePane(ref generalPaneGuid, PaneName, 1, 1);
                         OutputWindow.GetPane(ref generalPaneGuid, out pane);
 
-                        Paket.Logging.RegisterTraceFunction(text => { OutputPane.OutputStringThreadSafe(text + "\r\n"); });
+                        Paket.Logging.@event.Publish.Subscribe(text => OutputPane.OutputStringThreadSafe(text + "\r\n"));
                     }
 
                     _outputPane = pane;

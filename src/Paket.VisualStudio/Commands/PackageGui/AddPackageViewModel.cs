@@ -19,7 +19,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
 
         ReactiveCommand<NugetResult> SearchNuget { get; }
         ReactiveCommand<System.Reactive.Unit> AddPackage { get; }
-        IObservable<string> PaketTrace { get; }
+        IObservable<Logging.Trace> PaketTrace { get; }
         LoadingState AddPackageState { get; }
     }
 
@@ -38,9 +38,9 @@ namespace Paket.VisualStudio.Commands.PackageGui
     public class AddPackageViewModel : ReactiveObject, IAddPackageViewModel
     {
         private readonly Paket.Dependencies _dependenciesFile;
-        private readonly IObservable<string> _paketTraceFunObservable;
+        private readonly IObservable<Logging.Trace> _paketTraceFunObservable;
 
-        public IObservable<string> PaketTrace
+        public IObservable<Logging.Trace> PaketTrace
         {
             get { return _paketTraceFunObservable; }
         }
@@ -82,7 +82,7 @@ namespace Paket.VisualStudio.Commands.PackageGui
         public AddPackageViewModel(
             Func<string ,IObservable<string>> searchForPackages,
             Action<NugetResult> addPackageCallback,
-            IObservable<string> paketTraceFunObservable)
+            IObservable<Logging.Trace> paketTraceFunObservable)
         {
 
             var logger = new DebugLogger() {Level = LogLevel.Debug};

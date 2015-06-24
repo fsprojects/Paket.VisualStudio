@@ -32,13 +32,14 @@ namespace Paket.VisualStudio.Commands
             var secondWindow = new AddPackage();
 
             //Create observable paket trace
-            var paketTraceObs = Observable.Create<string>(observer =>
+            var paketTraceObs = Observable.Create<Logging.Trace>(observer =>
             {
-                Paket.Logging.RegisterTraceFunction(observer.OnNext);
+                Paket.Logging.@event.Publish.Subscribe(x => observer.OnNext(x));
                 return Disposable.Create(() =>
                 {
-                    Paket.Logging.RemoveTraceFunction(observer.OnNext);
+                   
                 });
+               
             });
 
             Action<NugetResult> addPackageToDependencies = result =>
