@@ -1,3 +1,6 @@
+#### 0.4.6 - 25.06.2015
+* BUGFIX: Add Paket content type and don't influence FSI - https://github.com/fsprojects/Paket.VisualStudio/pull/61
+
 #### 0.4.5 - 23.06.2015
 * Update to Paket 1.18 
 
