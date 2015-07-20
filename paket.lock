@@ -8,7 +8,7 @@ NUGET
       SizSelCsZzz (0.3.36.0)
     FAKE (3.36.0)
     FSharp.Compiler.Service (1.3.1.0)
-    FSharp.Core (3.1.2.1)
+    FSharp.Core (3.1.2.5)
     FSharp.Formatting (2.9.10)
       FSharp.Compiler.Service (>= 0.0.87)
       FSharpVSPowerTools.Core (1.8.0)
@@ -23,9 +23,9 @@ NUGET
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Newtonsoft.Json (7.0.1)
-    Octokit (0.13.0)
+    Octokit (0.14.0)
       Microsoft.Net.Http
-    Paket.Core (1.19.2)
+    Paket.Core (1.19.7)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
@@ -127,5 +127,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (4ad6663a0e2179b7f6047612b5bb6357e1543fbf)
+    modules/Octokit/Octokit.fsx (67584fb9db30af11f16d9c1e7d36e1ca244a6f9c)
       Octokit
