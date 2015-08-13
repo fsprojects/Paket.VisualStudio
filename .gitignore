@@ -185,3 +185,5 @@ paket-files
 release.cmd
 *.bak
 gallerycredentials.txt
+docs/tools/FSharp.Formatting.svclog
+.fake

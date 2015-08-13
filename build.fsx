@@ -164,6 +164,7 @@ Target "ReleaseDocs" (fun _ ->
 #load "paket-files/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
 
+#I @"packages/Selenium.Support/lib/net40"
 #r @"packages/Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll"
 #r @"packages/Selenium.WebDriver/lib/net40/WebDriver.dll"
 #r @"packages/Selenium.Support/lib/net40/WebDriver.Support.dll"
