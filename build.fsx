@@ -174,6 +174,22 @@ open canopy
 open runner
 open System
 
+Target "ReleaseToGitHub" (fun _ ->
+    StageAll ""
+    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
+    Branches.push ""
+
+    Branches.tag "" release.NugetVersion
+    Branches.pushTag "" "origin" release.NugetVersion
+
+    // release on github
+    createClient (getBuildParamOrDefault "github-user" "") (getBuildParamOrDefault "github-pw" "")
+    |> createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes 
+    |> uploadFile "./bin/Paket.VisualStudio.vsix"
+    |> releaseDraft
+    |> Async.RunSynchronously
+)
+
 
 Target "UploadToGallery" (fun _ ->
     canopy.configuration.chromeDir <- @"./packages/Selenium.WebDriver.ChromeDriver/driver"
@@ -208,25 +224,10 @@ Target "UploadToGallery" (fun _ ->
 )
 
 
-Target "Release" (fun _ ->
-    StageAll ""
-    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Branches.push ""
-
-    Branches.tag "" release.NugetVersion
-    Branches.pushTag "" "origin" release.NugetVersion
-
-    // release on github
-    createClient (getBuildParamOrDefault "github-user" "") (getBuildParamOrDefault "github-pw" "")
-    |> createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes 
-    |> uploadFile "./bin/Paket.VisualStudio.vsix"
-    |> releaseDraft
-    |> Async.RunSynchronously
-)
-
 // --------------------------------------------------------------------------------------
 // Run main targets by default. Invoke 'build <Target>' to override
 
+Target "Release" DoNothing
 Target "Default" DoNothing
 
 "Clean"
@@ -238,6 +239,7 @@ Target "Default" DoNothing
   ==> "CleanDocs"
   ==> "GenerateDocs"
   ==> "ReleaseDocs"
+  ==> "ReleaseToGitHub"
   ==> "UploadToGallery"
   ==> "Release"
 
