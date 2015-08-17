@@ -37,7 +37,7 @@ namespace Paket.VisualStudio.IntelliSense
             if (!TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
                 return;
 
-            if (!PaketClassifierProvider.IsPaketFile(document.FilePath))
+            if (!PaketClassifierProvider.IsPaketDependenciesFile(document.FilePath))
                 return;
 
             CommandFilter filter = new CommandFilter(view, CompletionBroker);

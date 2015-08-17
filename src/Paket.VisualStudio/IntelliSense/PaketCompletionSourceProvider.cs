@@ -32,23 +32,23 @@ namespace Paket.VisualStudio.IntelliSense
         {
             string filename = System.IO.Path.GetFileName(textBuffer.GetFileName());
 
-            if (PaketClassifierProvider.IsPaketFile(filename))
+            if (PaketClassifierProvider.IsPaketDependenciesFile(filename))
             {
-                return new PaketCompletionSource(glyphService, textBuffer, NavigatorService.GetTextStructureNavigator(textBuffer));
+                return new PaketDependenciesFileCompletionSource(glyphService, textBuffer, NavigatorService.GetTextStructureNavigator(textBuffer));
             }
 
             return null;
         }
     }
 
-    internal class PaketCompletionSource : ICompletionSource
+    internal class PaketDependenciesFileCompletionSource : ICompletionSource
     {
         private readonly ITextBuffer textBuffer;
         private readonly ITextStructureNavigator navigator;
         private readonly ImageSource glyph;
         private bool disposed;
 
-        public PaketCompletionSource(IGlyphService glyphService, ITextBuffer textBuffer, ITextStructureNavigator navigator)
+        public PaketDependenciesFileCompletionSource(IGlyphService glyphService, ITextBuffer textBuffer, ITextStructureNavigator navigator)
         {
             this.textBuffer = textBuffer;
             this.navigator = navigator;
@@ -86,7 +86,7 @@ namespace Paket.VisualStudio.IntelliSense
                         ? new Span(position, 0)
                         : new Span(context.SpanStart, context.SpanLength), SpanTrackingMode.EdgeInclusive);
 
-            CompletionSet completionSet = new CompletionSet("PaketCompletion", "Paket", trackingSpan, completions, Enumerable.Empty<Completion>());
+            CompletionSet completionSet = new CompletionSet("PaketDependenciesFileCompletion", "Paket", trackingSpan, completions, Enumerable.Empty<Completion>());
 
             completionSets.Add(completionSet);
         }

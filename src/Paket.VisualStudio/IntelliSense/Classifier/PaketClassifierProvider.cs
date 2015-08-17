@@ -38,7 +38,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             if (TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
             {
                 string filePath = document.FilePath;
-                if (!IsPaketFile(filePath)) return;
+                if (!IsPaketDependenciesFile(filePath)) return;
 
                 PaketClassifier classifier;
                 view.TextDataModel.DocumentBuffer.Properties.TryGetProperty(typeof(PaketClassifier), out classifier);
@@ -52,9 +52,9 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             }
         }
 
-        public static bool IsPaketFile(string filePath)
+        public static bool IsPaketDependenciesFile(string filePath)
         {
-            return System.IO.Path.GetFileName(filePath).ToLowerInvariant() == "paket.dependencies";
+            return System.IO.Path.GetFileName(filePath).ToLowerInvariant() == Paket.Constants.DependenciesFileName;
         }
     }
 }

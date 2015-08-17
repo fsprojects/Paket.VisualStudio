@@ -21,8 +21,6 @@ namespace Paket.VisualStudio.IntelliSense
 
     internal static class CompletionEngine
     {
-
-
         private static ExportProvider ExportProvider
         {
             get
