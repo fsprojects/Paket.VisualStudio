@@ -18,8 +18,6 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 {
     internal class NuGetNameCompletionListProvider : ICompletionListProvider
     {
-        private static IEnumerable<string> searchResults;
-
         public CompletionContextType ContextType
         {
             get { return CompletionContextType.NuGet; }
@@ -29,42 +27,18 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
         {
             ImageSource imageSource = GetImageSource();
 
-            if (searchResults != null)
-            {
-                foreach (var value in searchResults)
-                {
-                    yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
-                }
+            string searchTerm = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
 
-                searchResults = null;
+            var searchResults =
+                FSharpAsync.RunSynchronously(
+                    NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, searchTerm, 20),
+                    FSharpOption<int>.None,
+                    FSharpOption<CancellationToken>.None);
+
+            foreach (var value in searchResults)
+            {
+                yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
             }
-            else
-            {
-                Action<CompletionEntry> action = entry =>
-                {
-                    string searchTerm = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
-
-                    entry.UpdateDisplayText(searchTerm);
-
-                    ExecuteSearch(searchTerm);
-                };
-
-                yield return new CompletionEntry("Search remote NuGet packages...", null, null, imageSource, commitAction: action);
-            }
-        }
-
-        private void ExecuteSearch(string searchTerm)
-        {
-            ThreadPool.QueueUserWorkItem(state =>
-            {
-                searchResults =
-                    FSharpAsync.RunSynchronously(
-                        NuGetV3.FindPackages(FSharpOption<Paket.Utils.Auth>.None, Constants.DefaultNugetStream, searchTerm, 20),
-                        FSharpOption<int>.None,
-                        FSharpOption<CancellationToken>.None);
-
-                DteHelper.ExecuteCommand("Edit.CompleteWord");
-            });
         }
 
         private static ImageSource GetImageSource()

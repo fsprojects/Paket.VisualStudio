@@ -19,7 +19,6 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 {
     internal class InstalledNuGetNameCompletionListProvider : ICompletionListProvider
     {
-        private static IEnumerable<string> searchResults;
 
         public CompletionContextType ContextType
         {
@@ -30,27 +29,13 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
         {
             ImageSource imageSource = GetImageSource();
 
-            if (searchResults != null)
+            var searchResults =
+                Paket.Dependencies.Locate(context.Snapshot.TextBuffer.GetFileName())
+                    .GetInstalledPackages().Select(x => x.Item1);
+
+            foreach (var value in searchResults)
             {
-                foreach (var value in searchResults)
-                {
-                    yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
-                }
-
-                searchResults = null;
-            }
-            else
-            {
-                Action<CompletionEntry> action = entry =>
-                {
-                    string searchTerm = context.Snapshot.GetText(context.SpanStart, context.SpanLength);
-
-                    entry.UpdateDisplayText(searchTerm);
-
-                    ExecuteSearch(context, searchTerm);
-                };
-
-                yield return new CompletionEntry("Search installed NuGet packages...", null, null, imageSource, commitAction: action);
+                yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
             }
         }
 
@@ -58,10 +43,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
         {
             ThreadPool.QueueUserWorkItem(state =>
             {
-                searchResults =
-                    Paket.Dependencies.Locate(context.Snapshot.TextBuffer.GetFileName())
-                      .GetInstalledPackages().Select(x => x.Item1);                    
-
+                
                 DteHelper.ExecuteCommand("Edit.CompleteWord");
             });
         }
