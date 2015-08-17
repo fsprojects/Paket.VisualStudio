@@ -19,7 +19,7 @@ namespace Paket.VisualStudio.IntelliSense
         }
     }
 
-    internal static class CompletionEngine
+    internal static class DependenciesFileCompletionEngine
     {
         private static ExportProvider ExportProvider
         {
@@ -98,6 +98,77 @@ namespace Paket.VisualStudio.IntelliSense
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
+            context.Snapshot = snapShotSpan.Snapshot;
+            return context;
+        }
+    }
+
+    internal static class ReferencesFileCompletionEngine
+    {
+        private static ExportProvider ExportProvider
+        {
+            get
+            {
+                IComponentModel globalService = Globals.GetGlobalService<IComponentModel>(typeof(SComponentModel));
+                return globalService.DefaultExportProvider;
+            }
+        }
+
+        private static readonly HashSet<ICompletionListProvider> completionProviders = new HashSet<ICompletionListProvider>
+        {
+            new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
+            new NuGetNameCompletionListProvider(),
+            new InstalledNuGetNameCompletionListProvider(),
+            new SourceCompletionListProvider(),
+        };
+
+        public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
+        {
+            IEnumerable<ICompletionListProvider> providers = GetCompletionProviders(PaketDocument.FromTextBuffer(textBuffer), navigator, position, out context);
+            if (context == null)
+            {
+                return providers;
+            }
+
+            if (context.Snapshot == null)
+                context.Snapshot = textBuffer.CurrentSnapshot;
+            if (context.Session != null)
+                return providers;
+
+            context.Session = session;
+            return providers;
+        }
+
+        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position, out CompletionContext context)
+        {
+            context = GetCompletionContext(paketDocument, navigator, position);
+            return GetCompletionProviders(context.ContextType);
+        }
+
+        private static IEnumerable<ICompletionListProvider> GetCompletionProviders(CompletionContextType contextType)
+        {
+            return completionProviders.Where(provider => provider.ContextType == contextType);
+        }
+
+        private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
+        {
+            TextExtent endPosition = navigator.GetExtentOfWord(position - 1);
+            TextExtent startPosition = endPosition;
+
+            // try to extend the span over .
+            while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
+            {
+                startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
+            }
+
+            var startPos = startPosition.Span.Start.Position;
+            var length = endPosition.Span.End.Position - startPos;
+            var span = new Span(startPos, length);
+            var snapShotSpan = new SnapshotSpan(position.Snapshot, span);
+
+            var context = new CompletionContext(span);
+
+            context.ContextType = CompletionContextType.InstalledNuGet;
             context.Snapshot = snapShotSpan.Snapshot;
             return context;
         }

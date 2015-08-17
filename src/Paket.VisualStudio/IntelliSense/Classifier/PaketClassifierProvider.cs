@@ -12,9 +12,9 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 {
     [Export(typeof(IVsTextViewCreationListener))]
     [Export(typeof(IClassifierProvider))]
-    [ContentType(PaketFileContentType.ContentType)]
+    [ContentType(PaketDependenciesFileContentType.ContentType)]
     [TextViewRole(PredefinedTextViewRoles.Document)]
-    internal class PaketClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
+    internal class PaketDependenciesClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
     {
         [Import]
         public IClassificationTypeRegistryService Registry { get; set; }
@@ -38,7 +38,8 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             if (TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
             {
                 string filePath = document.FilePath;
-                if (!IsPaketDependenciesFile(filePath)) return;
+                if (!IsPaketDependenciesFile(filePath))
+                    return;
 
                 PaketClassifier classifier;
                 view.TextDataModel.DocumentBuffer.Properties.TryGetProperty(typeof(PaketClassifier), out classifier);
@@ -55,6 +56,11 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         public static bool IsPaketDependenciesFile(string filePath)
         {
             return System.IO.Path.GetFileName(filePath).ToLowerInvariant() == Paket.Constants.DependenciesFileName;
+        }
+
+        public static bool IsPaketReferencesFile(string filePath)
+        {
+            return System.IO.Path.GetFileName(filePath).ToLowerInvariant().EndsWith(Paket.Constants.ReferencesFile);
         }
     }
 }

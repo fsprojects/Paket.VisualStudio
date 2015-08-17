@@ -15,9 +15,9 @@ using Paket.VisualStudio.IntelliSense.Classifier;
 namespace Paket.VisualStudio.IntelliSense
 {
     [Export(typeof(IVsTextViewCreationListener))]
-    [ContentType(PaketFileContentType.ContentType)]
+    [ContentType(PaketDependenciesFileContentType.ContentType)]
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
-    internal sealed class PaketCompletionController : IVsTextViewCreationListener
+    internal sealed class PaketDependenciesCompletionController : IVsTextViewCreationListener
     {
         [Import]
         internal IVsEditorAdaptersFactoryService AdaptersFactory;
@@ -37,7 +37,7 @@ namespace Paket.VisualStudio.IntelliSense
             if (!TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
                 return;
 
-            if (!PaketClassifierProvider.IsPaketDependenciesFile(document.FilePath))
+            if (!PaketDependenciesClassifierProvider.IsPaketDependenciesFile(document.FilePath))
                 return;
 
             CommandFilter filter = new CommandFilter(view, CompletionBroker);
@@ -47,6 +47,41 @@ namespace Paket.VisualStudio.IntelliSense
             filter.Next = next;
         }
     }
+
+    [Export(typeof(IVsTextViewCreationListener))]
+    [ContentType(PaketReferencesFileContentType.ContentType)]
+    [TextViewRole(PredefinedTextViewRoles.Interactive)]
+    internal sealed class PaketReferencesCompletionController : IVsTextViewCreationListener
+    {
+        [Import]
+        internal IVsEditorAdaptersFactoryService AdaptersFactory;
+
+        [Import]
+        internal ICompletionBroker CompletionBroker;
+
+        [Import]
+        internal ITextDocumentFactoryService TextDocumentFactoryService;
+
+        public void VsTextViewCreated(IVsTextView textViewAdapter)
+        {
+            IWpfTextView view = AdaptersFactory.GetWpfTextView(textViewAdapter);
+            Debug.Assert(view != null);
+
+            ITextDocument document;
+            if (!TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
+                return;
+
+            if (!PaketDependenciesClassifierProvider.IsPaketReferencesFile(document.FilePath))
+                return;
+
+            CommandFilter filter = new CommandFilter(view, CompletionBroker);
+
+            IOleCommandTarget next;
+            ErrorHandler.ThrowOnFailure(textViewAdapter.AddCommandFilter(filter, out next));
+            filter.Next = next;
+        }
+    }
+
 
     internal sealed class CommandFilter : IOleCommandTarget
     {

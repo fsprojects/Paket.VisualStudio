@@ -10,18 +10,33 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace Paket.VisualStudio
 {
-    internal static class PaketFileContentType
+    internal static class PaketDependenciesFileContentType
     {
-        public const string ContentType = "Paket";
+        public const string ContentType = "PaketDependencies";
 
         [Export]
         [Name(ContentType)]
         [BaseDefinition("text")]
-        internal static ContentTypeDefinition PaketContentTypeDefinition;
+        internal static ContentTypeDefinition PaketDependenciesContentTypeDefinition;
 
         [Export]
         [FileExtension(".dependencies")]
         [ContentType(ContentType)]
-        internal static FileExtensionToContentTypeDefinition PaketFileExtensionDefinition;
+        internal static FileExtensionToContentTypeDefinition PaketDependenciesFileExtensionDefinition;
+    }
+
+    internal static class PaketReferencesFileContentType
+    {
+        public const string ContentType = "PaketReferences";
+
+        [Export]
+        [Name(ContentType)]
+        [BaseDefinition("text")]
+        internal static ContentTypeDefinition PaketReferencesContentTypeDefinition;
+
+        [Export]
+        [FileExtension(".references")]
+        [ContentType(ContentType)]
+        internal static FileExtensionToContentTypeDefinition PaketReferencesFileExtensionDefinition;
     }
 }
