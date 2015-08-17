@@ -209,6 +209,7 @@ Target "UploadToGallery" (fun _ ->
 
     click "#idSIButton9"
 
+    sleep 5
     // start a new upload session - via hacky form link
     js (sprintf "$('form[action=\"/%s/edit/changeContributionUpload\"]').submit();" vsixGuid) |> ignore
 
@@ -218,6 +219,8 @@ Target "UploadToGallery" (fun _ ->
     ".uploadFileInput" << fi.FullName 
     click "#setContributionTypeButton"
     
+    sleep 10
+
     click "#uploadButton"
 
     quit()
