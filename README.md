@@ -12,7 +12,7 @@ Features
 
 * Solution Explorer Extensions for Paket files
 * Paket commands in Solution Explorer menu
-* Syntax highlighting in paket.dependencies
+* IntelliSense in paket.dependencies and paket.references
 
 
 ### Build [![Build status](https://ci.appveyor.com/api/projects/status/do913wfhcmnit5ps/branch/master?svg=true)](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/branch/master)
