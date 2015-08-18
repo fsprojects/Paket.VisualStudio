@@ -6,7 +6,7 @@ NUGET
       Selenium.Support (2.47.0)
       Selenium.WebDriver (2.47.0)
       SizSelCsZzz (0.3.36.0)
-    FAKE (4.1.3)
+    FAKE (4.1.4)
     FSharp.Compiler.Service (1.4.0.1)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.10.0)
@@ -25,7 +25,7 @@ NUGET
     Newtonsoft.Json (7.0.1)
     Octokit (0.14.0)
       Microsoft.Net.Http
-    Paket.Core (1.29.2)
+    Paket.Core (1.30.0)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
@@ -127,5 +127,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (fc765158463b1df1b1d65df2d05df30b3b5eaf75)
+    modules/Octokit/Octokit.fsx (56f47d2c0b59f9835c7339bd9a92d3e983ff6f93)
       Octokit

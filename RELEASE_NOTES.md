@@ -1,3 +1,6 @@
+#### 0.5.3 - 18.08.2015
+* Updated to Paket 1.30.0
+
 #### 0.5.2 - 17.08.2015
 * Intellisense for paket.references
 * Updated to Paket 1.29.2
