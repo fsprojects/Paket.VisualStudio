@@ -1,7 +1,7 @@
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    canopy (0.9.30)
+    canopy (0.9.31)
       FSharp.Core (>= 3.0.2)
       Selenium.Support (2.47.0)
       Selenium.WebDriver (2.47.0)
@@ -14,7 +14,7 @@ NUGET
       FSharpVSPowerTools.Core (1.8.0)
     FSharpVSPowerTools.Core (1.8.0)
       FSharp.Compiler.Service (>= 0.0.87)
-    ILRepack (2.0.4)
+    ILRepack (2.0.5)
     MahApps.Metro (1.1.2)
     Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
@@ -25,7 +25,7 @@ NUGET
     Newtonsoft.Json (7.0.1)
     Octokit (0.14.0)
       Microsoft.Net.Http
-    Paket.Core (1.30.0)
+    Paket.Core (1.32.0)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
