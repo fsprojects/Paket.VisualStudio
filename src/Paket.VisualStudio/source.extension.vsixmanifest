@@ -3,7 +3,7 @@
   <Identifier Id="Paket.VisualStudio">
     <Name>Paket for Visual Studio</Name>
     <Author>Igal Tabachnik</Author>
-    <Version>0.5.3</Version>
+    <Version>0.5.4</Version>
     <Description xml:space="preserve">Manage your Paket dependencies from Visual Studio!</Description>
     <Locale>1033</Locale>
     <License>License.txt</License>
