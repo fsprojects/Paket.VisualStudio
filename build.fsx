@@ -219,9 +219,11 @@ Target "UploadToGallery" (fun _ ->
     ".uploadFileInput" << fi.FullName 
     click "#setContributionTypeButton"
     
-    sleep 10
+    sleep 15
 
     click "#uploadButton"
+
+    sleep 15
 
     quit()
 )
