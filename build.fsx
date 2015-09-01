@@ -165,9 +165,10 @@ Target "ReleaseDocs" (fun _ ->
 open Octokit
 
 #I @"packages/Selenium.Support/lib/net40"
+#I @"packages/Selenium.WebDriver/lib/net40"
 #r @"packages/Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll"
-#r @"packages/Selenium.WebDriver/lib/net40/WebDriver.dll"
-#r @"packages/Selenium.Support/lib/net40/WebDriver.Support.dll"
+#r @"WebDriver.Support.dll"
+#r @"WebDriver.dll"
 #r @"packages/canopy/lib/canopy.dll"
 #r @"packages/SizSelCsZzz/lib/SizSelCsZzz.dll"
 open canopy
