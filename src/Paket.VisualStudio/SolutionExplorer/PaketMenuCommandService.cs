@@ -322,7 +322,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void Restore(object sender, EventArgs e)
         {
-            RunCommand("paket-restore.html", info => // Do we need to unload?
+            RunCommandAndReloadAllProjects("paket-restore.html", info =>
             {
                 Paket.Dependencies.Locate(tracker.GetSelectedFileName())
                     .Restore();
