@@ -117,16 +117,21 @@ namespace Paket.VisualStudio.SolutionExplorer
 
         private void CreateNode(IGraphContext context, GraphNode parent, PaketMetadata metadata)
         {
+            var nodeId = metadata.Id;
+                if(metadata.GroupName != Paket.Constants.MainDependencyGroup.ToString())
+                    nodeId = metadata.GroupName + ": " + nodeId;
+
             var parentId = parent.GetValue<GraphNodeId>("Id");
             var id = GraphNodeId.GetNested(
                 parentId,
-                GraphNodeId.GetPartial(CodeGraphNodeIdName.Member, metadata.Id),
+                GraphNodeId.GetPartial(CodeGraphNodeIdName.Member, nodeId),
                 GraphNodeId.GetPartial(CodeGraphNodeIdName.Parameter, metadata.VersionString));
 
             var node = context.Graph.Nodes.Get(id);
             if (node == null)
             {
-                string label = metadata.Id;
+                string label = nodeId;
+
                 if (!String.IsNullOrWhiteSpace(metadata.VersionString))
                     label = label + " " + metadata.VersionString;
 
@@ -145,21 +150,21 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             return Dependencies.Locate(paketReferencesFile)
                 .GetDirectDependencies(ReferencesFile.FromFile(paketReferencesFile))
-                .Select(d => new PaketMetadata(d.Item1, d.Item2));
+                .Select(d => new PaketMetadata(d.Item1, d.Item2, d.Item3));
         }
 
         private IEnumerable<PaketMetadata> GetDependenciesFromFile(string paketDependenciesFile)
         {
             return DependenciesFile.ReadFromFile(paketDependenciesFile)
-                                   .Packages
-                                   .Select(d => new PaketMetadata(d.Name.ToString(), d.VersionRequirement.ToString()));
+                                   .Groups
+                                   .SelectMany(g => g.Value.Packages.Select(d => new PaketMetadata(g.Key.Item, d.Name.ToString(), d.VersionRequirement.ToString())));
         }
 
-        private IEnumerable<PaketMetadata> GetIndirectPackages(string paketReferencesFile, string packageName)
+        private IEnumerable<PaketMetadata> GetIndirectPackages(string paketReferencesFile, string groupName, string packageName)
         {
             return Dependencies.Locate(paketReferencesFile)
-                    .GetDirectDependenciesForPackage(packageName)
-                    .Select(d => new PaketMetadata(d.Item1, d.Item2));
+                    .GetDirectDependenciesForPackage(Domain.GroupName(groupName), packageName)
+                    .Select(d => new PaketMetadata(d.Item1, d.Item2, d.Item3));
         }
 
         private void TrackChanges(IGraphContext context)

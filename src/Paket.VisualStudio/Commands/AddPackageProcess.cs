@@ -48,11 +48,11 @@ namespace Paket.VisualStudio.Commands
                 {
                     var guid = Guid.Parse(projectGuid);
                     SolutionExplorerExtensions.UnloadProject(guid);
-                    dependenciesFile.AddToProject(result.PackageName, "", false, false, selectedFileName, true);
+                    dependenciesFile.AddToProject(Microsoft.FSharp.Core.FSharpOption<string>.None, result.PackageName, "", false, false, false, false, selectedFileName, true);
                     SolutionExplorerExtensions.ReloadProject(guid);
                 }
                 else
-                    dependenciesFile.Add(result.PackageName, "", false, false, false, true);
+                    dependenciesFile.Add(Microsoft.FSharp.Core.FSharpOption<string>.None, result.PackageName, "", false, false, false, false, false, true);
             };
 
             Func<string, IObservable<string>> searchNuGet = 

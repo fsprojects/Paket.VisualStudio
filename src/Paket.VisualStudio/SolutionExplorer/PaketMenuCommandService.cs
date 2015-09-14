@@ -22,6 +22,7 @@ namespace Paket.VisualStudio.SolutionExplorer
     {
         public string DependenciesFileName { get; set; }
         public string ReferencesFileName { get; set; }
+        public string GroupName { get; set; }
         public string PackageName { get; set; }
     }
 
@@ -186,10 +187,11 @@ namespace Paket.VisualStudio.SolutionExplorer
             var info = new PackageInfo();
             info.DependenciesFileName = node.Id.GetFileName();
             info.PackageName = node.GetPackageName();
+            info.GroupName = node.GetGroupName();
 
             var projectGuids =
                     Paket.Dependencies.Locate(info.DependenciesFileName)
-                        .FindProjectsFor(info.PackageName)
+                        .FindProjectsFor(info.GroupName,info.PackageName)
                         .Select(project => project.GetProjectGuid())
                         .ToArray();
 
@@ -271,6 +273,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             info.DependenciesFileName = node.Id.GetFileName();
             info.ReferencesFileName = node.Id.GetFileName();
             info.PackageName = node.GetPackageName();
+            info.GroupName = node.GetGroupName();
 
             System.Threading.Tasks.Task.Run(() =>
             {
@@ -343,7 +346,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .UpdatePackage(info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
+                    .UpdatePackage(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
             });
         }
 
@@ -352,7 +355,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageAndReloadAllDependendProjects("paket-remove.html", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .Remove(info.PackageName);
+                    .Remove(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName);
             });
         }
 
@@ -397,7 +400,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageInUnloadedProject("paket-remove.html#Removing-from-a-single-project", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .RemoveFromProject(info.PackageName, false, false, info.ReferencesFileName, true);
+                    .RemoveFromProject(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, false, false, info.ReferencesFileName, true);
             });
         }
 
