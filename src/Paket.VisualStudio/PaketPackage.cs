@@ -16,6 +16,7 @@ namespace Paket.VisualStudio
     public sealed class PaketPackage : Package
     {
         private PaketMenuCommandService commandService;
+        private PackageRestorer packageRestorer;
 
         protected override void Initialize()
         {
@@ -30,6 +31,8 @@ namespace Paket.VisualStudio
             PaketErrorPane.SetServiceProvider(this);
             SolutionExplorerExtensions.SetServiceProvider(this);
             StatusBarService.SetServiceProvider(this);
+
+            packageRestorer = new PackageRestorer();
         }
 
         protected override void Dispose(bool disposing)
