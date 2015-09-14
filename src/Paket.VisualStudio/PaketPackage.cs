@@ -13,6 +13,7 @@ namespace Paket.VisualStudio
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(Guids.PackageGuid)]
+    [ProvideOptionPage(typeof(PaketOptions), "Paket", "General", 0, 0, true)]
     public sealed class PaketPackage : Package
     {
         private PaketMenuCommandService commandService;
@@ -32,7 +33,7 @@ namespace Paket.VisualStudio
             SolutionExplorerExtensions.SetServiceProvider(this);
             StatusBarService.SetServiceProvider(this);
 
-            packageRestorer = new PackageRestorer();
+            packageRestorer = new PackageRestorer(this);
         }
 
         protected override void Dispose(bool disposing)

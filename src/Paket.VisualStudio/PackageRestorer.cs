@@ -5,6 +5,7 @@ using EnvDTE;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Settings;
 using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio
@@ -13,12 +14,14 @@ namespace Paket.VisualStudio
     {
         private readonly DTE dte;
         private readonly BuildEvents buildEvents;
+        private readonly IServiceProvider serviceProvider;
 
-        public PackageRestorer()
+        public PackageRestorer(IServiceProvider serviceProvider)
         {
             dte = (DTE)Package.GetGlobalService(typeof (DTE));
             buildEvents = dte.Events.BuildEvents;
             buildEvents.OnBuildBegin += BuildEvents_OnBuildBegin;
+            this.serviceProvider = serviceProvider;
         }
 
         private void BuildEvents_OnBuildBegin(
@@ -33,6 +36,10 @@ namespace Paket.VisualStudio
 
         private void Restore()
         {
+            var options = new PaketSettings(new ShellSettingsManager(serviceProvider));
+            if (!options.AutoRestore)
+                return;
+
             var dir = SolutionExplorerExtensions.GetSolutionDirectory();
             var dependencies = Paket.Dependencies.Locate(dir);
 
