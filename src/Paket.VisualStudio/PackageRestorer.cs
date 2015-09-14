@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using EnvDTE;
 using Microsoft.FSharp.Collections;
@@ -40,7 +41,26 @@ namespace Paket.VisualStudio
                 .Where(FSharpOption<string>.get_IsSome)
                 .Select(p => p.Value);
 
-            dependencies.Restore(FSharpOption<string>.None, ListModule.OfSeq(referenceFiles));
+            PaketOutputPane.OutputPane.Activate();
+            PaketErrorPane.Clear();
+            PaketOutputPane.OutputPane.OutputStringThreadSafe("Restoring packages\r\n");
+            StatusBarService.UpdateText("Restoring packages");
+
+            foreach (var referenceFile in referenceFiles)
+            {
+                try
+                {
+                    dependencies.Restore(FSharpOption<string>.None, ListModule.OfArray(new[] { referenceFile }));
+                }
+                catch (Exception ex)
+                {
+                    PaketErrorPane.ShowError(ex.Message, referenceFile, "paket-restore.html");
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
+                }
+            }
+
+            StatusBarService.UpdateText("Ready");
+            PaketOutputPane.OutputPane.OutputStringThreadSafe("Ready\r\n");
         }
     }
 }
