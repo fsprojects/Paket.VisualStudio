@@ -170,6 +170,7 @@
     <Compile Include="PaketSettings.cs" />
     <Compile Include="Restore\PaketRestorer.cs" />
     <Compile Include="Restore\RestoringProject.cs" />
+    <Compile Include="Restore\WaitDialogRestorer.cs" />
     <Compile Include="Utils\DisposableHelpers.cs" />
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />
     <Compile Include="EditorExtensions\CommentCommandTarget.cs" />

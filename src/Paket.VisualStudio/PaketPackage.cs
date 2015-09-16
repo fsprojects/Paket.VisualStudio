@@ -38,9 +38,12 @@ namespace Paket.VisualStudio
             packageRestorer = new PackageRestorer(
                 new AutoRestorer(
                     new OutputPaneRestorer(
-                        new ErrorReportRestorer(
-                            new PaketRestorer()
-                        ))
+                        new WaitDialogRestorer(
+                            new ErrorReportRestorer(
+                                new PaketRestorer()
+                            ),
+                            (IVsThreadedWaitDialogFactory)
+                            GetService(typeof(SVsThreadedWaitDialogFactory))))
                     , new PaketSettings(new ShellSettingsManager(this))
                 ));
         }
