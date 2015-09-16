@@ -18,7 +18,6 @@ namespace Paket.VisualStudio.Restore
         public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
         {
             PaketErrorPane.Clear();
-            PaketOutputPane.OutputPane.Activate();
             PaketOutputPane.OutputPane.OutputStringThreadSafe("Restoring packages\r\n");
 
             try
