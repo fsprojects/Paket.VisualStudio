@@ -7,8 +7,10 @@ using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Collections.Generic;
+using System.IO;
 using MadsKristensen.EditorExtensions;
 using EnvDTE;
+using EnvDTE80;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -97,6 +99,28 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }
             }
             return projectGuids;
+        }
+
+        public static IEnumerable<Project> GetAllProjects()
+        {
+            return DteUtils.DTE.Solution.Projects
+                .OfType<Project>()
+                .SelectMany(GetProjects)
+                .Where(p => File.Exists(p.FullName));
+        }
+
+        private static IEnumerable<Project> GetProjects(Project project)
+        {
+            if (project == null)
+                return Enumerable.Empty<Project>();
+
+            if (project.Kind != ProjectKinds.vsProjectKindSolutionFolder)
+                return new[] { project };
+
+            return
+                project.ProjectItems
+                    .OfType<ProjectItem>()
+                    .SelectMany(p => GetProjects(p.SubProject));
         }
     }
 }
