@@ -75,6 +75,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -143,6 +144,15 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GeneralOptionsControl.Designer.cs">
+      <DependentUpon>GeneralOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PaketOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Commands\AddPackageProcess.cs" />
     <Compile Include="Commands\CommandIDs.cs" />
     <Compile Include="Commands\PackageGui\AddPackage.xaml.cs">
@@ -151,7 +161,16 @@
     <Compile Include="Commands\PackageGui\AddPackageViewModel.cs" />
     <Compile Include="Commands\PackageGui\Converters\LoadingSuccessFailureVisiblityConverter.cs" />
     <Compile Include="IntelliSense\CompletionProviders\InstalledNuGetNameCompletionListProvider.cs" />
+    <Compile Include="Restore\AutoRestorer.cs" />
+    <Compile Include="Restore\ErrorReportRestorer.cs" />
+    <Compile Include="Restore\IPackageRestorer.cs" />
+    <Compile Include="Restore\OutputPaneRestorer.cs" />
+    <Compile Include="Restore\PackageRestorer.cs" />
     <Compile Include="PaketFileContentType.cs" />
+    <Compile Include="PaketSettings.cs" />
+    <Compile Include="Restore\PaketRestorer.cs" />
+    <Compile Include="Restore\RestoringProject.cs" />
+    <Compile Include="Restore\WaitDialogRestorer.cs" />
     <Compile Include="Utils\DisposableHelpers.cs" />
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />
     <Compile Include="EditorExtensions\CommentCommandTarget.cs" />
@@ -206,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <EmbeddedResource Include="GeneralOptionsControl.resx">
+      <DependentUpon>GeneralOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
