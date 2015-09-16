@@ -1,3 +1,8 @@
+#### 0.6.1 - 16.09.2015
+* Updated to Paket 2.1.2
+* Adding automatic restore - https://github.com/fsprojects/Paket.VisualStudio/pull/71
+* Restore action unloads and reloads the solution - https://github.com/fsprojects/Paket.VisualStudio/pull/70
+
 #### 0.6.0 - 14.09.2015
 * Updated to Paket 2.0.0
 
