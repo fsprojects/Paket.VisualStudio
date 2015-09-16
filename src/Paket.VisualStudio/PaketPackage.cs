@@ -3,7 +3,9 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Shell.Settings;
 using Paket.VisualStudio.Commands;
+using Paket.VisualStudio.Restore;
 using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio
@@ -33,7 +35,14 @@ namespace Paket.VisualStudio
             SolutionExplorerExtensions.SetServiceProvider(this);
             StatusBarService.SetServiceProvider(this);
 
-            packageRestorer = new PackageRestorer(this);
+            packageRestorer = new PackageRestorer(
+                new AutoRestorer(
+                    new OutputPaneRestorer(
+                        new ErrorReportRestorer(
+                            new PaketRestorer()
+                        ))
+                    , new PaketSettings(new ShellSettingsManager(this))
+                ));
         }
 
         protected override void Dispose(bool disposing)

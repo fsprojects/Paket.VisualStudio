@@ -101,21 +101,21 @@ namespace Paket.VisualStudio.SolutionExplorer
             return projectGuids;
         }
 
-        public static IEnumerable<string> GetAllProjectFiles()
+        public static IEnumerable<Project> GetAllProjects()
         {
             return DteUtils.DTE.Solution.Projects
                 .OfType<Project>()
                 .SelectMany(GetProjects)
-                .Where(File.Exists);
+                .Where(p => File.Exists(p.FullName));
         }
 
-        private static IEnumerable<string> GetProjects(Project project)
+        private static IEnumerable<Project> GetProjects(Project project)
         {
             if (project == null)
-                return Enumerable.Empty<string>();
+                return Enumerable.Empty<Project>();
 
             if (project.Kind != ProjectKinds.vsProjectKindSolutionFolder)
-                return new[] {project.FullName};
+                return new[] { project };
 
             return
                 project.ProjectItems
