@@ -1,3 +1,6 @@
+#### 0.6.2 - 21.09.2015
+* Updated to Paket 2.3.0
+
 #### 0.6.1 - 16.09.2015
 * Updated to Paket 2.1.2
 * Adding automatic restore - https://github.com/fsprojects/Paket.VisualStudio/pull/71
