@@ -346,7 +346,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .UpdatePackage(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false);
+                    .UpdatePackage(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false, SemVerUpdateMode.NoRestriction);
             });
         }
 

@@ -2,7 +2,7 @@
 // FAKE build script 
 // --------------------------------------------------------------------------------------
 
-#r @"packages/FAKE/tools/FakeLib.dll"
+#r @"packages/build/FAKE/tools/FakeLib.dll"
 open Fake 
 open Fake.Git
 open Fake.AssemblyInfoFile
@@ -127,14 +127,14 @@ Target "CleanVSIX" (fun _ ->
 
     let result =
         ExecProcess (fun info ->
-            info.FileName <- currentDirectory @@ "packages" @@ "ILRepack" @@ "tools" @@ "ILRepack.exe"
-            info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" vsixDir release.AssemblyVersion (buildMergedDir @@ "Paket.VisualStudio.dll") toPack
+            info.FileName <- currentDirectory </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
+            info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" vsixDir release.AssemblyVersion (buildMergedDir </> "Paket.VisualStudio.dll") toPack
             ) (TimeSpan.FromMinutes 5.)
 
     if result <> 0 then failwithf "Error during ILRepack execution."
 
     DeleteFiles filesToPack
-    CopyFile vsixDir (buildMergedDir @@ "Paket.VisualStudio.dll")
+    CopyFile vsixDir (buildMergedDir </> "Paket.VisualStudio.dll")
 
     ZipHelper.Zip vsixDir "bin/Paket.VisualStudio.vsix" (!! "bin/vsix/**")
 )
@@ -161,16 +161,16 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push tempDocsDir
 )
 
-#load "paket-files/fsharp/FAKE/modules/Octokit/Octokit.fsx"
+#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
 
-#I @"packages/Selenium.Support/lib/net40"
-#I @"packages/Selenium.WebDriver/lib/net40"
-#r @"packages/Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll"
+#I @"packages/build/Selenium.Support/lib/net40"
+#I @"packages/build/Selenium.WebDriver/lib/net40"
+#r @"packages/build/Newtonsoft.Json/lib/net40/Newtonsoft.Json.dll"
 #r @"WebDriver.Support.dll"
 #r @"WebDriver.dll"
-#r @"packages/canopy/lib/canopy.dll"
-#r @"packages/SizSelCsZzz/lib/SizSelCsZzz.dll"
+#r @"packages/build/canopy/lib/canopy.dll"
+#r @"packages/build/SizSelCsZzz/lib/SizSelCsZzz.dll"
 open canopy
 open runner
 open System
@@ -193,7 +193,7 @@ Target "ReleaseToGitHub" (fun _ ->
 
 
 Target "UploadToGallery" (fun _ ->
-    canopy.configuration.chromeDir <- @"./packages/Selenium.WebDriver.ChromeDriver/driver"
+    canopy.configuration.chromeDir <- @"./packages/build/Selenium.WebDriver.ChromeDriver/driver"
     start chrome
 
     let vsixGuid = "ce104917-e8b3-4365-9490-8432c6e75c36"
