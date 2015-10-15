@@ -1,4 +1,4 @@
-#### 0.7.0 - 14.10.2015
+#### 0.7.1 - 14.10.2015
 * Updated to Paket 2.13.1
 * Syntax highlighting in paket.lock files
 * Syntax highlighting for groups
