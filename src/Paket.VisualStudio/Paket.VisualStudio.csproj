@@ -150,6 +150,8 @@
     <Compile Include="GeneralOptionsControl.Designer.cs">
       <DependentUpon>GeneralOptionsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="IntelliSense\Classifier\PaketLockClassifierProvider.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketLockClassifier.cs" />
     <Compile Include="PaketOptions.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -178,8 +180,8 @@
     <Compile Include="EditorExtensions\DteUtils.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="IntelliSense\Classifier\PaketClassificationTypes.cs" />
-    <Compile Include="IntelliSense\Classifier\PaketClassifier.cs" />
-    <Compile Include="IntelliSense\Classifier\PaketClassifierProvider.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketDependenciesClassifier.cs" />
+    <Compile Include="IntelliSense\Classifier\PaketDependenciesClassifierProvider.cs" />
     <Compile Include="IntelliSense\CompletionContext.cs" />
     <Compile Include="IntelliSense\CompletionContextType.cs" />
     <Compile Include="IntelliSense\CompletionEngine.cs" />

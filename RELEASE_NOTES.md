@@ -1,3 +1,9 @@
+#### 0.7.0 - 14.10.2015
+* Updated to Paket 2.13.1
+* Syntax highlighting in paket.lock files
+* Syntax highlighting for groups
+* New "Update Group" command in Solution Explorer
+
 #### 0.6.9 - 14.10.2015
 * Updated to Paket 2.12.4
 

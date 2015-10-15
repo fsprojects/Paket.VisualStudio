@@ -25,6 +25,21 @@ namespace Paket.VisualStudio
         internal static FileExtensionToContentTypeDefinition PaketDependenciesFileExtensionDefinition;
     }
 
+    internal static class PaketLockFileContentType
+    {
+        public const string ContentType = "PaketLock";
+
+        [Export]
+        [Name(ContentType)]
+        [BaseDefinition("text")]
+        internal static ContentTypeDefinition PaketDependenciesContentTypeDefinition;
+
+        [Export]
+        [FileExtension(".lock")]
+        [ContentType(ContentType)]
+        internal static FileExtensionToContentTypeDefinition PaketDependenciesFileExtensionDefinition;
+    }
+
     internal static class PaketReferencesFileContentType
     {
         public const string ContentType = "PaketReferences";

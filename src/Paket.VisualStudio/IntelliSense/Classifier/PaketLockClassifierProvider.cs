@@ -12,9 +12,9 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 {
     [Export(typeof(IVsTextViewCreationListener))]
     [Export(typeof(IClassifierProvider))]
-    [ContentType(PaketDependenciesFileContentType.ContentType)]
+    [ContentType(PaketLockFileContentType.ContentType)]
     [TextViewRole(PredefinedTextViewRoles.Document)]
-    internal class PaketDependenciesClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
+    internal class PaketLockClassifierProvider : IClassifierProvider, IVsTextViewCreationListener
     {
         [Import]
         public IClassificationTypeRegistryService Registry { get; set; }
@@ -27,7 +27,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 
         public IClassifier GetClassifier(ITextBuffer textBuffer)
         {
-            return textBuffer.Properties.GetOrCreateSingletonProperty(() => new PaketClassifier(Registry));
+            return textBuffer.Properties.GetOrCreateSingletonProperty(() => new PaketLockClassifier(Registry));
         }
 
         public void VsTextViewCreated(IVsTextView textViewAdapter)
@@ -38,11 +38,12 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             if (TextDocumentFactoryService.TryGetTextDocument(view.TextDataModel.DocumentBuffer, out document))
             {
                 string filePath = document.FilePath;
-                if (!IsPaketDependenciesFile(filePath))
+
+                if (!IsPaketLockFile(filePath))
                     return;
 
-                PaketClassifier classifier;
-                view.TextDataModel.DocumentBuffer.Properties.TryGetProperty(typeof(PaketClassifier), out classifier);
+                PaketLockClassifier classifier;
+                view.TextDataModel.DocumentBuffer.Properties.TryGetProperty(typeof(PaketLockClassifier), out classifier);
                 view.Properties.GetOrCreateSingletonProperty(() => new CommentCommandTarget(textViewAdapter, view, "#"));
 
                 if (classifier != null)
@@ -61,6 +62,11 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         public static bool IsPaketReferencesFile(string filePath)
         {
             return System.IO.Path.GetFileName(filePath).ToLowerInvariant().EndsWith(Paket.Constants.ReferencesFile);
+        }
+
+        public static bool IsPaketLockFile(string filePath)
+        {
+            return System.IO.Path.GetFileName(filePath).ToLowerInvariant().EndsWith(Paket.Constants.LockFileName);
         }
     }
 }
