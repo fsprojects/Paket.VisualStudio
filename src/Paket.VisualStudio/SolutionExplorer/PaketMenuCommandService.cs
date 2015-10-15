@@ -51,6 +51,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         private void RegisterCommands()
         {
             RegisterCommand(CommandIDs.UpdatePackage, UpdatePackage, null);
+            RegisterCommand(CommandIDs.UpdateGroup, UpdateGroup, null);
             RegisterCommand(CommandIDs.RemovePackage, RemovePackage, OnlyBelowDependenciesFileNodes);
             RegisterCommand(CommandIDs.RemovePackageFromProject, RemovePackageFromProject, OnlyBelowReferencesFileNodes);
             RegisterCommand(CommandIDs.CheckForUpdates, CheckForUpdates, OnlyDependenciesFileNodes);
@@ -347,6 +348,16 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 Paket.Dependencies.Locate(info.DependenciesFileName)
                     .UpdatePackage(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false, SemVerUpdateMode.NoRestriction);
+            });
+        }
+        
+
+        private void UpdateGroup(object sender, EventArgs e)
+        {
+            RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-group", info =>
+            {
+                Paket.Dependencies.Locate(info.DependenciesFileName)
+                    .UpdateGroup(info.GroupName, false, false, false, false, true, SemVerUpdateMode.NoRestriction);
             });
         }
 
