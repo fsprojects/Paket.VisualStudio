@@ -7,14 +7,14 @@ using Microsoft.VisualStudio.Text.Classification;
 
 namespace Paket.VisualStudio.IntelliSense.Classifier
 {
-    internal class PaketClassifier : IClassifier
+    internal class PaketLockClassifier : IClassifier
     {
         private readonly IClassificationType keyword, comment;
 
         private static readonly HashSet<string> validKeywords = new HashSet<string>
         {
-            "source", "nuget", "github", "gist", "http",
-            "content", "reference", "redirects", "group"
+            "remote", "NUGET", "GITHUB", "GIST", "HTTP", "specs",
+            "content", "reference", "redirects", "GROUP"
         };
 
         public static IEnumerable<string> ValidKeywords
@@ -22,7 +22,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             get { return validKeywords; }
         }
 
-        internal PaketClassifier(IClassificationTypeRegistryService registry)
+        internal PaketLockClassifier(IClassificationTypeRegistryService registry)
         {
             keyword = registry.GetClassificationType(PredefinedClassificationTypeNames.Keyword);
             comment = registry.GetClassificationType(PredefinedClassificationTypeNames.Comment);
@@ -32,24 +32,25 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         {
             IList<ClassificationSpan> spans = new List<ClassificationSpan>();
 
-            string text = span.GetText();
-            int index = text.IndexOf("#", StringComparison.Ordinal);
+            string originalText = span.GetText();
+            int index = originalText.IndexOf("#", StringComparison.Ordinal);
 
             if (index > -1)
             {
-                var result = new SnapshotSpan(span.Snapshot, span.Start + index, text.Length - index);
+                var result = new SnapshotSpan(span.Snapshot, span.Start + index, originalText.Length - index);
                 spans.Add(new ClassificationSpan(result, comment));
             }
 
             if (index == -1 || index > 0)
             {
+                var text = originalText.Replace(":", "");
                 var trimmed = text.TrimStart();
                 var offset = text.Length - trimmed.Length;
                 string[] args = trimmed.Split(' ');
 
-                if (args.Length >= 2 && ValidKeywords.Contains(args[0].Trim().ToLowerInvariant()))
+                if (ValidKeywords.Contains(args[0].Trim()))
                 {
-                    var result = new SnapshotSpan(span.Snapshot, span.Start + offset, args[0].Length);
+                    var result = new SnapshotSpan(span.Snapshot, span.Start + offset, args[0].Trim().Length);
                     spans.Add(new ClassificationSpan(result, keyword));
                 }
             }
