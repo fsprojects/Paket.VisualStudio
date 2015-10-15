@@ -14,7 +14,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         private static readonly HashSet<string> validKeywords = new HashSet<string>
         {
             "source", "nuget", "github", "gist", "http",
-            "content", "reference", "redirects"
+            "content", "reference", "redirects", "group"
         };
 
         public static IEnumerable<string> ValidKeywords
@@ -43,11 +43,13 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
 
             if (index == -1 || index > 0)
             {
-                string[] args = text.Split(' ');
+                var trimmed = text.TrimStart();
+                var offset = text.Length - trimmed.Length;
+                string[] args = trimmed.Split(' ');
 
                 if (args.Length >= 2 && ValidKeywords.Contains(args[0].Trim().ToLowerInvariant()))
                 {
-                    var result = new SnapshotSpan(span.Snapshot, span.Start, args[0].Length);
+                    var result = new SnapshotSpan(span.Snapshot, span.Start + offset, args[0].Length);
                     spans.Add(new ClassificationSpan(result, keyword));
                 }
             }
