@@ -157,7 +157,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             return DependenciesFile.ReadFromFile(paketDependenciesFile)
                                    .Groups
-                                   .SelectMany(g => g.Value.Packages.Select(d => new PaketMetadata(g.Key.Item, d.Name.ToString(), d.VersionRequirement.ToString())));
+                                   .SelectMany(g => g.Value.Packages.Select(d => new PaketMetadata(g.Key.ToString(), d.Name.ToString(), d.VersionRequirement.ToString())));
         }
 
         private IEnumerable<PaketMetadata> GetIndirectPackages(string paketReferencesFile, string groupName, string packageName)

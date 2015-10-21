@@ -1,3 +1,6 @@
+#### 0.7.3 - 21.10.2015
+* Updated to Paket 2.16.0
+
 #### 0.7.2 - 14.10.2015
 * Updated to Paket 2.13.1
 * Syntax highlighting in paket.lock files
