@@ -4,7 +4,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.1.2)
     Newtonsoft.Json (7.0.1)
-    Paket.Core (2.16.0)
+    Paket.Core (2.17.1)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
