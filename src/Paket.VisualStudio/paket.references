@@ -3,6 +3,8 @@ VSSDK.GraphModel.12
 VSSDK.Language.12
 VSSDK.Editor.12
 VSSDK.ComponentModelHost.12
+VSSDK.Shell.12
+VSSDK.Shell.Interop.12
 reactiveui
 reactiveui-events
 MahApps.Metro
