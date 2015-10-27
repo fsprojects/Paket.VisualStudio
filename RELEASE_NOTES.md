@@ -1,3 +1,6 @@
+#### 0.7.5 - 27.10.2015
+* Intellisense for new strategy option - https://github.com/fsprojects/Paket.VisualStudio/pull/80
+
 #### 0.7.4 - 21.10.2015
 * BUGFIX: Detect project filename on "references node" - https://github.com/fsprojects/Paket.VisualStudio/issues/78
 
