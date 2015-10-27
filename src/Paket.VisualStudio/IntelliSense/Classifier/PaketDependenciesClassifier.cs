@@ -14,7 +14,8 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         private static readonly HashSet<string> validKeywords = new HashSet<string>
         {
             "source", "nuget", "github", "gist", "http",
-            "content", "reference", "redirects", "group"
+            "content", "reference", "redirects", "group",
+            "strategy"
         };
 
         public static IEnumerable<string> ValidKeywords
