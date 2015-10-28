@@ -20,5 +20,6 @@ namespace Paket.VisualStudio.Commands
         public static readonly CommandID RestoreSolution = new CommandID(Guids.CommandSet, 0x0013);
         public static readonly CommandID AddPackageToProject = new CommandID(Guids.CommandSet, 0x0015);
         public static readonly CommandID AddPackageToProjectOnReferences = new CommandID(Guids.CommandSet, 0x0016);
+        public static readonly CommandID UpdateGroup = new CommandID(Guids.CommandSet, 0x0017);
     };
 }

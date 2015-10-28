@@ -67,6 +67,15 @@
           <ToolTipText>Update Package</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="guidCommandSet" id="UpdateGroup" priority="0x0100">
+        <Icon guid="CheckUpdates.bmpGuid" id="CheckUpdates.bmpId" />
+        <Strings>
+          <CommandName>cmdidUpdate</CommandName>
+          <ButtonText>Update Group</ButtonText>
+          <MenuText>Update Group</MenuText>
+          <ToolTipText>Update Group</ToolTipText>
+        </Strings>
+      </Button>
       <Button guid="guidCommandSet" id="CheckUpdates" priority="0x0100">
         <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -229,6 +238,9 @@
     <CommandPlacement guid="guidCommandSet" id="AddPackageToProjectOnReferences" priority="0xF100">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_REFROOT_ADD"/>
     </CommandPlacement>
+    <CommandPlacement guid="guidCommandSet" id="UpdateGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJWIN_FILECONTENTS_SCOPE" />
+    </CommandPlacement>
   </CommandPlacements>
 
 
@@ -253,6 +265,7 @@
       <IDSymbol name="AddPackage" value="0x0014" />
       <IDSymbol name="AddPackageToProject" value="0x0015" />
       <IDSymbol name="AddPackageToProjectOnReferences" value="0x0016" />
+      <IDSymbol name="UpdateGroup" value="0x0017" />
     </GuidSymbol>
 
     <GuidSymbol name="guidFlyoutMenu" value="{306abd65-9842-4717-b8f2-11eac3d2fa82}">

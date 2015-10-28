@@ -30,8 +30,17 @@ namespace Paket.VisualStudio.SolutionExplorer
             return nodeId.LiteralValue.Substring(start, end - start);
         }
 
+        internal static string GetGroupName(this GraphNode node)
+        {
+            if(node.Label.Contains(":"))
+                return node.Label.Split(':')[0];
+            return Paket.Constants.MainDependencyGroup.ToString();
+        }
+
         internal static string GetPackageName(this GraphNode node)
         {
+            if (node.Label.Contains(":"))
+                return node.Label.Split(':')[1].Trim().Split(' ')[0];
             return node.Label.Split(' ')[0];
         }
     }

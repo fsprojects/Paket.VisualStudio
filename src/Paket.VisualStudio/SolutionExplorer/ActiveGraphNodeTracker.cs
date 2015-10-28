@@ -38,10 +38,10 @@ namespace Paket.VisualStudio.SolutionExplorer
                 return SolutionExplorerExtensions.GetSolutionFileName(); // nothing was selected => sln
             }
             ((IVsProject)hierarchy).GetMkDocument(itemid, out itemFullPath);
-            if (itemFullPath != null)
+            if (!String.IsNullOrEmpty(itemFullPath))
                 return itemFullPath;
             ((IVsProject)hierarchy).GetMkDocument(VSConstants.VSITEMID_ROOT, out itemFullPath);
-            if (itemFullPath != null)
+            if (!String.IsNullOrEmpty(itemFullPath))
                 return itemFullPath;
             return SelectedFileName;
         }

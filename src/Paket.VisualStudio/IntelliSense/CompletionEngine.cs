@@ -35,6 +35,7 @@ namespace Paket.VisualStudio.IntelliSense
             new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
             new NuGetNameCompletionListProvider(),
             new SourceCompletionListProvider(),
+            new SimpleOptionCompletionListProvider(CompletionContextType.Strategy, "min", "max")
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -95,6 +96,7 @@ namespace Paket.VisualStudio.IntelliSense
             {
                 case "nuget": context.ContextType = CompletionContextType.NuGet; break;
                 case "source": context.ContextType = CompletionContextType.Source; break;
+                case "strategy": context.ContextType = CompletionContextType.Strategy; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 

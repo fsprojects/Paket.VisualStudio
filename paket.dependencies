@@ -1,17 +1,23 @@
 source http://nuget.org/api/v2
 
-nuget FAKE
 nuget MahApps.Metro
 nuget Paket.Core
-nuget FSharp.Formatting
 nuget VSSDK.GraphModel.12 copy_local: false
 nuget VSSDK.Language.12 copy_local: false
 nuget VSSDK.Editor.12 copy_local: false
 nuget VSSDK.ComponentModelHost.12 copy_local: false
+nuget VSSDK.Shell.12 copy_local: false
+nuget VSSDK.Shell.Interop.12 copy_local: false
 nuget reactiveui
 nuget reactiveui-events
+
+group Build
+source http://nuget.org/api/v2
+
+nuget ILRepack
+nuget FAKE
+nuget FSharp.Formatting
 nuget canopy
 nuget Selenium.WebDriver.ChromeDriver
-nuget ILRepack
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx

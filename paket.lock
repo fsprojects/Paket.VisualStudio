@@ -1,31 +1,10 @@
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    canopy (0.9.31)
-      FSharp.Core (>= 3.0.2)
-      Selenium.Support (2.47.0)
-      Selenium.WebDriver (2.47.0)
-      SizSelCsZzz (0.3.36.0)
-    FAKE (4.2.0)
-    FSharp.Compiler.Service (1.4.0.1)
     FSharp.Core (4.0.0.1)
-    FSharp.Formatting (2.10.0)
-      FSharp.Compiler.Service (>= 0.0.87)
-      FSharpVSPowerTools.Core (1.8.0)
-    FSharpVSPowerTools.Core (1.8.0)
-      FSharp.Compiler.Service (>= 0.0.87)
-    ILRepack (2.0.5)
     MahApps.Metro (1.1.2)
-    Microsoft.Bcl (1.1.10)
-      Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21)
-    Microsoft.Net.Http (2.2.29)
-      Microsoft.Bcl (>= 1.1.10)
-      Microsoft.Bcl.Build (>= 1.0.14)
     Newtonsoft.Json (7.0.1)
-    Octokit (0.14.0)
-      Microsoft.Net.Http
-    Paket.Core (1.33.0)
+    Paket.Core (2.17.1)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
@@ -55,14 +34,6 @@ NUGET
       Rx-Main (>= 2.2.5)
     Rx-Xaml (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Rx-Main (>= 2.2.5)
-    Selenium.Support (2.47.0)
-      Selenium.WebDriver (>= 2.47.0)
-    Selenium.WebDriver (2.47.0)
-    Selenium.WebDriver.ChromeDriver (2.18.0)
-    SizSelCsZzz (0.3.36.0)
-      Newtonsoft.Json (>= 6.0)
-      Selenium.Support (>= 2.40)
-      Selenium.WebDriver (>= 2.40)
     Splat (1.6.2)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
@@ -74,6 +45,8 @@ NUGET
     VSSDK.CoreUtility.12 (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4 < 13.0.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
+    VSSDK.DTE (7.0.4) - copy_local: false
+      VSSDK.IDE (>= 7.0.4 < 8.0.0)
     VSSDK.Editor (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
@@ -92,8 +65,11 @@ NUGET
       VSSDK.GraphModel (>= 12.0.4 < 13.0.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.IDE (7.0.4) - copy_local: false
+    VSSDK.IDE.10 (10.0.4) - copy_local: false
+    VSSDK.IDE.11 (11.0.4) - copy_local: false
     VSSDK.IDE.12 (12.0.4) - copy_local: false
     VSSDK.IDE.8 (8.0.4) - copy_local: false
+    VSSDK.IDE.9 (9.0.4) - copy_local: false
     VSSDK.Language (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
@@ -105,9 +81,61 @@ NUGET
       VSSDK.Text.12 (>= 12.0.4 < 13.0.0)
     VSSDK.OLE.Interop (7.0.4) - copy_local: false
       VSSDK.IDE (>= 7.0.4 < 8.0.0)
+    VSSDK.Shell.12 (12.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Immutable.10 (>= 10.0.4 < 11.0.0)
+      VSSDK.Shell.Immutable.11 (>= 11.0.4 < 12.0.0)
+      VSSDK.Shell.Immutable.12 (>= 12.0.4 < 13.0.0)
+      VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0.0)
+      VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Threading.12 (>= 12.0.4 < 13.0.0)
+    VSSDK.Shell.Immutable.10 (10.0.4) - copy_local: false
+      VSSDK.IDE.10 (>= 10.0.4 < 11.0.0)
+    VSSDK.Shell.Immutable.11 (11.0.4) - copy_local: false
+      VSSDK.GraphModel (>= 11.0.4)
+      VSSDK.IDE.11 (>= 11.0.4 < 12.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
+    VSSDK.Shell.Immutable.12 (12.0.4) - copy_local: false
+      VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.Shell.Interop (7.0.4) - copy_local: false
       VSSDK.IDE (>= 7.0.4 < 8.0.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
+    VSSDK.Shell.Interop.10 (10.0.4) - copy_local: false
+      VSSDK.IDE.10 (>= 10.0.4 < 11.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0.0)
+    VSSDK.Shell.Interop.11 (11.0.4) - copy_local: false
+      VSSDK.IDE.11 (>= 11.0.4 < 12.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop.10 (>= 10.0.4 < 11.0.0)
+      VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0.0)
+    VSSDK.Shell.Interop.12 (12.0.4) - copy_local: false
+      VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop.10 (>= 10.0.4 < 11.0.0)
+      VSSDK.Shell.Interop.11 (>= 11.0.4 < 12.0.0)
+      VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0.0)
+    VSSDK.Shell.Interop.8 (8.0.4) - copy_local: false
+      VSSDK.IDE.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.TextManager.Interop.8 (>= 8.0.4 < 9.0.0)
+    VSSDK.Shell.Interop.9 (9.0.4) - copy_local: false
+      VSSDK.IDE.9 (>= 9.0.4 < 10.0.0)
+      VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
+      VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
     VSSDK.Text (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4)
@@ -124,8 +152,49 @@ NUGET
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0.0)
       VSSDK.Shell.Interop (>= 7.0.4 < 8.0.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0.0)
+    VSSDK.Threading (12.0.4) - copy_local: false
+      VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
+    VSSDK.Threading.12 (12.0.4) - copy_local: false
+      VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
+      VSSDK.Threading (>= 12.0.4 < 13.0.0)
+
+GROUP Build
+NUGET
+  remote: http://nuget.org/api/v2
+  specs:
+    canopy (0.9.37)
+      FSharp.Core (>= 3.0.2)
+      Selenium.Support (2.48.0)
+      Selenium.WebDriver (2.48.0)
+      SizSelCsZzz (0.3.36.0)
+    FAKE (4.7.2)
+    FSharp.Compiler.Service (1.4.0.6)
+    FSharp.Core (4.0.0.1)
+    FSharp.Formatting (2.12.0)
+      FSharp.Compiler.Service (1.4.0.6)
+      FSharpVSPowerTools.Core (2.1.0)
+    FSharpVSPowerTools.Core (2.1.0)
+      FSharp.Compiler.Service (>= 1.4.0.6)
+    ILRepack (2.0.8)
+    Microsoft.Bcl (1.1.10)
+      Microsoft.Bcl.Build (>= 1.0.14)
+    Microsoft.Bcl.Build (1.0.21) - import_targets: false
+    Microsoft.Net.Http (2.2.29)
+      Microsoft.Bcl (>= 1.1.10)
+      Microsoft.Bcl.Build (>= 1.0.14)
+    Newtonsoft.Json (7.0.1)
+    Octokit (0.16.0)
+      Microsoft.Net.Http
+    Selenium.Support (2.48.0)
+      Selenium.WebDriver (>= 2.48.0)
+    Selenium.WebDriver (2.48.0)
+    Selenium.WebDriver.ChromeDriver (2.20.0)
+    SizSelCsZzz (0.3.36.0)
+      Newtonsoft.Json (>= 6.0)
+      Selenium.Support (>= 2.40)
+      Selenium.WebDriver (>= 2.40)
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (8dbd30c34d78e00a6a4970d65b3acdc1c7b62bc3)
+    modules/Octokit/Octokit.fsx (0cedad490fa06bd072823b2215f3f05cf917a7ba)
       Octokit
