@@ -1,3 +1,6 @@
+#### 0.7.8 - 28.10.2015
+* Updated Paket.Core to 2.18.0
+
 #### 0.7.7 - 28.10.2015
 * Intellisense for new strategy option - https://github.com/fsprojects/Paket.VisualStudio/pull/80
 
