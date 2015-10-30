@@ -29,7 +29,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
             var feeds = Paket.Dependencies.Locate().GetDefinedNuGetFeeds();
             foreach (var feed in feeds)
             {
-                yield return new Completion2(feed, feed, null, null, "iconAutomationText");
+                yield return new Completion(feed, feed, null, null, "iconAutomationText");
             }
         }
     }

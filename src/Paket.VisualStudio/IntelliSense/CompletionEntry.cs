@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Language.Intellisense;
 
 namespace Paket.VisualStudio.IntelliSense
 {
-    public class CompletionEntry : Completion2, IComparable<CompletionEntry>, IComparable, ICustomCommit
+    public class CompletionEntry : Completion, IComparable<CompletionEntry>, IComparable, ICustomCommit
     {
         private readonly Action<CompletionEntry> commitAction;
 

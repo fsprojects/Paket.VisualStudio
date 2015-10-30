@@ -37,7 +37,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
             foreach (var value in searchResults)
             {
-                yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
+                yield return new Completion(value, value, null, imageSource, "iconAutomationText");
             }
         }
 

@@ -5,12 +5,12 @@ nuget Paket.Core
 nuget VSSDK.DTE.8 copy_local: false
 nuget VSSDK.DTE.9 copy_local: false
 nuget VSSDK.DTE.10 copy_local: false
-nuget VSSDK.GraphModel.12 copy_local: false
-nuget VSSDK.Language.12 copy_local: false
-nuget VSSDK.Editor.12 copy_local: false
-nuget VSSDK.ComponentModelHost.12 copy_local: false
-nuget VSSDK.Shell.12 copy_local: false
-nuget VSSDK.Shell.Interop.12 copy_local: false
+nuget VSSDK.GraphModel.11 copy_local: false
+nuget VSSDK.Language.11 copy_local: false
+nuget VSSDK.Editor.11 copy_local: false
+nuget VSSDK.ComponentModelHost.11 copy_local: false
+nuget VSSDK.Shell.11 copy_local: false
+nuget VSSDK.Shell.Interop.11 copy_local: false
 nuget reactiveui
 nuget reactiveui-events
 
