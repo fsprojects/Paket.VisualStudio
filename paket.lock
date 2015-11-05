@@ -4,7 +4,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.1.2)
     Newtonsoft.Json (7.0.1)
-    Paket.Core (2.17.1)
+    Paket.Core (2.22.1)
       FSharp.Core
       Newtonsoft.Json
     reactiveui (6.5.0)
@@ -16,18 +16,18 @@ NUGET
       Splat (>= 1.0 < 2.0)
     reactiveui-events (6.5.0)
       Rx-Main (>= 2.2.5)
-    Rx-Core (2.2.5)
+    Rx-Core (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Rx-Interfaces (>= 2.2.5)
-    Rx-Interfaces (2.2.5)
-    Rx-Linq (2.2.5)
+    Rx-Interfaces (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-Linq (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
-    Rx-Main (2.2.5)
+    Rx-Main (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
       Rx-Linq (>= 2.2.5)
       Rx-PlatformServices (>= 2.2.5)
-    Rx-PlatformServices (2.2.5)
+    Rx-PlatformServices (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
     Rx-WinRT (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
@@ -162,12 +162,12 @@ GROUP Build
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    canopy (0.9.37)
+    canopy (0.9.40)
       FSharp.Core (>= 3.0.2)
       Selenium.Support (2.48.0)
       Selenium.WebDriver (2.48.0)
       SizSelCsZzz (0.3.36.0)
-    FAKE (4.7.2)
+    FAKE (4.8.0)
     FSharp.Compiler.Service (1.4.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.12.0)
@@ -196,5 +196,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (0cedad490fa06bd072823b2215f3f05cf917a7ba)
+    modules/Octokit/Octokit.fsx (545fb5d2cc7901bcbfd8f7f1a53da8f7f169deda)
       Octokit
