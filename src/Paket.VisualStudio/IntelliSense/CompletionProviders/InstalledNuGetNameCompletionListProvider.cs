@@ -29,9 +29,31 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
         {
             ImageSource imageSource = GetImageSource();
 
+            var group = "Main";
+
+            try
+            {
+                var text = context.Snapshot.GetText().Substring(0, context.SpanStart + context.SpanLength);
+                var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = lines.Length - 1; i >= 0; i--)
+                {
+                    var line = lines[i].Trim();
+                    if (line.StartsWith("group"))
+                        group = line.Replace("group", "").Trim();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+
             var searchResults =
                 Paket.Dependencies.Locate(context.Snapshot.TextBuffer.GetFileName())
-                    .GetInstalledPackages().Select(x => x.Item1);
+                    .GetInstalledPackages()
+                    .Where(x => Paket.Domain.GroupName(x.Item1).Equals(Paket.Domain.GroupName(group)))
+                    .Select(x => x.Item2)
+                    .ToArray();
 
             foreach (var value in searchResults)
             {

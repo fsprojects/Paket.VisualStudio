@@ -1,20 +1,11 @@
-#### 0.7.6 - 05.11.2015
-* Update to Paket 2.22.1
-
-#### 0.7.5 - 27.10.2015
+#### 0.8.0 - 09.11.2015
+* Update to Paket 2.23
 * Intellisense for new strategy option - https://github.com/fsprojects/Paket.VisualStudio/pull/80
-
-#### 0.7.4 - 21.10.2015
-* BUGFIX: Detect project filename on "references node" - https://github.com/fsprojects/Paket.VisualStudio/issues/78
-
-#### 0.7.3 - 21.10.2015
-* Updated to Paket 2.16.0
-
-#### 0.7.2 - 14.10.2015
-* Updated to Paket 2.13.1
 * Syntax highlighting in paket.lock files
 * Syntax highlighting for groups
 * New "Update Group" command in Solution Explorer
+* BUGFIX: Detect project filename on "references node" - https://github.com/fsprojects/Paket.VisualStudio/issues/78
+* BUGFIX: Fixed Intellisense for packages in paket.references - https://github.com/fsprojects/Paket.VisualStudio/issues/82
 
 #### 0.6.9 - 14.10.2015
 * Updated to Paket 2.12.4
