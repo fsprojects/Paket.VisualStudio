@@ -47,6 +47,18 @@ NUGET
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.DTE (7.0.4) - copy_local: false
       VSSDK.IDE (>= 7.0.4 < 8.0.0)
+    VSSDK.DTE.10 (10.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.DTE.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.DTE.9 (>= 9.0.4 < 10.0.0)
+      VSSDK.IDE.10 (>= 10.0.4 < 11.0.0)
+    VSSDK.DTE.8 (8.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.IDE.8 (>= 8.0.4 < 9.0.0)
+    VSSDK.DTE.9 (9.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.DTE.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.IDE.9 (>= 9.0.4 < 10.0.0)
     VSSDK.Editor (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
