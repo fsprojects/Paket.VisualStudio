@@ -26,7 +26,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
         public IEnumerable<Completion> GetCompletionEntries(CompletionContext context)
         {
-            return validValues.Select(value => new Completion2(value, value, null, null, "iconAutomationText"));
+            return validValues.Select(value => new Completion(value, value, null, null, "iconAutomationText"));
         }
     }
 }
