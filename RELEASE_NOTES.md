@@ -1,3 +1,6 @@
+#### 0.8.0 - 26.11.2015
+* Updated Paket.Core to 2.28.0
+
 #### 0.7.10 - 28.10.2015
 * Updated Paket.Core to 2.18.0
 
