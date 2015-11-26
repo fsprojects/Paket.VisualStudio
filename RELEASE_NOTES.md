@@ -1,4 +1,4 @@
-#### 0.8.0 - 26.11.2015
+#### 0.8.2 - 26.11.2015
 * Updated Paket.Core to 2.28.0
 
 #### 0.7.10 - 28.10.2015
@@ -18,6 +18,8 @@
 * Syntax highlighting in paket.lock files
 * Syntax highlighting for groups
 * New "Update Group" command in Solution Explorer
+* BUGFIX: Detect project filename on "references node" - https://github.com/fsprojects/Paket.VisualStudio/issues/78
+* BUGFIX: Fixed Intellisense for packages in paket.references - https://github.com/fsprojects/Paket.VisualStudio/issues/82
 
 #### 0.6.9 - 14.10.2015
 * Updated to Paket 2.12.4

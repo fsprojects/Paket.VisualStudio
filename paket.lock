@@ -2,7 +2,7 @@ NUGET
   remote: http://nuget.org/api/v2
   specs:
     FSharp.Core (4.0.0.1)
-    MahApps.Metro (1.1.2)
+    MahApps.Metro (1.1.2.0)
     Newtonsoft.Json (7.0.1)
     Paket.Core (2.28.0)
       FSharp.Core
@@ -11,28 +11,28 @@ NUGET
       reactiveui-core (6.5.0)
     reactiveui-core (6.5.0)
       Rx-Main (>= 2.2.5)
-      Rx-WinRT (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
-      Rx-Xaml (>= 2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+      Rx-WinRT (>= 2.2.5) - framework: portable-win81+wpa81, winv4.5, wpv8.0
+      Rx-Xaml (>= 2.2.5) - framework: >= net45, portable-win81+wpa81, winv4.5, wpv8.0
       Splat (>= 1.0 < 2.0)
     reactiveui-events (6.5.0)
       Rx-Main (>= 2.2.5)
-    Rx-Core (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-Core (2.2.5)
       Rx-Interfaces (>= 2.2.5)
-    Rx-Interfaces (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
-    Rx-Linq (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-Interfaces (2.2.5)
+    Rx-Linq (2.2.5)
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
-    Rx-Main (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-Main (2.2.5)
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
       Rx-Linq (>= 2.2.5)
       Rx-PlatformServices (>= 2.2.5)
-    Rx-PlatformServices (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-PlatformServices (2.2.5)
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
-    Rx-WinRT (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81
+    Rx-WinRT (2.2.5) - framework: portable-win81+wpa81, winv4.5, wpv8.0
       Rx-Main (>= 2.2.5)
-    Rx-Xaml (2.2.5) - framework: winv4.5, wpv8.0, portable-win81+wpa81, >= net45
+    Rx-Xaml (2.2.5) - framework: >= net45, portable-win81+wpa81, winv4.5, wpv8.0
       Rx-Main (>= 2.2.5)
     Splat (1.6.2)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
@@ -47,6 +47,18 @@ NUGET
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
     VSSDK.DTE (7.0.4) - copy_local: false
       VSSDK.IDE (>= 7.0.4 < 8.0.0)
+    VSSDK.DTE.10 (10.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.DTE.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.DTE.9 (>= 9.0.4 < 10.0.0)
+      VSSDK.IDE.10 (>= 10.0.4 < 11.0.0)
+    VSSDK.DTE.8 (8.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.IDE.8 (>= 8.0.4 < 9.0.0)
+    VSSDK.DTE.9 (9.0.4) - copy_local: false
+      VSSDK.DTE (>= 7.0.4 < 8.0.0)
+      VSSDK.DTE.8 (>= 8.0.4 < 9.0.0)
+      VSSDK.IDE.9 (>= 9.0.4 < 10.0.0)
     VSSDK.Editor (12.0.4) - copy_local: false
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0.0)
@@ -188,7 +200,7 @@ NUGET
     Selenium.Support (2.48.2)
       Selenium.WebDriver (>= 2.48.2)
     Selenium.WebDriver (2.48.2)
-    Selenium.WebDriver.ChromeDriver (2.20.0)
+    Selenium.WebDriver.ChromeDriver (2.20.0.0)
     SizSelCsZzz (0.3.36.0)
       Newtonsoft.Json (>= 6.0)
       Selenium.Support (>= 2.40)
