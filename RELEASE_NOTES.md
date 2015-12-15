@@ -1,3 +1,6 @@
+#### 0.9.1 - 15.12.2015
+* Don't fail on autocomplete in empty paket.references file
+
 #### 0.9.0 - 15.12.2015
 * Update to Paket 2.36.5
 
