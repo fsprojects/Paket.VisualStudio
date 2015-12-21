@@ -154,17 +154,25 @@ namespace Paket.VisualStudio.IntelliSense
 
         private static CompletionContext GetCompletionContext(PaketDocument paketDocument, ITextStructureNavigator navigator, SnapshotPoint position)
         {
-            TextExtent endPosition = navigator.GetExtentOfWord(position - 1);
-            TextExtent startPosition = endPosition;
+            var startPos = position.Position;
+            var length = 0;
 
-            // try to extend the span over .
-            while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
+            if (position.Position > 0)
             {
-                startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
+                TextExtent endPosition = navigator.GetExtentOfWord(position);
+                TextExtent startPosition = endPosition;
+
+                // try to extend the span over .
+                while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
+                {
+                    startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
+                }
+
+
+                startPos = startPosition.Span.Start.Position;
+                length = endPosition.Span.End.Position - startPos;
             }
 
-            var startPos = startPosition.Span.Start.Position;
-            var length = endPosition.Span.End.Position - startPos;
             var span = new Span(startPos, length);
             var snapShotSpan = new SnapshotSpan(position.Snapshot, span);
 

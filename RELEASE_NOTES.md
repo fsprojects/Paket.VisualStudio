@@ -1,20 +1,15 @@
-#### 0.8.2 - 26.11.2015
-* Updated Paket.Core to 2.28.0
+#### 0.9.1 - 15.12.2015
+* Don't fail on autocomplete in empty paket.references file
 
-#### 0.7.10 - 28.10.2015
-* Updated Paket.Core to 2.18.0
+#### 0.9.0 - 15.12.2015
+* Update to Paket 2.36.5
 
-#### 0.7.7 - 28.10.2015
+#### 0.8.1 - 19.11.2015
+* Update to Paket 2.27.5
+
+#### 0.8.0 - 09.11.2015
+* Update to Paket 2.23
 * Intellisense for new strategy option - https://github.com/fsprojects/Paket.VisualStudio/pull/80
-
-#### 0.7.4 - 21.10.2015
-* BUGFIX: Detect project filename on "references node" - https://github.com/fsprojects/Paket.VisualStudio/issues/78
-
-#### 0.7.3 - 21.10.2015
-* Updated to Paket 2.16.0
-
-#### 0.7.2 - 14.10.2015
-* Updated to Paket 2.13.1
 * Syntax highlighting in paket.lock files
 * Syntax highlighting for groups
 * New "Update Group" command in Solution Explorer
@@ -47,7 +42,7 @@
 #### 0.6.0 - 14.09.2015
 * Updated to Paket 2.0.0
 
-#### 0.5.16 - 03.09.2015
+#### 0.5.11 - 01.09.2015
 * Updated to Paket 1.36.1
 
 #### 0.5.4 - 19.08.2015

@@ -119,7 +119,7 @@ Target "CleanVSIX" (fun _ ->
     CreateDir buildMergedDir
 
     let filesToPack =
-        ["Paket.VisualStudio.dll"; "Paket.Core.dll"; "FSharp.Core.dll"; "Newtonsoft.Json.dll"; 
+        ["Paket.VisualStudio.dll"; "Paket.Core.dll"; "FSharp.Core.dll"; "Newtonsoft.Json.dll" ; "Chessie.dll"; 
          "ReactiveUI.dll"; "ReactiveUI.Events.dll"; "Splat.dll"; "System.Reactive.Core.dll"; "System.Reactive.Interfaces.dll"; "System.Reactive.Linq.dll"; "System.Reactive.PlatformServices.dll"; "System.Reactive.Windows.Threading.dll"]
         |> List.map (fun l -> vsixDir @@ l)
 
