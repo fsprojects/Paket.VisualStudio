@@ -31,7 +31,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
             var searchResults =
                 FSharpAsync.RunSynchronously(
-                    NuGetV3.FindPackages(FSharpOption<Paket.PackageSources.NugetSourceAuthentication>.None, Constants.DefaultNugetStream, searchTerm, 20),
+                    NuGetV3.FindPackages(FSharpOption<Paket.PackageSources.NugetSourceAuthentication>.None, Constants.DefaultNuGetStream, searchTerm, 20),
                     FSharpOption<int>.None,
                     FSharpOption<CancellationToken>.None);
 

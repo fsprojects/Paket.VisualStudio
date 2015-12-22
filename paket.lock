@@ -1,12 +1,12 @@
 NUGET
-  remote: http://nuget.org/api/v2
+  remote: http://www.nuget.org/api/v2
   specs:
     Chessie (0.2.2)
       FSharp.Core
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.1.2)
     Newtonsoft.Json (7.0.1)
-    Paket.Core (2.37.1)
+    Paket.Core (2.38.0)
       Chessie
       FSharp.Core
       Newtonsoft.Json
@@ -175,14 +175,14 @@ NUGET
 
 GROUP Build
 NUGET
-  remote: http://nuget.org/api/v2
+  remote: http://www.nuget.org/api/v2
   specs:
     canopy (0.9.43)
       FSharp.Core (>= 3.0.2)
       Selenium.Support (2.48.2)
       Selenium.WebDriver (2.48.2)
       SizSelCsZzz (0.3.36.0)
-    FAKE (4.11.0)
+    FAKE (4.11.3)
     FSharp.Compiler.Service (1.4.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.12.0)
@@ -211,5 +211,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (8a907b9ce6bdff37004d461c4b9f3fe97b86b02e)
+    modules/Octokit/Octokit.fsx (29cd4ee57792f0f35e18bd97d4517eb8c94de569)
       Octokit
