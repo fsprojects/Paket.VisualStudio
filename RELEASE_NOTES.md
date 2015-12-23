@@ -1,3 +1,6 @@
+#### 0.10.1 - 23.12.2015
+* Update to Paket.Core 2.39.1
+
 #### 0.10.0 - 22.12.2015
 * Update to Paket.Core 2.38
 * Don't fail on autocomplete in empty paket.references file
