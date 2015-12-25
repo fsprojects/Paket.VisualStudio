@@ -233,6 +233,14 @@ namespace Paket.VisualStudio.SolutionExplorer
             var projectGuids = SolutionExplorerExtensions.GetAllProjectGuids();
 
             SolutionExplorerExtensions.SaveSolution();
+
+            // https://github.com/fsprojects/Paket.VisualStudio/issues/84
+            // explicitly save unsaved projects
+            foreach (var project in SolutionExplorerExtensions.GetAllProjects().Where(p => false == p.Saved))
+            {
+                project.Save();
+            }
+
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
