@@ -1,3 +1,7 @@
+#### 0.11.0 - 28.12.2015
+* Update to Paket.Core 2.39.3
+* Save projects before install - https://github.com/fsprojects/Paket.VisualStudio/pull/88
+
 #### 0.10.1 - 23.12.2015
 * Update to Paket.Core 2.39.1
 
