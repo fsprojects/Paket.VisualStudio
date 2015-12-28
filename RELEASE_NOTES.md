@@ -1,3 +1,7 @@
+#### 0.11.1 - 28.12.2015
+* Update to Paket.Core 2.39.4
+* BUGFIX: Type ahead did not work properly in Add package window - https://github.com/fsprojects/Paket.VisualStudio/issues/60
+
 #### 0.11.0 - 28.12.2015
 * Update to Paket.Core 2.39.3
 * Save projects before install - https://github.com/fsprojects/Paket.VisualStudio/pull/88
