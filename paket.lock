@@ -5,8 +5,8 @@ NUGET
       FSharp.Core
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.1.2)
-    Newtonsoft.Json (7.0.1)
-    Paket.Core (2.39.8)
+    Newtonsoft.Json (8.0.1)
+    Paket.Core (2.40.0)
       Chessie
       FSharp.Core
       Newtonsoft.Json
@@ -197,7 +197,7 @@ NUGET
     Microsoft.Net.Http (2.2.29)
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Newtonsoft.Json (7.0.1)
+    Newtonsoft.Json (8.0.1)
     Octokit (0.17.0)
       Microsoft.Net.Http
     Selenium.Support (2.48.2)
