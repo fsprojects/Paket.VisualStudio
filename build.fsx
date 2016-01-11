@@ -178,7 +178,7 @@ open System
 Target "ReleaseToGitHub" (fun _ ->
     StageAll ""
     Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Branches.push ""
+    Branches.pushBranch "" "origin" (Information.getBranchName "")
 
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
