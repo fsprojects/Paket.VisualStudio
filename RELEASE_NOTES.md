@@ -1,11 +1,5 @@
-#### 0.11.4 - 11.01.2016
+#### 0.12.0 - 11.01.2016
 * Update to Paket 2.42.3
-
-#### 0.11.3 - 29.12.2015
-* Update to Paket.Core 2.40
-
-#### 0.11.2 - 28.12.2015
-* Update to Paket.Core 2.39.8
 * BUGFIX: Type ahead did not work properly in Add package window - https://github.com/fsprojects/Paket.VisualStudio/issues/60
 
 #### 0.11.0 - 28.12.2015
