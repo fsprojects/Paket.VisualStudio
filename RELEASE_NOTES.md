@@ -1,3 +1,7 @@
+#### 0.13.0 - 16.01.2016
+* BUGFIX: Use "references" as keyword - https://github.com/fsprojects/Paket.VisualStudio/pull/92
+* Allow to autocomplete NuGet v2 sources - https://github.com/fsprojects/Paket.VisualStudio/issues/89 
+
 #### 0.12.1 - 13.01.2016
 * Update to Paket 2.42.6
 
