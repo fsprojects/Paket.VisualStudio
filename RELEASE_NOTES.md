@@ -1,3 +1,6 @@
+#### 0.13.5 - 28.01.2016
+* Update Paket.Core to 2.48.0
+
 #### 0.13.4 - 25.01.2016
 * Don't include prereleases when checking for outdated packages - https://github.com/fsprojects/Paket.VisualStudio/pull/95
 * Update Paket.Core to 2.47.2 
