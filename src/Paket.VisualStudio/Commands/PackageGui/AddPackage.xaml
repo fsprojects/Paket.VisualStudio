@@ -25,12 +25,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
-
-          
+            <Style x:Key="FocusTextBox" TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=SearchTextBox, Path=IsVisible}" Value="True">
+                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=SearchTextBox}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
-        
     </Window.Resources>
 
     <controls:MetroWindow.Flyouts>
@@ -116,7 +119,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource FocusTextBox}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
