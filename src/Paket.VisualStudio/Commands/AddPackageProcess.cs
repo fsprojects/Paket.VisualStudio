@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.FSharp.Control;
 using Paket.VisualStudio.Commands.PackageGui;
 using Paket.VisualStudio.SolutionExplorer;
+using Paket.VisualStudio.Utils;
 
 namespace Paket.VisualStudio.Commands
 {
@@ -47,6 +48,7 @@ namespace Paket.VisualStudio.Commands
                 if (projectGuid != null)
                 {
                     var guid = Guid.Parse(projectGuid);
+                    DteHelper.ExecuteCommand("File.SaveAll");
                     SolutionExplorerExtensions.UnloadProject(guid);
                     dependenciesFile.AddToProject(Microsoft.FSharp.Core.FSharpOption<string>.None, result.PackageName, "", false, false, false, false, selectedFileName, true, SemVerUpdateMode.NoRestriction);
                     SolutionExplorerExtensions.ReloadProject(guid);
