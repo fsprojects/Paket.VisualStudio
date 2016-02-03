@@ -1,11 +1,7 @@
-#### 0.13.5 - 28.01.2016
-* Update Paket.Core to 2.48.0
-
-#### 0.13.4 - 25.01.2016
+#### 0.14.0 - 03.02.2016
+* "Save All" before adding packages - https://github.com/fsprojects/Paket.VisualStudio/pull/97
+* Update Paket.Core to 2.49.0
 * Don't include prereleases when checking for outdated packages - https://github.com/fsprojects/Paket.VisualStudio/pull/95
-* Update Paket.Core to 2.47.2 
-
-#### 0.13.3 - 19.01.2016
 * Allow to autocomplete local NuGet sources - https://github.com/fsprojects/Paket.VisualStudio/issues/89 
 
 #### 0.13.0 - 16.01.2016
