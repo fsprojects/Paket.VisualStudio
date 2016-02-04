@@ -1,3 +1,6 @@
+#### 0.14.1 - 04.02.2016
+* Set focus to search textbox when adding package - https://github.com/fsprojects/Paket.VisualStudio/pull/99
+
 #### 0.14.0 - 03.02.2016
 * "Save All" before adding packages - https://github.com/fsprojects/Paket.VisualStudio/pull/97
 * Update Paket.Core to 2.49.0
