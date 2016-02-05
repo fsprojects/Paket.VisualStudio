@@ -12,11 +12,9 @@ namespace Paket.VisualStudio
     public class PaketOptions : DialogPage
     {
         private GeneralOptionControl window;
+        private IServiceProvider ServiceProvider => (IServiceProvider)GetService(typeof(Package));
 
-        protected override IWin32Window Window
-        {
-            get { return General; }
-        }
+        protected override IWin32Window Window => General;
 
         protected override void OnActivate(CancelEventArgs e)
         {
@@ -27,35 +25,43 @@ namespace Paket.VisualStudio
 
         protected override void OnApply(PageApplyEventArgs e)
         {
-            base.OnApply(e);
+            window.APIKeysControl.EndEdit(DataGridViewDataErrorContexts.Commit);
             General.OnApply();
+            base.OnApply(e);
         }
 
         protected override void OnClosed(EventArgs e)
         {
-            base.OnClosed(e);
             General.OnClosed();
+            base.OnClosed(e);
         }
 
         public GeneralOptionControl General
         {
             get {
-                if (window == null)
-                {
-                    window = 
-                        new GeneralOptionControl(
-                            new PaketSettings(
-                                new ShellSettingsManager(ServiceProvider)));
-                    window.Location = new Point(0, 0);
-                }
+                if (window != null)
+                    return window;
+
+                window =
+                    new GeneralOptionControl(
+                        new PaketSettings(
+                            new ShellSettingsManager(ServiceProvider))) {Location = new Point(0, 0)};
 
                 return window;
             }
         }
 
-        private IServiceProvider ServiceProvider
+        protected override void Dispose(bool disposing)
         {
-            get { return (IServiceProvider)GetService(typeof(Package)); }
+            if (disposing)
+            {
+                if (window != null)
+                {
+                    window.Dispose();
+                    window = null;
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }
