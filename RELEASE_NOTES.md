@@ -1,3 +1,6 @@
+#### 0.14.2 - 09.02.2016
+* Update Paket.Core to 2.49.8
+
 #### 0.14.1 - 04.02.2016
 * Set focus to search textbox when adding package - https://github.com/fsprojects/Paket.VisualStudio/pull/99
 
