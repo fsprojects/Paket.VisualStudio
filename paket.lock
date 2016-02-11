@@ -6,7 +6,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
     Newtonsoft.Json (8.0.2)
-    Paket.Core (2.49.8)
+    Paket.Core (2.50.4)
       Chessie
       FSharp.Core
       Newtonsoft.Json
@@ -183,7 +183,7 @@ NUGET
       Selenium.WebDriver (2.48.2)
       SizSelCsZzz (0.3.36)
     FAKE (4.20.0)
-    FSharp.Compiler.Service (2.0.0.4)
+    FSharp.Compiler.Service (2.0.0.5)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.0)
       FSharp.Compiler.Service (>= 2.0.0.3 < 2.1.0)
