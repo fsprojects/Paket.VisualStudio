@@ -1,3 +1,6 @@
+#### 0.15.1 - 18.02.2016
+* Update Paket.Core to 2.50.11
+
 #### 0.15.0 - 13.02.2016
 * Allow the configuration of API keys - https://github.com/fsprojects/Paket.VisualStudio/pull/100
 * Set focus to search textbox when adding package - https://github.com/fsprojects/Paket.VisualStudio/pull/99
