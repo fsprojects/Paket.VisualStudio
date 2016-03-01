@@ -1,3 +1,6 @@
+#### 0.15.2 - 01.03.2016
+* Update Paket.Core to 2.51.3
+
 #### 0.15.1 - 18.02.2016
 * Update Paket.Core to 2.50.11
 
