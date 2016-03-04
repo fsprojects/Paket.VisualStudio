@@ -92,7 +92,11 @@ namespace Paket.VisualStudio.IntelliSense
             // try to extend the span over blanks
             while (paketDocument.GetCharAt(previous.Span.Start.Position) == " ")
             {
-                previous = navigator.GetExtentOfWord(pos);
+                var pos2 = previous.Span.Start;
+                if (previous.Span.Start.Position > 0)
+                    pos2 = previous.Span.Start - 1;
+
+                previous = navigator.GetExtentOfWord(pos2);
             }
             var lastWord = previous.Span.GetText();
 

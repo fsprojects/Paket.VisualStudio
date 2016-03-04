@@ -1,3 +1,6 @@
+#### 0.15.5 - 04.03.2016
+* BUGFIX: Fixed Visual Studio freeze on insert - https://github.com/fsprojects/Paket.VisualStudio/issues/106
+
 #### 0.15.4 - 04.03.2016
 * BUGFIX: Fixed Visual Studio exception on insert - https://github.com/fsprojects/Paket.VisualStudio/issues/105
 * Update Paket.Core to 2.51.4
