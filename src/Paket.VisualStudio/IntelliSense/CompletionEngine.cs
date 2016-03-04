@@ -77,18 +77,22 @@ namespace Paket.VisualStudio.IntelliSense
                 startPosition = navigator.GetExtentOfWord(startPosition.Span.Start - 2);
             }
 
-            var startPos = startPosition.Span.Start.Position ;
+            var startPos = startPosition.Span.Start.Position;
             var length = endPosition.Span.End.Position - startPos;
             var span = new Span(startPos,length);
             var snapShotSpan = new SnapshotSpan(position.Snapshot, span);
 
             var context = new CompletionContext(span);
 
-            TextExtent previous = navigator.GetExtentOfWord(startPosition.Span.Start - 1);
+            var pos = startPosition.Span.Start;
+            if (startPosition.Span.Start.Position > 0)
+                pos = startPosition.Span.Start - 1;
+
+            TextExtent previous = navigator.GetExtentOfWord(pos);
             // try to extend the span over blanks
             while (paketDocument.GetCharAt(previous.Span.Start.Position) == " ")
             {
-                previous = navigator.GetExtentOfWord(previous.Span.Start - 1);
+                previous = navigator.GetExtentOfWord(pos);
             }
             var lastWord = previous.Span.GetText();
 
