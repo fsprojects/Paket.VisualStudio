@@ -6,7 +6,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
     Newtonsoft.Json (8.0.2)
-    Paket.Core (2.51.4)
+    Paket.Core (2.51.7)
       Chessie
       FSharp.Core
       Newtonsoft.Json
@@ -211,5 +211,5 @@ NUGET
 GITHUB
   remote: fsharp/FAKE
   specs:
-    modules/Octokit/Octokit.fsx (e71048b08b7aefebb3adeaa4518915510d55785c)
+    modules/Octokit/Octokit.fsx (58dce73f9a069ae7fbfbae993f5e6f06ed9218d5)
       Octokit
