@@ -1,18 +1,7 @@
-#### 0.15.11 - 21.03.2016
-* Update Paket.Core to 2.54.0
-
-#### 0.15.5 - 04.03.2016
+#### 0.16.0 - 31.03.2016
+* Update Paket.Core to 2.57.1
 * BUGFIX: Fixed Visual Studio freeze on insert - https://github.com/fsprojects/Paket.VisualStudio/issues/106
-
-#### 0.15.4 - 04.03.2016
 * BUGFIX: Fixed Visual Studio exception on insert - https://github.com/fsprojects/Paket.VisualStudio/issues/105
-* Update Paket.Core to 2.51.4
-
-#### 0.15.3 - 01.03.2016
-* Update Paket.Core to 2.51.3
-
-#### 0.15.1 - 18.02.2016
-* Update Paket.Core to 2.50.11
 
 #### 0.15.0 - 13.02.2016
 * Allow the configuration of API keys - https://github.com/fsprojects/Paket.VisualStudio/pull/100
