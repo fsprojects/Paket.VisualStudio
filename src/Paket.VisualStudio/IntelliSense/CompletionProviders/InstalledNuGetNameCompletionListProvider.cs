@@ -49,7 +49,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
 
             var searchResults =
-                Paket.Dependencies.Locate(context.Snapshot.TextBuffer.GetFileName())
+                Dependencies.Locate(context.Snapshot.TextBuffer.GetFileName())
                     .GetInstalledPackages()
                     .Where(x => Paket.Domain.GroupName(x.Item1).Equals(Paket.Domain.GroupName(group)))
                     .Select(x => x.Item2)

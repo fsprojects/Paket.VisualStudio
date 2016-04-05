@@ -1,18 +1,10 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using System.Linq;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using Paket.VisualStudio.Commands;
 using System.Threading.Tasks;
-using EnvDTE;
-using MadsKristensen.EditorExtensions;
 using System.IO;
-using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using System.Threading;
 
@@ -77,7 +69,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 menuCommand.Enabled = false;
 
                 var fileName = tracker.GetSelectedFileName();
-                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Constants.DependenciesFileName))
                     return;
 
                 menuCommand.Visible = true;
@@ -94,7 +86,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                 menuCommand.Enabled = false;
 
                 var fileName = tracker.GetSelectedFileName();
-                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.ReferencesFile))
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Constants.ReferencesFile))
                     return;
 
                 menuCommand.Visible = true;
@@ -115,7 +107,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                     return;
 
                 var fileName = node.Id.GetFileName();
-                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.DependenciesFileName))
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Constants.DependenciesFileName))
                     return;
 
                 menuCommand.Visible = true;
@@ -136,7 +128,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                     return;
 
                 var fileName = node.Id.GetFileName();
-                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Paket.Constants.ReferencesFile))
+                if (String.IsNullOrWhiteSpace(fileName) || !fileName.EndsWith(Constants.ReferencesFile))
                     return;
 
                 menuCommand.Visible = true;
@@ -191,7 +183,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             info.GroupName = node.GetGroupName();
 
             var projectGuids =
-                    Paket.Dependencies.Locate(info.DependenciesFileName)
+                    Dependencies.Locate(info.DependenciesFileName)
                         .FindProjectsFor(info.GroupName,info.PackageName)
                         .Select(project => project.GetProjectGuid())
                         .ToArray();
@@ -309,7 +301,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand("paket-outdated.html", info =>
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                Dependencies.Locate(tracker.GetSelectedFileName())
                     .ShowOutdated(false, false);
             });
         }
@@ -318,7 +310,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-update.html", _ =>
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                Dependencies.Locate(tracker.GetSelectedFileName())
                     .Update(false, false);
             });
         }
@@ -327,7 +319,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-install.html", _ =>
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                Dependencies.Locate(tracker.GetSelectedFileName())
                     .Install(false, false);
             });
         }
@@ -336,7 +328,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-restore.html", info =>
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                Dependencies.Locate(tracker.GetSelectedFileName())
                     .Restore();
             });
         }
@@ -345,7 +337,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand("paket-simplify.html", info => // Should work without unload
             {
-                Paket.Dependencies.Locate(tracker.GetSelectedFileName())
+                Dependencies.Locate(tracker.GetSelectedFileName())
                     .Simplify(false);
             });
         }
@@ -354,8 +346,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
-                Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .UpdatePackage(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, Microsoft.FSharp.Core.FSharpOption<string>.None, false, false, SemVerUpdateMode.NoRestriction);
+                Dependencies.Locate(info.DependenciesFileName)
+                    .UpdatePackage(FSharpOption<string>.Some(info.GroupName), info.PackageName, FSharpOption<string>.None, false, false, SemVerUpdateMode.NoRestriction, false);
             });
         }
         
@@ -364,8 +356,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-group", info =>
             {
-                Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .UpdateGroup(info.GroupName, false, false, false, false, true, SemVerUpdateMode.NoRestriction);
+                Dependencies.Locate(info.DependenciesFileName)
+                    .UpdateGroup(info.GroupName, false, false, false, false, true, SemVerUpdateMode.NoRestriction, false);
             });
         }
 
@@ -373,7 +365,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-remove.html", info =>
             {
-                Paket.Dependencies.Locate(info.DependenciesFileName)
+                Dependencies.Locate(info.DependenciesFileName)
                     .Remove(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName);
             });
         }
@@ -418,8 +410,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageInUnloadedProject("paket-remove.html#Removing-from-a-single-project", info =>
             {
-                Paket.Dependencies.Locate(info.DependenciesFileName)
-                    .RemoveFromProject(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName, false, false, info.ReferencesFileName, true);
+                Dependencies.Locate(info.DependenciesFileName)
+                    .RemoveFromProject(FSharpOption<string>.Some(info.GroupName), info.PackageName, false, false, info.ReferencesFileName, true);
             });
         }
 
@@ -427,9 +419,9 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-convert-from-nuget.html", info =>
             {
-                var dir = Microsoft.FSharp.Core.FSharpOption<DirectoryInfo>.Some(new DirectoryInfo(info.Directory));
-                Paket.Dependencies
-                    .ConvertFromNuget(true, true, true, Microsoft.FSharp.Core.FSharpOption<string>.None, dir);
+                var dir = FSharpOption<DirectoryInfo>.Some(new DirectoryInfo(info.Directory));
+                Dependencies
+                    .ConvertFromNuget(true, true, true, FSharpOption<string>.None, dir);
             });
         }
 

@@ -32,7 +32,7 @@ namespace Paket.VisualStudio.Restore
         private void Restore()
         {
             var dir = SolutionExplorerExtensions.GetSolutionDirectory();
-            var dependencies = Paket.Dependencies.Locate(dir);
+            var dependencies = Dependencies.Locate(dir);
 
             var projects = SolutionExplorerExtensions.GetAllProjects()
                 .Select(p => new { ProjectName = p.Name, ReferenceFile = ProjectFile.FindReferencesFile(new FileInfo(p.FullName)) })

@@ -26,7 +26,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
 
         public IEnumerable<Completion> GetCompletionEntries(CompletionContext context)
         {
-            var feeds = Paket.Dependencies.Locate().GetDefinedNuGetFeeds();
+            var feeds = Dependencies.Locate().GetDefinedNuGetFeeds();
             foreach (var feed in feeds)
             {
                 yield return new Completion2(feed, feed, null, null, "iconAutomationText");
