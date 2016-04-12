@@ -1,3 +1,6 @@
+#### 0.16.4 - 12.04.2016
+* Update Paket.Core to 2.59.1
+
 #### 0.16.3 - 11.04.2016
 * Update Paket.Core to 2.58.14
 
