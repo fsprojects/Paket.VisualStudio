@@ -1,8 +1,5 @@
-#### 0.18.3 - 13.05.2016
-* Update Paket.Core to 2.64.3
-
-#### 0.18.2 - 27.04.2016
-* Update Paket.Core to 2.63.2
+#### 0.19.0 - 18.05.2016
+* Update Paket.Core to 2.65.0
 * Calling ShowOutdated() with strict=true - https://github.com/fsprojects/Paket.VisualStudio/pull/109 
 
 #### 0.18.0 - 17.04.2016
