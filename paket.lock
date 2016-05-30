@@ -6,7 +6,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
     Newtonsoft.Json (8.0.3)
-    Paket.Core (2.66.2)
+    Paket.Core (2.66.5)
       Chessie
       FSharp.Core
       Newtonsoft.Json
@@ -183,7 +183,7 @@ NUGET
     FAKE (4.27)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
-    FSharp.Formatting (2.14.2)
+    FSharp.Formatting (2.14.3)
       FSharp.Compiler.Service (2.0.0.6)
       FSharpVSPowerTools.Core (>= 2.3 < 2.4)
     FSharpVSPowerTools.Core (2.3)
