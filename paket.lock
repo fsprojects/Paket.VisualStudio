@@ -6,7 +6,7 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
     Newtonsoft.Json (8.0.3)
-    Paket.Core (2.66.6)
+    Paket.Core (2.66.8)
       Chessie
       FSharp.Core
       Newtonsoft.Json
