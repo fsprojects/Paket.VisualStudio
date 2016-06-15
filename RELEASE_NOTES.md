@@ -1,11 +1,5 @@
-#### 0.19.8 - 02.06.2016
-* Update Paket.Core to 2.66.8
-
-#### 0.19.5 - 01.06.2016
-* Update Paket.Core to 2.66.6
-
-#### 0.19.3 - 30.05.2016
-* Update Paket.Core to 2.66.5
+#### 0.20.0 - 15.06.2016
+* Update Paket.Core to 3.0
 
 #### 0.19.0 - 18.05.2016
 * Update Paket.Core to 2.65.0

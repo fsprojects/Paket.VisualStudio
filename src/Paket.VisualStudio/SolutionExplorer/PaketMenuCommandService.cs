@@ -311,7 +311,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandAndReloadAllProjects("paket-update.html", _ =>
             {
                 Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Update(false, false);
+                    .Update(false);
             });
         }
 
@@ -320,7 +320,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandAndReloadAllProjects("paket-install.html", _ =>
             {
                 Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Install(false, false);
+                    .Install(false);
             });
         }
 
@@ -347,7 +347,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
                 Dependencies.Locate(info.DependenciesFileName)
-                    .UpdatePackage(FSharpOption<string>.Some(info.GroupName), info.PackageName, FSharpOption<string>.None, false, false, SemVerUpdateMode.NoRestriction, false);
+                    .UpdatePackage(FSharpOption<string>.Some(info.GroupName), info.PackageName, FSharpOption<string>.None, false, SemVerUpdateMode.NoRestriction, false);
             });
         }
         
@@ -411,7 +411,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommandOnPackageInUnloadedProject("paket-remove.html#Removing-from-a-single-project", info =>
             {
                 Dependencies.Locate(info.DependenciesFileName)
-                    .RemoveFromProject(FSharpOption<string>.Some(info.GroupName), info.PackageName, false, false, info.ReferencesFileName, true);
+                    .RemoveFromProject(FSharpOption<string>.Some(info.GroupName), info.PackageName, false, info.ReferencesFileName, true);
             });
         }
 
