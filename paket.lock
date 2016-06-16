@@ -6,7 +6,7 @@ NUGET
     MahApps.Metro (1.2.4)
     Mono.Cecil (0.9.6.1)
     Newtonsoft.Json (8.0.3)
-    Paket.Core (3.0.2)
+    Paket.Core (3.1)
       Chessie
       FSharp.Core
       Mono.Cecil
