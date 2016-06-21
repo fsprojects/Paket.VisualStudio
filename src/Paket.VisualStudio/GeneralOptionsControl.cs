@@ -48,6 +48,8 @@ namespace Paket.VisualStudio
         {
             APIToken apiTokensConfig;
             var paketConfigPath = Utils.Config.GetPaketConfigPath();
+            var paketConfigDirectory = Path.GetDirectoryName(paketConfigPath);
+            Directory.CreateDirectory(paketConfigDirectory);
             File.AppendText(paketConfigPath).Close();
             CreateRequiredNodes(paketConfigPath);
             using (var reader = new StreamReader(paketConfigPath))
