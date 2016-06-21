@@ -1,5 +1,6 @@
-#### 0.21.1 - 19.06.2016
-* Update Paket.Core to 3.1.6
+#### 0.22.0 - 21.06.2016
+* Update Paket.Core to 3.1.7
+* BUGFIX: Create config folder if needed - https://github.com/fsprojects/Paket.VisualStudio/pull/112
 
 #### 0.21.0 - 16.06.2016
 * Update Paket.Core to 3.1
