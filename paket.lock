@@ -1,3 +1,4 @@
+FRAMEWORK: >= NET45
 NUGET
   remote: http://www.nuget.org/api/v2
     Chessie (0.5.1)
@@ -5,8 +6,8 @@ NUGET
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
     Mono.Cecil (0.9.6.1)
-    Newtonsoft.Json (8.0.3)
-    Paket.Core (3.2)
+    Newtonsoft.Json (9.0.1)
+    Paket.Core (3.7)
       Chessie
       FSharp.Core
       Mono.Cecil
@@ -15,8 +16,7 @@ NUGET
       reactiveui-core (6.5)
     reactiveui-core (6.5)
       Rx-Main (>= 2.2.5)
-      Rx-WinRT (>= 2.2.5) - framework: portable-win81+wpa81, winv4.5, wpv8.0
-      Rx-Xaml (>= 2.2.5) - framework: >= net45, portable-win81+wpa81, winv4.5, wpv8.0
+      Rx-Xaml (>= 2.2.5)
       Splat (>= 1.0 < 2.0)
     reactiveui-events (6.5)
       Rx-Main (>= 2.2.5)
@@ -34,9 +34,7 @@ NUGET
     Rx-PlatformServices (2.2.5)
       Rx-Core (>= 2.2.5)
       Rx-Interfaces (>= 2.2.5)
-    Rx-WinRT (2.2.5) - framework: portable-win81+wpa81, winv4.5, wpv8.0
-      Rx-Main (>= 2.2.5)
-    Rx-Xaml (2.2.5) - framework: >= net45, portable-win81+wpa81, winv4.5, wpv8.0
+    Rx-Xaml (2.2.5)
       Rx-Main (>= 2.2.5)
     Splat (1.6.2)
     VSSDK.ComponentModelHost (12.0.4) - copy_local: false
@@ -177,10 +175,10 @@ NUGET
 GROUP Build
 NUGET
   remote: http://www.nuget.org/api/v2
-    canopy (0.9.54)
+    canopy (0.9.56)
       FSharp.Core (>= 3.0.2)
-      Selenium.WebDriver (2.53)
-    FAKE (4.29.2)
+      Selenium.WebDriver (2.53.1)
+    FAKE (4.30.2)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -197,9 +195,9 @@ NUGET
       Microsoft.Bcl.Build (>= 1.0.14)
     Octokit (0.20)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
-    Selenium.WebDriver (2.53)
+    Selenium.WebDriver (2.53.1)
     Selenium.WebDriver.ChromeDriver (2.22)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (c063bf415dac7f7d4df4c37fe76badce76cae3c3)
-      Octokit
+    modules/Octokit/Octokit.fsx (f35a5d927148ca1a5fe5bc6ae2c1a37e3b2b5923)
+      Octokit (>= 0.20)
