@@ -7,7 +7,7 @@ NUGET
     MahApps.Metro (1.2.4)
     Mono.Cecil (0.9.6.1)
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.7)
+    Paket.Core (3.7.3)
       Chessie
       FSharp.Core
       Mono.Cecil
@@ -178,7 +178,7 @@ NUGET
     canopy (0.9.56)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (2.53.1)
-    FAKE (4.30.2)
+    FAKE (4.31.1)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -199,5 +199,5 @@ NUGET
     Selenium.WebDriver.ChromeDriver (2.22)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (f35a5d927148ca1a5fe5bc6ae2c1a37e3b2b5923)
+    modules/Octokit/Octokit.fsx (40dd0ff66fc379474450f93fd1ba545f6cf6c121)
       Octokit (>= 0.20)
