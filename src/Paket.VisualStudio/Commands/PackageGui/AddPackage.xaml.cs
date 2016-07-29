@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
+
 using Paket.VisualStudio.Commands.PackageGui.Converters;
 using Paket.VisualStudio.Utils;
 using ReactiveUI;

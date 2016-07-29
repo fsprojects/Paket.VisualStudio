@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.Design;
+﻿using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell.Settings;
-using Paket.VisualStudio.Commands;
+
 using Paket.VisualStudio.Restore;
 using Paket.VisualStudio.SolutionExplorer;
 
