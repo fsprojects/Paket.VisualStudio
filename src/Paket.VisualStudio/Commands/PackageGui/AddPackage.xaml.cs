@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
+
 using Paket.VisualStudio.Commands.PackageGui.Converters;
 using Paket.VisualStudio.Utils;
 using ReactiveUI;
@@ -33,11 +32,11 @@ namespace Paket.VisualStudio.Commands.PackageGui
                 this.Bind(ViewModel, vm => vm.SelectedPackage, v => v.NugetResults.SelectedItem);
                 this.BindCommand(ViewModel, x => x.AddPackage, v => v.AddPackageButton);
                 this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.OutProgressRing.Visibility,
-                    () => LoadingState.Loading, LoadingState.Loading, new LoadingSuccessFailureVisiblityConverter());
+                    () => LoadingState.Loading, LoadingState.Loading, new LoadingSuccessFailureVisibilityConverter());
                 this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.PaketAddSuccess.Visibility,
-                    () => LoadingState.Loading, LoadingState.Success, new LoadingSuccessFailureVisiblityConverter());
+                    () => LoadingState.Loading, LoadingState.Success, new LoadingSuccessFailureVisibilityConverter());
                 this.OneWayBind(ViewModel, vm => vm.AddPackageState, v => v.PaketAddFailure.Visibility,
-                    () => LoadingState.Loading, LoadingState.Failure, new LoadingSuccessFailureVisiblityConverter());
+                    () => LoadingState.Loading, LoadingState.Failure, new LoadingSuccessFailureVisibilityConverter());
                 
 
                 //TODO: These visual states should be handled more elegantly

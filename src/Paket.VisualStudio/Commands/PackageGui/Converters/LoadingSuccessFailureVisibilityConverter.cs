@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace Paket.VisualStudio.Commands.PackageGui.Converters
 {
-    public class LoadingSuccessFailureVisiblityConverter : IBindingTypeConverter
+    public class LoadingSuccessFailureVisibilityConverter : IBindingTypeConverter
     {
         public int GetAffinityForObjects(Type fromType, Type toType)
         {

@@ -52,6 +52,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RegisterCommand(CommandIDs.Restore, Restore, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.Simplify, Simplify, OnlyDependenciesFileNodes);
             RegisterCommand(CommandIDs.AddPackage, AddPackage, OnlyDependenciesFileNodes);
+            RegisterCommand(CommandIDs.Init, Init, null);
             RegisterCommand(CommandIDs.ConvertFromNuget, ConvertFromNuGet, null);
             RegisterCommand(CommandIDs.UpdateSolution, Update, null);
             RegisterCommand(CommandIDs.InstallSolution, Install, null);
@@ -412,6 +413,14 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 Dependencies.Locate(info.DependenciesFileName)
                     .RemoveFromProject(FSharpOption<string>.Some(info.GroupName), info.PackageName, false, info.ReferencesFileName, true);
+            });
+        }
+
+        private void Init(object sender, EventArgs e)
+        {
+            RunCommandAndReloadAllProjects("paket-init.html", info =>
+            {
+                Dependencies.Init(info.Directory);
             });
         }
 

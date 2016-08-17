@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.VisualStudio.Text;
 
 namespace Paket.VisualStudio.IntelliSense
