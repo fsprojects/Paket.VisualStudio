@@ -21,5 +21,6 @@ namespace Paket.VisualStudio.Commands
         public static readonly CommandID AddPackageToProject = new CommandID(Guids.CommandSet, 0x0015);
         public static readonly CommandID AddPackageToProjectOnReferences = new CommandID(Guids.CommandSet, 0x0016);
         public static readonly CommandID UpdateGroup = new CommandID(Guids.CommandSet, 0x0017);
+        public static readonly CommandID Init = new CommandID(Guids.CommandSet, 0x0018);
     };
 }

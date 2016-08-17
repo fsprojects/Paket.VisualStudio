@@ -1,5 +1,5 @@
 using System.ComponentModel.Composition;
-using System.Xml.Schema;
+
 using MadsKristensen.EditorExtensions;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text;

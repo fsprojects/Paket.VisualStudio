@@ -1,10 +1,5 @@
 ﻿using System;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.GraphModel;
-using Microsoft.VisualStudio.Shell;
+
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Paket.VisualStudio

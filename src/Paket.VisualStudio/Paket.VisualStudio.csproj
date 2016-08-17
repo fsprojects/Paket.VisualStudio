@@ -91,7 +91,7 @@
       <DependentUpon>AddPackage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\PackageGui\AddPackageViewModel.cs" />
-    <Compile Include="Commands\PackageGui\Converters\LoadingSuccessFailureVisiblityConverter.cs" />
+    <Compile Include="Commands\PackageGui\Converters\LoadingSuccessFailureVisibilityConverter.cs" />
     <Compile Include="IntelliSense\CompletionProviders\InstalledNuGetNameCompletionListProvider.cs" />
     <Compile Include="Restore\AutoRestorer.cs" />
     <Compile Include="Restore\ErrorReportRestorer.cs" />

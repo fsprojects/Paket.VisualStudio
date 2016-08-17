@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using Microsoft.VisualStudio.Shell;

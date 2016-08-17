@@ -1,6 +1,4 @@
 ﻿using System;
-using System;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio;
