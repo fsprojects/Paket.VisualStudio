@@ -4,9 +4,9 @@ NUGET
     Chessie (0.6)
     FSharp.Core (4.0.0.1)
     MahApps.Metro (1.2.4)
-    Mono.Cecil (0.9.6.3)
+    Mono.Cecil (0.9.6.4)
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.9.6)
+    Paket.Core (3.13.1)
       Chessie
       FSharp.Core
       Mono.Cecil
@@ -174,10 +174,10 @@ NUGET
 GROUP Build
 NUGET
   remote: http://www.nuget.org/api/v2
-    canopy (0.9.57)
+    canopy (0.9.60)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (2.53.1)
-    FAKE (4.35)
+    FAKE (4.37.2)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -192,11 +192,11 @@ NUGET
     Microsoft.Net.Http (2.2.29) - framework: net10, net11, net20, net30, net35, net40, net40-full
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Octokit (0.20)
+    Octokit (0.21.1)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
     Selenium.WebDriver (2.53.1)
-    Selenium.WebDriver.ChromeDriver (2.22)
+    Selenium.WebDriver.ChromeDriver (2.23.0.1)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (835b545ca84995f27e1e07a61616ac0edb3c4790)
+    modules/Octokit/Octokit.fsx (cd7849e12cf4a6619863671828ed1b0418e90d7f)
       Octokit (>= 0.20)
