@@ -1,3 +1,6 @@
+#### 0.24.1 - 22.08.2016
+* Update Paket.Core to 3.14.2
+
 #### 0.24.0 - 17.08.2016
 * Update Paket.Core to 3.13.1
 * Add initialize command to flyout menu - https://github.com/fsprojects/Paket.VisualStudio/pull/115
