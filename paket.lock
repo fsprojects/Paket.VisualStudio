@@ -6,17 +6,17 @@ NUGET
     MahApps.Metro (1.2.4)
     Mono.Cecil (0.9.6.4)
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.14.2)
+    Paket.Core (3.15)
       Chessie
       FSharp.Core
       Mono.Cecil
       Newtonsoft.Json
-    reactiveui (6.5)
-      reactiveui-core (6.5)
-    reactiveui-core (6.5)
+    reactiveui (6.5.1)
+      reactiveui-core (6.5.1)
+    reactiveui-core (6.5.1)
       Rx-Main (>= 2.2.5)
       Rx-Xaml (>= 2.2.5)
-      Splat (>= 1.0 < 2.0)
+      Splat (>= 1.4 < 2.0)
     reactiveui-events (6.5)
       Rx-Main (>= 2.2.5)
     Rx-Core (2.2.5)
@@ -185,7 +185,7 @@ NUGET
       FSharpVSPowerTools.Core (>= 2.3 < 2.4)
     FSharpVSPowerTools.Core (2.3)
       FSharp.Compiler.Service (>= 2.0.0.3)
-    ILRepack (2.0.10)
+    ILRepack (2.0.11)
     Microsoft.Bcl (1.1.10) - framework: net10, net11, net20, net30, net35, net40, net40-full
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Build (1.0.21) - import_targets: false, framework: net10, net11, net20, net30, net35, net40, net40-full
