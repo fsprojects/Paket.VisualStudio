@@ -1,3 +1,6 @@
+#### 0.27.0 - 13.09.2016
+* Update Paket.Core to 3.19.3
+
 #### 0.26.0 - 02.09.2016
 * Update Paket.Core to 3.18.0
 

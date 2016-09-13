@@ -7,14 +7,14 @@ NUGET
     MahApps.Metro (1.2.4)
     Mono.Cecil (0.9.6.4)
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.18)
+    Paket.Core (3.19.3)
       Chessie
       FSharp.Core
       Mono.Cecil
       Newtonsoft.Json
-    reactiveui (6.5.1)
-      reactiveui-core (6.5.1)
-    reactiveui-core (6.5.1)
+    reactiveui (6.5.2)
+      reactiveui-core (6.5.2)
+    reactiveui-core (6.5.2)
       Rx-Main (>= 2.2.5)
       Rx-Xaml (>= 2.2.5)
       Splat (>= 1.4 < 2.0)
@@ -178,7 +178,7 @@ NUGET
     canopy (0.9.60)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (2.53.1)
-    FAKE (4.39)
+    FAKE (4.39.1)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -199,5 +199,5 @@ NUGET
     Selenium.WebDriver.ChromeDriver (2.23.0.1)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (e5870cb85f9b500246e02c6daa94e5131dad7a6e)
+    modules/Octokit/Octokit.fsx (73589a85a5e30a2c78d61efccdd3446a99483142)
       Octokit (>= 0.20)
