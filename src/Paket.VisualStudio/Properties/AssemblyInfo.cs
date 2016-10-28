@@ -6,11 +6,15 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitleAttribute("Paket.VisualStudio")]
 [assembly: AssemblyProductAttribute("Paket.VisualStudio")]
 [assembly: AssemblyDescriptionAttribute("Manage your Paket dependencies from Visual Studio!")]
-[assembly: AssemblyVersionAttribute("0.27.1")]
-[assembly: AssemblyFileVersionAttribute("0.27.1")]
+[assembly: AssemblyVersionAttribute("0.28.0")]
+[assembly: AssemblyFileVersionAttribute("0.28.0")]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.27.1";
-        internal const string InformationalVersion = "0.27.1";
+        internal const System.String InternalsVisibleTo = "Paket.VisualStudio.Tests";
+        internal const System.String AssemblyTitle = "Paket.VisualStudio";
+        internal const System.String AssemblyProduct = "Paket.VisualStudio";
+        internal const System.String AssemblyDescription = "Manage your Paket dependencies from Visual Studio!";
+        internal const System.String AssemblyVersion = "0.28.0";
+        internal const System.String AssemblyFileVersion = "0.28.0";
     }
 }
