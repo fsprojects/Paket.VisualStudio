@@ -203,8 +203,9 @@ Target "UploadToGallery" (fun _ ->
     // log in to msdn
     url galleryUrl    
     "#i0116" << username
-    "#i0118" << password
+    click "#idSIButton9"
 
+    "#i0118" << password
     click "#idSIButton9"
 
     sleep 5
