@@ -141,9 +141,9 @@ NUGET
     VSSDK.ComponentModelHost.12 (12.0.4) - copy_local: false
       VSSDK.ComponentModelHost (>= 12.0.4 < 13.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.CoreUtility (12.0.4) - copy_local: false
+    VSSDK.CoreUtility (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.CoreUtility.12 (12.0.4) - copy_local: false
+    VSSDK.CoreUtility.12 (12.0.4)
       VSSDK.CoreUtility (>= 12.0.4 < 13.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
     VSSDK.DTE (7.0.4) - copy_local: false
@@ -160,26 +160,26 @@ NUGET
       VSSDK.DTE (>= 7.0.4 < 8.0)
       VSSDK.DTE.8 (>= 8.0.4 < 9.0)
       VSSDK.IDE.9 (>= 9.0.4 < 10.0)
-    VSSDK.Editor (12.0.4) - copy_local: false
+    VSSDK.Editor (12.0.4)
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.Text (>= 12.0.4)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
       VSSDK.TextManager.Interop.8 (>= 8.0.4 < 9.0)
-    VSSDK.Editor.12 (12.0.4) - copy_local: false
+    VSSDK.Editor.12 (12.0.4)
       VSSDK.CoreUtility.12 (>= 12.0.4 < 13.0)
       VSSDK.Editor (>= 12.0.4 < 13.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.Text.12 (>= 12.0.4 < 13.0)
-    VSSDK.GraphModel (12.0.4) - copy_local: false
+    VSSDK.GraphModel (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.GraphModel.12 (12.0.4) - copy_local: false
+    VSSDK.GraphModel.12 (12.0.4)
       VSSDK.GraphModel (>= 12.0.4 < 13.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
     VSSDK.IDE (7.0.4) - copy_local: false
     VSSDK.IDE.10 (10.0.4) - copy_local: false
-    VSSDK.IDE.11 (11.0.4) - copy_local: false
+    VSSDK.IDE.11 (11.0.4)
     VSSDK.IDE.12 (12.0.4) - copy_local: false
     VSSDK.IDE.8 (8.0.4) - copy_local: false
     VSSDK.IDE.9 (9.0.4) - copy_local: false
@@ -192,9 +192,9 @@ NUGET
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.Language (>= 12.0.4 < 13.0)
       VSSDK.Text.12 (>= 12.0.4 < 13.0)
-    VSSDK.OLE.Interop (7.0.4) - copy_local: false
+    VSSDK.OLE.Interop (7.0.4)
       VSSDK.IDE (>= 7.0.4 < 8.0)
-    VSSDK.Shell.12 (12.0.4) - copy_local: false
+    VSSDK.Shell.12 (12.0.4)
       VSSDK.DTE (>= 7.0.4 < 8.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
@@ -206,16 +206,16 @@ NUGET
       VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
       VSSDK.Threading.12 (>= 12.0.4 < 13.0)
-    VSSDK.Shell.Immutable.10 (10.0.4) - copy_local: false
+    VSSDK.Shell.Immutable.10 (10.0.4)
       VSSDK.IDE.10 (>= 10.0.4 < 11.0)
-    VSSDK.Shell.Immutable.11 (11.0.4) - copy_local: false
+    VSSDK.Shell.Immutable.11 (11.0.4)
       VSSDK.GraphModel (>= 11.0.4)
       VSSDK.IDE.11 (>= 11.0.4 < 12.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.Shell.Interop (>= 7.0.4 < 8.0)
-    VSSDK.Shell.Immutable.12 (12.0.4) - copy_local: false
+    VSSDK.Shell.Immutable.12 (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.Shell.Interop (7.0.4) - copy_local: false
+    VSSDK.Shell.Interop (7.0.4)
       VSSDK.IDE (>= 7.0.4 < 8.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
@@ -239,35 +239,35 @@ NUGET
       VSSDK.Shell.Interop.11 (>= 11.0.4 < 12.0)
       VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0)
       VSSDK.Shell.Interop.9 (>= 9.0.4 < 10.0)
-    VSSDK.Shell.Interop.8 (8.0.4) - copy_local: false
+    VSSDK.Shell.Interop.8 (8.0.4)
       VSSDK.IDE.8 (>= 8.0.4 < 9.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.Shell.Interop (>= 7.0.4 < 8.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
       VSSDK.TextManager.Interop.8 (>= 8.0.4 < 9.0)
-    VSSDK.Shell.Interop.9 (9.0.4) - copy_local: false
+    VSSDK.Shell.Interop.9 (9.0.4)
       VSSDK.IDE.9 (>= 9.0.4 < 10.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.Shell.Interop.8 (>= 8.0.4 < 9.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
-    VSSDK.Text (12.0.4) - copy_local: false
+    VSSDK.Text (12.0.4)
       VSSDK.CoreUtility (>= 12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.Text.12 (12.0.4) - copy_local: false
+    VSSDK.Text.12 (12.0.4)
       VSSDK.CoreUtility.12 (>= 12.0.4 < 13.0)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.Text (>= 12.0.4 < 13.0)
-    VSSDK.TextManager.Interop (7.0.4) - copy_local: false
+    VSSDK.TextManager.Interop (7.0.4)
       VSSDK.IDE (>= 7.0.4 < 8.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
-    VSSDK.TextManager.Interop.8 (8.0.4) - copy_local: false
+    VSSDK.TextManager.Interop.8 (8.0.4)
       VSSDK.IDE.8 (>= 8.0.4 < 9.0)
       VSSDK.OLE.Interop (>= 7.0.4 < 8.0)
       VSSDK.Shell.Interop (>= 7.0.4 < 8.0)
       VSSDK.TextManager.Interop (>= 7.0.4 < 8.0)
-    VSSDK.Threading (12.0.4) - copy_local: false
+    VSSDK.Threading (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
-    VSSDK.Threading.12 (12.0.4) - copy_local: false
+    VSSDK.Threading.12 (12.0.4)
       VSSDK.IDE.12 (>= 12.0.4 < 13.0)
       VSSDK.Threading (>= 12.0.4 < 13.0)
 

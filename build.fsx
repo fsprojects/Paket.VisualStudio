@@ -55,6 +55,8 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let buildVersion = sprintf "%s-a%s" release.NugetVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
+let visualStudioVersion = getBuildParamOrDefault "VisualStudioVersion" "12" |> sprintf "%s.0"
+
 let buildDir = "bin"
 let vsixDir = "bin/vsix"
 let tempDir = "temp"
@@ -100,7 +102,7 @@ Target "CleanDocs" (fun _ ->
 Target "Build" (fun _ ->
     // We would like to build only one solution
     !! (solutionFile + ".sln")
-    |> MSBuildReleaseExt  "" ["VisualStudioVersion", "12.0"] "Rebuild"
+    |> MSBuildReleaseExt  "" ["VisualStudioVersion", visualStudioVersion] "Rebuild"
     |> ignore
 )
 

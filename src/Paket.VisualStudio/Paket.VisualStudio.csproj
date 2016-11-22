@@ -856,7 +856,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.CoreUtility">
           <HintPath>..\..\packages\VSSDK.CoreUtility\lib\net45\Microsoft.VisualStudio.CoreUtility.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -921,7 +921,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Editor">
           <HintPath>..\..\packages\VSSDK.Editor\lib\net45\Microsoft.VisualStudio.Editor.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -932,7 +932,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.GraphModel">
           <HintPath>..\..\packages\VSSDK.GraphModel\lib\net45\Microsoft.VisualStudio.GraphModel.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -959,7 +959,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.OLE.Interop">
           <HintPath>..\..\packages\VSSDK.OLE.Interop\lib\net20\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -970,7 +970,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.12.0">
           <HintPath>..\..\packages\VSSDK.Shell.12\lib\net45\Microsoft.VisualStudio.Shell.12.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -981,7 +981,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0">
           <HintPath>..\..\packages\VSSDK.Shell.Immutable.10\lib\net40\Microsoft.VisualStudio.Shell.Immutable.10.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -992,7 +992,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0">
           <HintPath>..\..\packages\VSSDK.Shell.Immutable.11\lib\net45\Microsoft.VisualStudio.Shell.Immutable.11.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1003,7 +1003,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Immutable.12.0">
           <HintPath>..\..\packages\VSSDK.Shell.Immutable.12\lib\net45\Microsoft.VisualStudio.Shell.Immutable.12.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1014,7 +1014,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Interop">
           <HintPath>..\..\packages\VSSDK.Shell.Interop\lib\net20\Microsoft.VisualStudio.Shell.Interop.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1058,7 +1058,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0">
           <HintPath>..\..\packages\VSSDK.Shell.Interop.8\lib\net20\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1069,7 +1069,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0">
           <HintPath>..\..\packages\VSSDK.Shell.Interop.9\lib\net20\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1080,22 +1080,22 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Text.Data">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Data.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.Logic">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.Logic.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.Wpf.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.VisualStudio.Text.UI">
           <HintPath>..\..\packages\VSSDK.Text\lib\net45\Microsoft.VisualStudio.Text.UI.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1106,7 +1106,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.TextManager.Interop">
           <HintPath>..\..\packages\VSSDK.TextManager.Interop\lib\net20\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1117,7 +1117,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.TextManager.Interop.8.0">
           <HintPath>..\..\packages\VSSDK.TextManager.Interop.8\lib\net20\Microsoft.VisualStudio.TextManager.Interop.8.0.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -1128,7 +1128,7 @@
       <ItemGroup>
         <Reference Include="Microsoft.VisualStudio.Threading">
           <HintPath>..\..\packages\VSSDK.Threading\lib\net45\Microsoft.VisualStudio.Threading.dll</HintPath>
-          <Private>False</Private>
+          <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
