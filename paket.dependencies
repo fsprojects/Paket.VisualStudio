@@ -3,6 +3,7 @@ framework: >= net45
 
 nuget MahApps.Metro
 nuget Paket.Core
+nuget Mono.Cecil prerelease redirects:force
 nuget VSSDK.DTE.8 copy_local: false
 nuget VSSDK.DTE.9 copy_local: false
 nuget VSSDK.DTE.10 copy_local: false
@@ -12,8 +13,8 @@ nuget VSSDK.Editor.12 copy_local: false
 nuget VSSDK.ComponentModelHost.12 copy_local: false
 nuget VSSDK.Shell.12 copy_local: false
 nuget VSSDK.Shell.Interop.12 copy_local: false
-nuget reactiveui
-nuget reactiveui-events
+nuget reactiveui 6.5.2
+nuget reactiveui-events 6.5.0
 
 group Build
 source http://nuget.org/api/v2
