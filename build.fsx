@@ -193,6 +193,8 @@ Target "ReleaseToGitHub" (fun _ ->
 
 Target "UploadToGallery" (fun _ ->
     canopy.configuration.chromeDir <- @"./packages/build/Selenium.WebDriver.ChromeDriver/driver"
+    canopy.configuration.pageTimeout <- canopy.configuration.pageTimeout * 2.
+    canopy.configuration.elementTimeout <- canopy.configuration.elementTimeout * 2.
     start chrome
 
     let vsixGuid = "ce104917-e8b3-4365-9490-8432c6e75c36"
