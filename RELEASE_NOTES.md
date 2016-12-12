@@ -1,3 +1,6 @@
+#### 0.30.1 - 12.12.2016
+* Update Paket.Core to 3.31.2
+
 #### 0.30.0 - 22.11.2016
 * Update Paket.Core to 3.29.3
 * BUGFIX: Mono.Cecil issue fixed

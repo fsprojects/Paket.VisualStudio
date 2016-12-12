@@ -42,19 +42,19 @@ NUGET
       System.Security.Cryptography.X509Certificates (>= 4.3) - framework: >= net46
       System.Threading.Timer (>= 4.3) - framework: >= net451
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.29.3)
+    Paket.Core (3.31.2)
       Chessie (>= 0.6)
       FSharp.Core (>= 4.0.1.7-alpha)
       Mono.Cecil (>= 0.10.0-beta1-v2)
       Newtonsoft.Json
-      System.Diagnostics.FileVersionInfo (>= 4.0.0-prerelease)
-      System.Diagnostics.Process (>= 4.1.0-prerelease)
-      System.Diagnostics.TraceSource (>= 4.0.0-prerelease)
-      System.Security.Cryptography.Algorithms (>= 4.2.0-prerelease)
-      System.Security.Cryptography.ProtectedData (>= 4.0.0-prerelease)
-      System.Xml.XDocument (>= 4.0.11-prerelease)
-      System.Xml.XPath.XDocument (>= 4.0.1-prerelease)
-      System.Xml.XPath.XmlDocument (>= 4.0.1-prerelease)
+      System.Diagnostics.FileVersionInfo (>= 4.3.0-prerelease)
+      System.Diagnostics.Process (>= 4.3.0-prerelease)
+      System.Diagnostics.TraceSource (>= 4.3.0-prerelease)
+      System.Security.Cryptography.Algorithms (>= 4.3.0-prerelease)
+      System.Security.Cryptography.ProtectedData (>= 4.3.0-prerelease)
+      System.Xml.XDocument (>= 4.3.0-prerelease)
+      System.Xml.XPath.XDocument (>= 4.3.0-prerelease)
+      System.Xml.XPath.XmlDocument (>= 4.3.0-prerelease)
     reactiveui (6.5.2)
       reactiveui-core (6.5.2)
     reactiveui-core (6.5.2)
@@ -274,10 +274,10 @@ NUGET
 GROUP Build
 NUGET
   remote: http://www.nuget.org/api/v2
-    canopy (1.0.4)
+    canopy (1.0.5)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (3.0)
-    FAKE (4.45.2)
+    FAKE (4.46.1)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -295,8 +295,8 @@ NUGET
     Octokit (0.23)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
     Selenium.WebDriver (3.0)
-    Selenium.WebDriver.ChromeDriver (2.25.0.8)
+    Selenium.WebDriver.ChromeDriver (2.26)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (eaf899a7be2e2c0cb5c00a022f19f67c2d2c337e)
+    modules/Octokit/Octokit.fsx (ab0bacd2f21ee486879a3ea2a765f15b536181fb)
       Octokit (>= 0.20)
