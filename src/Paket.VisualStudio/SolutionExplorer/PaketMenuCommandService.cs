@@ -303,7 +303,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             RunCommand("paket-outdated.html", info =>
             {
                 Dependencies.Locate(tracker.GetSelectedFileName())
-                    .ShowOutdated(true, false);
+                    .ShowOutdated(true, false, FSharpOption<string>.None);
             });
         }
 
