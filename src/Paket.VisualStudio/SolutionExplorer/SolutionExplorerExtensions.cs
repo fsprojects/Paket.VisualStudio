@@ -84,7 +84,7 @@ namespace Paket.VisualStudio.SolutionExplorer
             IVsHierarchy hierarchy;
             IVsSolution solution = _serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;            
 
-            foreach (Project project in DteUtils.DTE.Solution.Projects)
+            foreach (Project project in GetAllProjects())
             {
                 solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
 
