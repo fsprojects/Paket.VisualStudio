@@ -1,3 +1,7 @@
+#### 0.30.4 - 09.01.2017
+* Update Paket.Core to 3.33.2
+* BUGFIX: Fixed unload/reload for nested projects - https://github.com/fsprojects/Paket.VisualStudio/pull/130
+
 #### 0.30.3 - 06.01.2017
 * Update Paket.Core to 3.33.0
 
