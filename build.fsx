@@ -55,7 +55,7 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let buildVersion = sprintf "%s-a%s" release.NugetVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
-let visualStudioVersion = getBuildParamOrDefault "VisualStudioVersion" "12" |> sprintf "%s.0"
+let visualStudioVersion = getBuildParamOrDefault "VisualStudioVersion" "14" |> sprintf "%s.0"
 
 let buildDir = "bin"
 let vsixDir = "bin/vsix"
