@@ -1,11 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paket.VisualStudio", "src\Paket.VisualStudio\Paket.VisualStudio.csproj", "{02140F7C-6F20-4FB5-89FD-4C283B44BAEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C379C61-EBC9-47FB-945C-61242838D624}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		build.fsx = build.fsx
 		paket.dependencies = paket.dependencies
 		paket.lock = paket.lock

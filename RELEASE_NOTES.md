@@ -1,3 +1,6 @@
+#### 0.30.5 - 13.01.2017
+* Change extension manifest to allow for Visual Studio 2017
+
 #### 0.30.4 - 09.01.2017
 * Update Paket.Core to 3.33.2
 * BUGFIX: Fixed unload/reload for nested projects - https://github.com/fsprojects/Paket.VisualStudio/pull/130
