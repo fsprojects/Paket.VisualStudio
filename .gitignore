@@ -187,3 +187,4 @@ release.cmd
 gallerycredentials.txt
 docs/tools/FSharp.Formatting.svclog
 .fake
+/.vs

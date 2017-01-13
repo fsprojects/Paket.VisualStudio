@@ -1,40 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
-  <Identifier Id="Paket.VisualStudio">
-    <Name>Paket for Visual Studio</Name>
-    <Author>Igal Tabachnik</Author>
-    <Version>0.30.5</Version>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="Paket.VisualStudio" Publisher="Igal Tabachnik" Language="en-US" Version="0.30.5" />
+    <DisplayName>Paket for Visual Studio</DisplayName>
     <Description xml:space="preserve">Manage your Paket dependencies from Visual Studio!</Description>
-    <Locale>1033</Locale>
-    <License>License.txt</License>
-    <Icon>logo.png</Icon>
-    <ReleaseNotes>https://github.com/fsprojects/Paket.VisualStudio/blob/master/RELEASE_NOTES.md</ReleaseNotes>
-    <PreviewImage>preview.png</PreviewImage>
-    <MoreInfoUrl></MoreInfoUrl>
+    <License>LICENSE.txt</License>
     <GettingStartedGuide></GettingStartedGuide>
-    <SupportedProducts>
-      <VisualStudio Version="11.0">
-        <Edition>Pro</Edition>
-      </VisualStudio>
-      <VisualStudio Version="12.0">
-        <Edition>Pro</Edition>
-      </VisualStudio>
-      <VisualStudio Version="14.0">
-        <Edition>Pro</Edition>
-      </VisualStudio>
-      <VisualStudio Version="15.0">
-        <Edition>Pro</Edition>
-      </VisualStudio>
-    </SupportedProducts>
-    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.6.2"/>
-  </Identifier>
-  <References>
+    <Icon>logo.png</Icon>
+    <PreviewImage>preview.png</PreviewImage>
+    <Tags></Tags>
+
+    <!--<Name></Name>
+      <Author></Author>
+      <Version>0.30.5</Version>
+      <Description xml:space="preserve">Manage your Paket dependencies from Visual Studio!</Description>
+      <Locale>1033</Locale>
+      <License>License.txt</License>
+      <Icon>logo.png</Icon>
+      <ReleaseNotes>https://github.com/fsprojects/Paket.VisualStudio/blob/master/RELEASE_NOTES.md</ReleaseNotes>
+      <PreviewImage>preview.png</PreviewImage>
+      <MoreInfoUrl></MoreInfoUrl>
+      <GettingStartedGuide></GettingStartedGuide>
+      <SupportedProducts>
+        <VisualStudio Version="11.0">
+          <Edition>Pro</Edition>
+        </VisualStudio>
+        <VisualStudio Version="12.0">
+          <Edition>Pro</Edition>
+        </VisualStudio>
+        <VisualStudio Version="14.0">
+          <Edition>Pro</Edition>
+        </VisualStudio>
+        <VisualStudio Version="15.0">
+          <Edition>Pro</Edition>
+        </VisualStudio>
+      </SupportedProducts>
+      <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.6.2"/>
+      -->
+  </Metadata>
+  <!--<References>
     <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
       <Name>Visual Studio MPF</Name>
     </Reference>
-  </References>
-  <Content>
+  </References>-->
+  <Installation>
+    <InstallationTarget Version="[12.0,16.0)" Id="Microsoft.VisualStudio.Community" />
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.Net.Component.4.TargetingPack" Version="[12.0,16.0)" DisplayName=".NET Framework 4 targeting pack" />
+  </Prerequisites>
+  <!--<Content>
     <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
     <MefComponent>|%CurrentProject%|</MefComponent>
-  </Content>
-</Vsix>
+  </Content>-->
+</PackageManifest>
