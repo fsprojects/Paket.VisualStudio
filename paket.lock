@@ -3,6 +3,9 @@ NUGET
   remote: http://www.nuget.org/api/v2
     Chessie (0.6)
       FSharp.Core
+    Clarius.VisualStudio (2.0.11)
+      MSBuilder (>= 0.1)
+      MSBuilder.CodeTaskAssembly (>= 0.2.4)
     FSharp.Core (4.0.1.7-alpha)
       Microsoft.NETCore.Platforms (>= 1.0.1) - framework: >= net463
       NETStandard.Library (>= 1.6) - framework: >= net463
@@ -19,6 +22,10 @@ NUGET
     Microsoft.NETCore.Platforms (1.1) - framework: >= net463
     Microsoft.Win32.Primitives (4.3) - framework: >= net463
     Mono.Cecil (0.10.0-beta1-v2) - redirects: force
+    MSBuilder (0.1.1)
+      MSBuilder.IsXBuild
+    MSBuilder.CodeTaskAssembly (0.2.5)
+    MSBuilder.IsXBuild (0.2.1)
     NETStandard.Library (1.6.1) - framework: >= net463
       Microsoft.Win32.Primitives (>= 4.3) - framework: >= net46
       System.AppContext (>= 4.3) - framework: >= net46

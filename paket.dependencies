@@ -15,6 +15,7 @@ nuget VSSDK.Shell.12
 nuget VSSDK.Shell.Interop.12 copy_local: false
 nuget reactiveui 6.5.2
 nuget reactiveui-events 6.5.0
+nuget Clarius.VisualStudio
 
 group Build
 source http://nuget.org/api/v2
