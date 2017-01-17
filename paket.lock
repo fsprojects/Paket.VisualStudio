@@ -3,9 +3,6 @@ NUGET
   remote: http://www.nuget.org/api/v2
     Chessie (0.6)
       FSharp.Core
-    Clarius.VisualStudio (2.0.11)
-      MSBuilder (>= 0.1)
-      MSBuilder.CodeTaskAssembly (>= 0.2.4)
     FSharp.Core (4.0.1.7-alpha)
       Microsoft.NETCore.Platforms (>= 1.0.1) - framework: >= net463
       NETStandard.Library (>= 1.6) - framework: >= net463
@@ -21,11 +18,7 @@ NUGET
     MahApps.Metro (1.4.1)
     Microsoft.NETCore.Platforms (1.1) - framework: >= net463
     Microsoft.Win32.Primitives (4.3) - framework: >= net463
-    Mono.Cecil (0.10.0-beta1-v2) - redirects: force
-    MSBuilder (0.1.1)
-      MSBuilder.IsXBuild
-    MSBuilder.CodeTaskAssembly (0.2.5)
-    MSBuilder.IsXBuild (0.2.1)
+    Mono.Cecil (0.10.0-beta2) - redirects: force
     NETStandard.Library (1.6.1) - framework: >= net463
       Microsoft.Win32.Primitives (>= 4.3) - framework: >= net46
       System.AppContext (>= 4.3) - framework: >= net46
@@ -49,7 +42,7 @@ NUGET
       System.Security.Cryptography.X509Certificates (>= 4.3) - framework: >= net46
       System.Threading.Timer (>= 4.3) - framework: >= net451
     Newtonsoft.Json (9.0.1)
-    Paket.Core (3.33.2)
+    Paket.Core (3.33.3)
       Chessie (>= 0.6)
       FSharp.Core (>= 4.0.1.7-alpha)
       Mono.Cecil (>= 0.10.0-beta1-v2)
@@ -284,7 +277,7 @@ NUGET
     canopy (1.1)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (3.0)
-    FAKE (4.49.1)
+    FAKE (4.50)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -305,5 +298,5 @@ NUGET
     Selenium.WebDriver.ChromeDriver (2.27)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (4eba8e70da347f09158a7940ee68614df37a7de7)
+    modules/Octokit/Octokit.fsx (82bf328cc145d8843e43ac2075c97a0990efc0ca)
       Octokit (>= 0.20)

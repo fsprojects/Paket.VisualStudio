@@ -191,39 +191,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
-      <PropertyGroup>
-        <__paket__MSBuilder_IsXBuild_props>MSBuilder.IsXBuild</__paket__MSBuilder_IsXBuild_props>
-      </PropertyGroup>
-    </When>
-  </Choose>
-  <Import Project="..\..\packages\MSBuilder.IsXBuild\build\$(__paket__MSBuilder_IsXBuild_props).props" Condition="Exists('..\..\packages\MSBuilder.IsXBuild\build\$(__paket__MSBuilder_IsXBuild_props).props')" Label="Paket" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
-      <PropertyGroup>
-        <__paket__MSBuilder_CodeTaskAssembly_props>MSBuilder.CodeTaskAssembly</__paket__MSBuilder_CodeTaskAssembly_props>
-      </PropertyGroup>
-    </When>
-  </Choose>
-  <Import Project="..\..\packages\MSBuilder.CodeTaskAssembly\build\$(__paket__MSBuilder_CodeTaskAssembly_props).props" Condition="Exists('..\..\packages\MSBuilder.CodeTaskAssembly\build\$(__paket__MSBuilder_CodeTaskAssembly_props).props')" Label="Paket" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
-      <PropertyGroup>
-        <__paket__MSBuilder_props>MSBuilder</__paket__MSBuilder_props>
-      </PropertyGroup>
-    </When>
-  </Choose>
-  <Import Project="..\..\packages\MSBuilder\build\$(__paket__MSBuilder_props).props" Condition="Exists('..\..\packages\MSBuilder\build\$(__paket__MSBuilder_props).props')" Label="Paket" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
-      <PropertyGroup>
-        <__paket__Clarius_VisualStudio_props>Clarius.VisualStudio</__paket__Clarius_VisualStudio_props>
-        <__paket__Clarius_VisualStudio_targets>Clarius.VisualStudio</__paket__Clarius_VisualStudio_targets>
-      </PropertyGroup>
-    </When>
-  </Choose>
-  <Import Project="..\..\packages\Clarius.VisualStudio\build\$(__paket__Clarius_VisualStudio_props).props" Condition="Exists('..\..\packages\Clarius.VisualStudio\build\$(__paket__Clarius_VisualStudio_props).props')" Label="Paket" />
   <Import Project="$(SolutionDir)\.paket\paket.targets" />
   <ItemGroup>
     <Content Include="..\..\docs\files\img\logo.png">
@@ -1154,5 +1121,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\packages\Clarius.VisualStudio\build\$(__paket__Clarius_VisualStudio_targets).targets" Condition="Exists('..\..\packages\Clarius.VisualStudio\build\$(__paket__Clarius_VisualStudio_targets).targets')" Label="Paket" />
 </Project>
