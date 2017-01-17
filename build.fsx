@@ -7,6 +7,7 @@ open Fake
 open Fake.Git
 open Fake.AssemblyInfoFile
 open Fake.ReleaseNotesHelper
+open Fake.ConfigurationHelper
 open System
 open System.IO
 open System.Text.RegularExpressions
@@ -55,7 +56,7 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 let isAppVeyorBuild = environVar "APPVEYOR" <> null
 let buildVersion = sprintf "%s-a%s" release.NugetVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
-let visualStudioVersion = getBuildParamOrDefault "VisualStudioVersion" "12" |> sprintf "%s.0"
+let visualStudioVersion = getBuildParamOrDefault "VisualStudioVersion" "12.0"
 
 let buildDir = "bin"
 let vsixDir = "bin/vsix"
@@ -78,11 +79,8 @@ Target "AssemblyInfo" (fun _ ->
       (Attribute.InternalsVisibleTo "Paket.VisualStudio.Tests" :: Attribute.Title "Paket.VisualStudio" :: shared)
 
   let manifest = "src/Paket.VisualStudio/source.extension.vsixmanifest"
-  File.WriteAllLines(
-      manifest,
-      File.ReadAllLines manifest
-      |> Array.map (fun l -> if l.Contains("<Version>") then sprintf "    <Version>%s</Version>" release.NugetVersion else l))
-      
+  // Having to use this format due to xml namespaces
+  updateConfigSetting manifest ("//*[local-name()='Identity']") "Version" (sprintf "%s" release.NugetVersion)
 )
 
 // --------------------------------------------------------------------------------------

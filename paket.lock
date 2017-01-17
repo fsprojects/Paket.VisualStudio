@@ -281,10 +281,10 @@ NUGET
 GROUP Build
 NUGET
   remote: http://www.nuget.org/api/v2
-    canopy (1.0.7)
+    canopy (1.1)
       FSharp.Core (>= 3.0.2)
       Selenium.WebDriver (3.0)
-    FAKE (4.48)
+    FAKE (4.49.1)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.14.4)
@@ -299,11 +299,11 @@ NUGET
     Microsoft.Net.Http (2.2.29) - framework: net10, net11, net20, net30, net35, net40, net40-full
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Octokit (0.23)
+    Octokit (0.24)
       Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40-full
     Selenium.WebDriver (3.0)
     Selenium.WebDriver.ChromeDriver (2.27)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (4c38cad5f0a1d3f29c22e50ef2bff189be47c730)
+    modules/Octokit/Octokit.fsx (4eba8e70da347f09158a7940ee68614df37a7de7)
       Octokit (>= 0.20)
