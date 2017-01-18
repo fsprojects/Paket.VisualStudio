@@ -1,3 +1,6 @@
+#### 0.31.0 - 18.01.2017
+* Support for Visual Studio 2017 - https://github.com/fsprojects/Paket.VisualStudio/pull/133
+
 #### 0.30.4 - 09.01.2017
 * Update Paket.Core to 3.33.2
 * BUGFIX: Fixed unload/reload for nested projects - https://github.com/fsprojects/Paket.VisualStudio/pull/130
