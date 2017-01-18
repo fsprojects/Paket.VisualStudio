@@ -1,4 +1,4 @@
-#### 0.31.1 - 18.01.2017
+#### 0.31.2 - 18.01.2017
 * Support for Visual Studio 2017 - https://github.com/fsprojects/Paket.VisualStudio/pull/133
 
 #### 0.30.4 - 09.01.2017
