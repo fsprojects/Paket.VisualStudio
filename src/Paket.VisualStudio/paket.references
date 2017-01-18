@@ -8,6 +8,7 @@ VSSDK.Editor.12
 VSSDK.ComponentModelHost.12
 VSSDK.Shell.12
 VSSDK.Shell.Interop.12
+Microsoft.VisualStudio.Sdk.BuildTasks.14.0
 reactiveui
 reactiveui-events
 MahApps.Metro

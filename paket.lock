@@ -17,6 +17,7 @@ NUGET
       System.Threading.ThreadPool (>= 4.0.10) - framework: >= net463
     MahApps.Metro (1.4.1)
     Microsoft.NETCore.Platforms (1.1) - framework: >= net463
+    Microsoft.VisualStudio.Sdk.BuildTasks.14.0 (14.0.20-pre)
     Microsoft.Win32.Primitives (4.3) - framework: >= net463
     Mono.Cecil (0.10.0-beta2) - redirects: force
     NETStandard.Library (1.6.1) - framework: >= net463
