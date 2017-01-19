@@ -17,8 +17,7 @@
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
   </Dependencies>
   <Prerequisites>
-    <!-- required for VS2017 -->
-    <Prerequisite Id="Microsoft.Framework.NDP" Version="[4.5,)" DisplayName="Microsoft .NET Framework" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26004.1,16.0)" DisplayName="Visual Studio core editor" />
   </Prerequisites>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

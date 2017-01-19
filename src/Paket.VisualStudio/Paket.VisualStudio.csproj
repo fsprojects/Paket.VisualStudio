@@ -3,8 +3,7 @@
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(VisualStudioVersion)' != ''">$(VisualStudioVersion)</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <!-- This project is NOT intended to build the actual extension at all. -->
-    <CreateVsixContainer>false</CreateVsixContainer>
+    <VsixType>v3</VsixType>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -190,6 +189,15 @@
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
+      <PropertyGroup>
+        <__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_props>Microsoft.VisualStudio.Sdk.BuildTasks.14.0</__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_props>
+        <__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_targets>Microsoft.VisualStudio.Sdk.BuildTasks.14.0</__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_targets>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0\build\$(__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_props).props" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0\build\$(__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_props).props')" Label="Paket" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(SolutionDir)\.paket\paket.targets" />
   <ItemGroup>
@@ -1121,4 +1129,5 @@
       </ItemGroup>
     </When>
   </Choose>
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0\build\$(__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_targets).targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Sdk.BuildTasks.14.0\build\$(__paket__Microsoft_VisualStudio_Sdk_BuildTasks_14_0_targets).targets')" Label="Paket" />
 </Project>
