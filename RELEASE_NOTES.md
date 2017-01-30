@@ -1,3 +1,6 @@
+#### 0.31.5 - 30.01.2017
+* Update Paket.Core to 3.35.0
+
 #### 0.31.4 - 19.01.2017
 * Update Paket.Core to 3.33.4
 * Support for Visual Studio 2017 - https://github.com/fsprojects/Paket.VisualStudio/pull/133
