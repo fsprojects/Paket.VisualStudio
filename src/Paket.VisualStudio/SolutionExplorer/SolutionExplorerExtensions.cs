@@ -111,7 +111,7 @@ namespace Paket.VisualStudio.SolutionExplorer
                     catch (NotImplementedException e)
                     {
                         // I believe this happens when a project is currently not loaded...
-                        PaketOutputPane.OutputPane.OutputString($"Error while trying to get FullName of project '{p.Name}': {e}");
+                        PaketOutputPane.OutputPane.OutputString($"Error while trying to get FullName of project '{p.Name}': {e}\r\n");
                         return false;
                     }
                 });
