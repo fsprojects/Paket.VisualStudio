@@ -22,7 +22,14 @@ namespace Paket.VisualStudio.Restore
 
             try
             {
-                restorer.Restore(dependencies, projects);
+                using (var loggingSub = Paket.Logging.@event.Publish.Subscribe(trace =>
+                {
+                    PaketOutputPane.OutputPane.OutputStringThreadSafe(
+                        "Paket: "+ trace.Text + (trace.NewLine ? "\r\n" : ""));
+                }))
+                {
+                    restorer.Restore(dependencies, projects);
+                }
             }
             finally
             {

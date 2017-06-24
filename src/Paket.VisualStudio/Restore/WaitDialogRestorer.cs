@@ -26,17 +26,26 @@ namespace Paket.VisualStudio.Restore
             var projectsList = projects?.ToList();
             IVsThreadedWaitDialog2 waitDialog;
             waitDialogFactory.CreateInstance(out waitDialog);
-            waitDialog.StartWaitDialog("Paket", "Restoring packages", null, null, null, 0, false, true);
+            waitDialog.StartWaitDialog("Paket", "Restoring packages", "Initialize Paket", null, null, 0, false, true);
 
             int i = 0;
             try
             {
                 if (projectsList == null)
                 {
-                    bool canceled;
-                    waitDialog.UpdateProgress(string.Format("Restoring packages for Solution"), null, null, i++, 1, false, out canceled);
+                    using (var loggingSub = Paket.Logging.@event.Publish.Subscribe(trace =>
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(
+                            "Restoring packages for Solution", trace.Text, trace.Text, i++, 50, false, out canceled);
+                    }))
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(
+                            "Restoring packages for Solution", "Restoring packages", "Restoring packages", i++, 50, false, out canceled);
 
-                    restorer.Restore(dependencies, null);
+                        restorer.Restore(dependencies, null);
+                    }
                 }
                 else
                 {
