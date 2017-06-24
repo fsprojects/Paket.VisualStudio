@@ -23,7 +23,7 @@ namespace Paket.VisualStudio.Restore
 
         public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
         {
-            var projectsList = projects.ToList();
+            var projectsList = projects?.ToList();
             IVsThreadedWaitDialog2 waitDialog;
             waitDialogFactory.CreateInstance(out waitDialog);
             waitDialog.StartWaitDialog("Paket", "Restoring packages", null, null, null, 0, false, true);
@@ -31,12 +31,22 @@ namespace Paket.VisualStudio.Restore
             int i = 0;
             try
             {
-                foreach (var project in projectsList)
+                if (projectsList == null)
                 {
                     bool canceled;
-                    waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
+                    waitDialog.UpdateProgress(string.Format("Restoring packages for Solution"), null, null, i++, 1, false, out canceled);
 
-                    restorer.Restore(dependencies, new[] { project });
+                    restorer.Restore(dependencies, null);
+                }
+                else
+                {
+                    foreach (var project in projectsList)
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
+
+                        restorer.Restore(dependencies, new[] { project });
+                    }
                 }
             }
             finally
