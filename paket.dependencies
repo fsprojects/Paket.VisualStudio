@@ -3,6 +3,7 @@ framework: >= net45
 
 nuget MahApps.Metro
 nuget Paket.Core
+nuget FSharp.Core redirects:force
 nuget Mono.Cecil prerelease redirects:force
 nuget Microsoft.VisualStudio.Sdk.BuildTasks.14.0 prerelease
 nuget VSSDK.DTE.8 copy_local: false
