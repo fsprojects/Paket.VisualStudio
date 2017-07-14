@@ -1,3 +1,6 @@
+#### 0.32.3 - 14.07.2017
+* Update Paket.Core to 5.6.12
+
 #### 0.32.2 - 28.06.2017
 * Update Paket.Core to 5
 
