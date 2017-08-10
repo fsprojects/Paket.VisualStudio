@@ -9,7 +9,7 @@ NUGET
     Microsoft.VisualStudio.Sdk.BuildTasks.14.0 (14.0.215)
     Mono.Cecil (0.10.0-beta6) - redirects: force
     Newtonsoft.Json (10.0.3)
-    Paket.Core (5.6.12)
+    Paket.Core (5.85)
       Chessie (>= 0.6)
       FSharp.Compiler.Tools
       FSharp.Core
