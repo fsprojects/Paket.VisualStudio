@@ -30,6 +30,7 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
                     NuGetV3.FindPackages(FSharpOption<Paket.PackageSources.NugetSourceAuthentication>.None, Constants.DefaultNuGetStream, searchTerm, 20),
                     FSharpOption<int>.None,
                     FSharpOption<CancellationToken>.None);
+
             if (searchResults.IsOk)
             {
                 foreach (var value in searchResults.ResultValue)
