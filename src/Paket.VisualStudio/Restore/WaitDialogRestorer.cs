@@ -23,20 +23,39 @@ namespace Paket.VisualStudio.Restore
 
         public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
         {
-            var projectsList = projects.ToList();
+            var projectsList = projects?.ToList();
             IVsThreadedWaitDialog2 waitDialog;
             waitDialogFactory.CreateInstance(out waitDialog);
-            waitDialog.StartWaitDialog("Paket", "Restoring packages", null, null, null, 0, false, true);
+            waitDialog.StartWaitDialog("Paket", "Restoring packages", "Initialize Paket", null, null, 0, false, true);
 
             int i = 0;
             try
             {
-                foreach (var project in projectsList)
+                if (projectsList == null)
                 {
-                    bool canceled;
-                    waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
+                    using (var loggingSub = Paket.Logging.@event.Publish.Subscribe(trace =>
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(
+                            "Restoring packages for Solution", trace.Text, trace.Text, i++, 50, false, out canceled);
+                    }))
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(
+                            "Restoring packages for Solution", "Restoring packages", "Restoring packages", i++, 50, false, out canceled);
 
-                    restorer.Restore(dependencies, new[] { project });
+                        restorer.Restore(dependencies, null);
+                    }
+                }
+                else
+                {
+                    foreach (var project in projectsList)
+                    {
+                        bool canceled;
+                        waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
+
+                        restorer.Restore(dependencies, new[] { project });
+                    }
                 }
             }
             finally

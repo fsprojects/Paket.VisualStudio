@@ -103,7 +103,18 @@ namespace Paket.VisualStudio.SolutionExplorer
             return DteUtils.DTE.Solution.Projects
                 .OfType<Project>()
                 .SelectMany(GetProjects)
-                .Where(p => File.Exists(p.FullName));
+                .Where(p => {
+                    try
+                    {
+                        return File.Exists(p.FullName);
+                    }
+                    catch (NotImplementedException e)
+                    {
+                        // I believe this happens when a project is currently not loaded...
+                        PaketOutputPane.OutputPane.OutputString($"Error while trying to get FullName of project '{p.Name}': {e}\r\n");
+                        return false;
+                    }
+                });
         }
 
         private static IEnumerable<Project> GetProjects(Project project)

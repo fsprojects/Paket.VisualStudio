@@ -31,9 +31,12 @@ namespace Paket.VisualStudio.IntelliSense.CompletionProviders
                     FSharpOption<int>.None,
                     FSharpOption<CancellationToken>.None);
 
-            foreach (var value in searchResults.ResultValue)
+            if (searchResults.IsOk)
             {
-                yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
+                foreach (var value in searchResults.ResultValue)
+                {
+                    yield return new Completion2(value, value, null, imageSource, "iconAutomationText");
+                }
             }
         }
 

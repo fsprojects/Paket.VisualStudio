@@ -12,13 +12,23 @@ namespace Paket.VisualStudio.Restore
         private readonly IPackageRestorer restorer;
         private readonly DTE dte;
         private readonly BuildEvents buildEvents;
+        private readonly SolutionEvents solutionEvents;
 
         public PackageRestorer(IPackageRestorer restorer)
         {
             dte = (DTE)Package.GetGlobalService(typeof(DTE));
+            solutionEvents = dte.Events.SolutionEvents;
+            solutionEvents.Opened += SolutionEvents_Opened;
             buildEvents = dte.Events.BuildEvents;
             buildEvents.OnBuildBegin += BuildEvents_OnBuildBegin;
             this.restorer = restorer;
+        }
+
+        private void SolutionEvents_Opened()
+        {
+            var dir = SolutionExplorerExtensions.GetSolutionDirectory();
+            var dependencies = Dependencies.Locate(dir);
+            restorer.Restore(dependencies, null);
         }
 
         private void BuildEvents_OnBuildBegin(vsBuildScope scope, vsBuildAction action)
