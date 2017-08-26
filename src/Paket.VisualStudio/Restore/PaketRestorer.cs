@@ -9,16 +9,8 @@ namespace Paket.VisualStudio.Restore
     {
         public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> project)
         {
-            if (project == null)
-            {
-                dependencies.Restore();
-            }
-            else
-            {
-                dependencies.Restore(
-                    FSharpOption<string>.None,
-                    ListModule.OfSeq(project.Select(p => p.ReferenceFile)));
-            }
+            // Note: Performance optimization because this command is optimized in paket itself
+            dependencies.Restore();
         }
     }
 }
