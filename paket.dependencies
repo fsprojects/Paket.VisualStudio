@@ -25,6 +25,7 @@ nuget ILRepack
 nuget FAKE
 nuget FSharp.Formatting
 nuget canopy
-nuget Selenium.WebDriver.ChromeDriver
+nuget Selenium.WebDriver.ChromeDriver 2.30.0.1
+nuget Selenium.WebDriver 3.4
 
 github fsharp/FAKE modules/Octokit/Octokit.fsx
