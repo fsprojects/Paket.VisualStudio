@@ -15,13 +15,13 @@ namespace Paket.VisualStudio.Restore
             this.restorer = restorer;
         }
 
-        public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
+        public void Restore(IEnumerable<RestoringProject> projects)
         {
             foreach (var project in projects)
             {
                 try
                 {
-                    restorer.Restore(dependencies, new[] { project });
+                    restorer.Restore(new[] { project });
                 }
                 catch (Exception ex)
                 {

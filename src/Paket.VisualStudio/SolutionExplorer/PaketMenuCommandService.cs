@@ -3,9 +3,8 @@ using System.ComponentModel.Design;
 using System.Linq;
 using Microsoft.VisualStudio.Shell;
 using Paket.VisualStudio.Commands;
+using Paket.VisualStudio.Utils;
 using System.Threading.Tasks;
-using System.IO;
-using Microsoft.FSharp.Core;
 using System.Threading;
 
 namespace Paket.VisualStudio.SolutionExplorer
@@ -213,7 +212,6 @@ namespace Paket.VisualStudio.SolutionExplorer
             });
         }
 
-
         private void RunCommandAndReloadAllProjects(string helpTopic, Action<SolutionInfo> command)
         {
             PaketOutputPane.OutputPane.Activate();
@@ -302,26 +300,26 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand("paket-outdated.html", info =>
             {
-                Dependencies.Locate(tracker.GetSelectedFileName())
-                    .ShowOutdated(true, false, FSharpOption<string>.None);
+                PaketLauncher.LaunchPaket(info.Directory, "outdated",
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
         private void Update(object sender, EventArgs e)
         {
-            RunCommandAndReloadAllProjects("paket-update.html", _ =>
+            RunCommandAndReloadAllProjects("paket-update.html", info =>
             {
-                Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Update(false);
+                PaketLauncher.LaunchPaket(info.Directory, "update",
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
         private void Install(object sender, EventArgs e)
         {
-            RunCommandAndReloadAllProjects("paket-install.html", _ =>
+            RunCommandAndReloadAllProjects("paket-install.html", info =>
             {
-                Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Install(false);
+                PaketLauncher.LaunchPaket(info.Directory, "install",
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -329,8 +327,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-restore.html", info =>
             {
-                Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Restore();
+                PaketLauncher.LaunchPaket(info.Directory, "restore",
+                                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -338,8 +336,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommand("paket-simplify.html", info => // Should work without unload
             {
-                Dependencies.Locate(tracker.GetSelectedFileName())
-                    .Simplify(false);
+                PaketLauncher.LaunchPaket(info.Directory, "simplify",
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -347,8 +345,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
-                Dependencies.Locate(info.DependenciesFileName)
-                    .UpdatePackage(FSharpOption<string>.Some(info.GroupName), info.PackageName, FSharpOption<string>.None, false, SemVerUpdateMode.NoRestriction, false);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "update " + info.PackageName,
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
         
@@ -357,8 +355,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-group", info =>
             {
-                Dependencies.Locate(info.DependenciesFileName)
-                    .UpdateGroup(info.GroupName, false, false, false, false, true, SemVerUpdateMode.NoRestriction, false);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "update --group " + info.GroupName,
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -366,8 +364,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-remove.html", info =>
             {
-                Dependencies.Locate(info.DependenciesFileName)
-                    .Remove(Microsoft.FSharp.Core.FSharpOption<string>.Some(info.GroupName), info.PackageName);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "remove " + info.PackageName,
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -411,8 +409,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageInUnloadedProject("paket-remove.html#Removing-from-a-single-project", info =>
             {
-                Dependencies.Locate(info.DependenciesFileName)
-                    .RemoveFromProject(FSharpOption<string>.Some(info.GroupName), info.PackageName, false, info.ReferencesFileName, true);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "remove " + info.PackageName + " --project " + info.ReferencesFileName,
+                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -420,7 +418,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-init.html", info =>
             {
-                Dependencies.Init(info.Directory);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "init",
+                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 
@@ -428,9 +427,8 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-convert-from-nuget.html", info =>
             {
-                var dir = FSharpOption<DirectoryInfo>.Some(new DirectoryInfo(info.Directory));
-                Dependencies
-                    .ConvertFromNuget(true, true, true, FSharpOption<string>.None, dir);
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "convert-from-nuget",
+                                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
 

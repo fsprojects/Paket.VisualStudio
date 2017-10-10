@@ -4,6 +4,6 @@ namespace Paket.VisualStudio.Restore
 {
     public interface IPackageRestorer
     {
-        void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects);
+        void Restore(IEnumerable<RestoringProject> projects);
     }
 }

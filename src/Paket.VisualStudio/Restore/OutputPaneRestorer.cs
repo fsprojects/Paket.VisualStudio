@@ -15,14 +15,14 @@ namespace Paket.VisualStudio.Restore
             this.restorer = restorer;
         }
 
-        public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
+        public void Restore(IEnumerable<RestoringProject> projects)
         {
             PaketErrorPane.Clear();
             PaketOutputPane.OutputPane.OutputStringThreadSafe("Restoring packages\r\n");
 
             try
             {
-                restorer.Restore(dependencies, projects);
+                restorer.Restore(projects);
             }
             finally
             {

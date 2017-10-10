@@ -1,17 +1,19 @@
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.FSharp.Collections;
-using Microsoft.FSharp.Core;
+using Paket.VisualStudio.Utils;
+using Paket.VisualStudio.SolutionExplorer;
 
 namespace Paket.VisualStudio.Restore
 {
     public class PaketRestorer : IPackageRestorer
     {
-        public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> project)
+        public void Restore(IEnumerable<RestoringProject> project)
         {
-            dependencies.Restore(
-                FSharpOption<string>.None,
-                ListModule.OfSeq(project.Select(p => p.ReferenceFile)));
+            string PaketSubCommand = "restore --references-file ";
+            foreach (RestoringProject p in project)
+                PaketSubCommand += p.ReferenceFile + " ";
+
+            PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), PaketSubCommand,
+                                    (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
         }
     }
 }

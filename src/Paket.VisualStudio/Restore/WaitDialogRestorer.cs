@@ -21,7 +21,7 @@ namespace Paket.VisualStudio.Restore
             this.waitDialogFactory = waitDialogFactory;
         }
 
-        public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
+        public void Restore(IEnumerable<RestoringProject> projects)
         {
             var projectsList = projects.ToList();
             IVsThreadedWaitDialog2 waitDialog;
@@ -36,7 +36,7 @@ namespace Paket.VisualStudio.Restore
                     bool canceled;
                     waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
 
-                    restorer.Restore(dependencies, new[] { project });
+                    restorer.Restore(new[] { project });
                 }
             }
             finally
