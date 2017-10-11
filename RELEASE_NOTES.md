@@ -1,3 +1,6 @@
+#### 0.33.3 - 11.10.2017
+* Update Paket.Core to Paket.Core 5.113.2
+
 #### 0.33.2 - 13.09.2017
 * Update Paket.Core to 5.96
 
