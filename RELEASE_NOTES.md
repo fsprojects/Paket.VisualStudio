@@ -1,3 +1,6 @@
+#### 0.34.0 - 12.10.2017
+* Keeping minimum dependency on Paket.Core.Dll and using paket.exe instead for operations that modify the solution - https://github.com/fsprojects/Paket.VisualStudio/pull/144
+
 #### 0.33.3 - 11.10.2017
 * Update Paket.Core to Paket.Core 5.113.2
 
