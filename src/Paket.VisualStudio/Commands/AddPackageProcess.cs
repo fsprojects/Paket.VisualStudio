@@ -22,7 +22,8 @@ namespace Paket.VisualStudio.Commands
             catch (Exception)
             {
                 var dir = new System.IO.FileInfo(SolutionExplorerExtensions.GetSolutionFileName()).Directory.FullName;
-                Dependencies.Init(dir);
+                PaketLauncher.LaunchPaket(dir, "init",
+                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
                 dependenciesFile = Dependencies.Locate(selectedFileName);
             }
 
@@ -46,11 +47,13 @@ namespace Paket.VisualStudio.Commands
                     var guid = Guid.Parse(projectGuid);
                     DteHelper.ExecuteCommand("File.SaveAll");
                     SolutionExplorerExtensions.UnloadProject(guid);
-                    dependenciesFile.AddToProject(FSharpOption<string>.None, result.PackageName, "", false, false, false, false, selectedFileName, true, SemVerUpdateMode.NoRestriction, false);
+                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "add " + result.PackageName + " --project " + selectedFileName,
+                        (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
                     SolutionExplorerExtensions.ReloadProject(guid);
                 }
                 else
-                    dependenciesFile.Add(FSharpOption<string>.None, result.PackageName, "", false, false, false, false, false, true, SemVerUpdateMode.NoRestriction, false);
+                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "add " + result.PackageName,
+                        (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             };
 
             Func<string, IObservable<string>> searchNuGet = 

@@ -145,6 +145,7 @@
     <Compile Include="SolutionExplorer\PaketGraphSchema.cs" />
     <Compile Include="SolutionExplorer\PaketMenuCommandService.cs" />
     <Compile Include="Utils\DteHelper.cs" />
+    <Compile Include="Utils\PaketLauncher.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Content Include="..\..\RELEASE_NOTES.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

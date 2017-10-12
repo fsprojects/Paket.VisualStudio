@@ -40,7 +40,7 @@ namespace Paket.VisualStudio.Restore
                 .Select(p => new RestoringProject(p.ProjectName, p.ReferenceFile.Value))
                 .ToList();
 
-            restorer.Restore(dependencies, projects);
+            restorer.Restore(projects);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Paket.VisualStudio.Restore
             this.settings = settings;
         }
 
-        public void Restore(Dependencies dependencies, IEnumerable<RestoringProject> projects)
+        public void Restore(IEnumerable<RestoringProject> projects)
         {
             if (!settings.AutoRestore)
                 return;
-            restorer.Restore(dependencies, projects);
+            restorer.Restore(projects);
         }
     }
 }
