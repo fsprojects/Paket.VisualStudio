@@ -19,8 +19,10 @@ namespace Paket.VisualStudio.Utils
             process.StartInfo.WorkingDirectory = SolutionDirectory;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
             process.OutputDataReceived += PaketDataReceivedHandler;
-            process.ErrorDataReceived += PaketDataReceivedHandler;
+            process.ErrorDataReceived += PaketDataReceivedHandler;            
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();

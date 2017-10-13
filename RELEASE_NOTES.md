@@ -1,3 +1,6 @@
+#### 0.35.0 - 13.10.2017
+* BUGFIX: Don't open cmd window - https://github.com/fsprojects/Paket.VisualStudio/issues/145
+
 #### 0.34.0 - 12.10.2017
 * Keeping minimum dependency on Paket.Core.Dll and using paket.exe instead for operations that modify the solution - https://github.com/fsprojects/Paket.VisualStudio/pull/144
 
