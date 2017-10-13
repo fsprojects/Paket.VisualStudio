@@ -8,9 +8,9 @@ namespace Paket.VisualStudio.Restore
     {
         public void Restore(IEnumerable<RestoringProject> project)
         {
-            string PaketSubCommand = "restore --references-file ";
+            string PaketSubCommand = "restore";
             foreach (RestoringProject p in project)
-                PaketSubCommand += p.ReferenceFile + " ";
+                PaketSubCommand += $" --references-file {p.ReferenceFile} ";
 
             PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), PaketSubCommand,
                                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
