@@ -1,3 +1,6 @@
+#### 0.36.0 - 13.10.2017
+* BUGFIX: Fix issues on build/restore packages - https://github.com/fsprojects/Paket.VisualStudio/issues/147
+
 #### 0.35.0 - 13.10.2017
 * BUGFIX: Don't open cmd window - https://github.com/fsprojects/Paket.VisualStudio/issues/145
 
