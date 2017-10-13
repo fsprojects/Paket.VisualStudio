@@ -31,13 +31,10 @@ namespace Paket.VisualStudio.Restore
             int i = 0;
             try
             {
-                foreach (var project in projectsList)
-                {
-                    bool canceled;
-                    waitDialog.UpdateProgress(string.Format("Restoring packages for {0}", project.ProjectName), null, null, i++, projectsList.Count, false, out canceled);
+                bool canceled;
+                waitDialog.UpdateProgress(string.Format("Restoring packages"), null, null, i++, projectsList.Count, false, out canceled);
 
-                    restorer.Restore(new[] { project });
-                }
+                restorer.Restore(projects);
             }
             finally
             {

@@ -17,17 +17,14 @@ namespace Paket.VisualStudio.Restore
 
         public void Restore(IEnumerable<RestoringProject> projects)
         {
-            foreach (var project in projects)
+            try
             {
-                try
-                {
-                    restorer.Restore(new[] { project });
-                }
-                catch (Exception ex)
-                {
-                    PaketErrorPane.ShowError(ex.Message, project.ReferenceFile, "paket-restore.html");
-                    PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
-                }
+                restorer.Restore(projects);
+            }
+            catch (Exception ex)
+            {
+                PaketErrorPane.ShowError(ex.Message, "Paket restore error !", "paket-restore.html");
+                PaketOutputPane.OutputPane.OutputStringThreadSafe(ex.Message + "\r\n");
             }
         }
     }
