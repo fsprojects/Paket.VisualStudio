@@ -83,6 +83,9 @@
     <Compile Include="IntelliSense\Classifier\PaketLockClassifierProvider.cs" />
     <Compile Include="IntelliSense\Classifier\PaketLockClassifier.cs" />
     <Compile Include="IntelliSense\CompletionProviders\SimpleOptionCompletionListProvider.cs" />
+    <Compile Include="LockFile\LockFileTaggerProvider.cs" />
+    <Compile Include="LockFile\GroupOutline.cs" />
+    <Compile Include="LockFile\LockFileTagger.cs" />
     <Compile Include="PaketOptions.cs">
       <SubType>Component</SubType>
     </Compile>
