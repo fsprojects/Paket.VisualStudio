@@ -1,3 +1,6 @@
+#### 0.37.0 - 16.10.2017
+*  BUGFIX: Fix issues on build/restore packages - https://github.com/fsprojects/Paket.VisualStudio/issues/149
+
 #### 0.36.0 - 13.10.2017
 * BUGFIX: Fix issues on build/restore packages - https://github.com/fsprojects/Paket.VisualStudio/issues/147
 
