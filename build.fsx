@@ -190,7 +190,7 @@ Target "ReleaseToGitHub" (fun _ ->
 
 
 Target "UploadToGallery" (fun _ ->
-    canopy.configuration.chromeDir <- @"./packages/build/Selenium.WebDriver.ChromeDriver/driver"
+    canopy.configuration.chromeDir <- @"./packages/build/Selenium.WebDriver.ChromeDriver/driver/win32"
     canopy.configuration.pageTimeout <- canopy.configuration.pageTimeout * 4.
     canopy.configuration.elementTimeout <- canopy.configuration.elementTimeout * 4.
     start chrome
