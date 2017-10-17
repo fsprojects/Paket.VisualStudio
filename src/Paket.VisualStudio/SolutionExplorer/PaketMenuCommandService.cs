@@ -145,8 +145,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             PaketErrorPane.Clear();
             StatusBarService.UpdateText("Paket command started.");
             var info = new SolutionInfo();
-            info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
-            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();
+            info.Directory = SolutionExplorerExtensions.GetPaketDirectory();
+            info.FileName = SolutionExplorerExtensions.GetPaketDirectory();
             System.Threading.Tasks.Task.Factory.StartNew(() =>
                 {
                     try
@@ -219,8 +219,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             StatusBarService.UpdateText("Paket command started.");
 
             var info = new SolutionInfo();
-            info.Directory = SolutionExplorerExtensions.GetSolutionDirectory();
-            info.FileName = SolutionExplorerExtensions.GetSolutionDirectory();
+            info.Directory = SolutionExplorerExtensions.GetPaketDirectory();
+            info.FileName = SolutionExplorerExtensions.GetPaketDirectory();
             var projectGuids = SolutionExplorerExtensions.GetAllProjectGuids();
 
             SolutionExplorerExtensions.SaveSolution();
@@ -345,7 +345,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-package", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "update " + info.PackageName,
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "update " + info.PackageName,
                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
@@ -355,7 +355,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-update.html#Updating-a-single-group", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "update --group " + info.GroupName,
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "update --group " + info.GroupName,
                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
@@ -364,7 +364,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageAndReloadAllDependendProjects("paket-remove.html", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "remove " + info.PackageName,
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "remove " + info.PackageName,
                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
@@ -409,7 +409,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandOnPackageInUnloadedProject("paket-remove.html#Removing-from-a-single-project", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "remove " + info.PackageName + " --project " + info.ReferencesFileName,
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "remove " + info.PackageName + " --project " + info.ReferencesFileName,
                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
@@ -418,7 +418,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-init.html", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "init",
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "init",
                      (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }
@@ -427,7 +427,7 @@ namespace Paket.VisualStudio.SolutionExplorer
         {
             RunCommandAndReloadAllProjects("paket-convert-from-nuget.html", info =>
             {
-                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "convert-from-nuget",
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "convert-from-nuget",
                                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             });
         }

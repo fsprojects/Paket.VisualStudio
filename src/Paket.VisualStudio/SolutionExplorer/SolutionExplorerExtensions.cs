@@ -25,10 +25,29 @@ namespace Paket.VisualStudio.SolutionExplorer
             string dir = null;
             string fileName = null;
             string userOptsFile = null;
-            IVsSolution solution = _serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;            
+            IVsSolution solution = _serviceProvider.GetService(typeof(Microsoft.VisualStudio.Shell.Interop.SVsSolution)) as IVsSolution;
 
             solution.GetSolutionInfo(out dir, out fileName, out userOptsFile);
-            return dir;            
+            return dir;
+        }
+
+        private static string GetPaketDirectory(DirectoryInfo current, DirectoryInfo sln)
+        {
+            var paketFolder = new DirectoryInfo(Path.Combine(current.FullName, ".paket"));
+            if (paketFolder.Exists)
+                return current.FullName;
+            var depsFile = new FileInfo(Path.Combine(current.FullName, "paket.dependencies"));
+            if (depsFile.Exists)
+                return current.FullName;
+            if (current.Parent == null)
+                return sln.FullName;
+            return GetPaketDirectory(current.Parent, sln);
+        }
+
+        public static string GetPaketDirectory()
+        {
+            var di = new DirectoryInfo(SolutionExplorerExtensions.GetSolutionDirectory());
+            return GetPaketDirectory(di,di);
         }
 
         public static string GetSolutionFileName()

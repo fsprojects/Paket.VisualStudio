@@ -12,7 +12,7 @@ namespace Paket.VisualStudio.Restore
             foreach (RestoringProject p in project)
                 PaketSubCommand += $" --references-file {p.ReferenceFile} ";
 
-            PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), PaketSubCommand,
+            PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), PaketSubCommand,
                                     (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
         }
     }

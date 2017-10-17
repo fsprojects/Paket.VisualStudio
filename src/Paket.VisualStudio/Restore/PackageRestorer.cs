@@ -31,7 +31,7 @@ namespace Paket.VisualStudio.Restore
 
         private void Restore()
         {
-            var dir = SolutionExplorerExtensions.GetSolutionDirectory();
+            var dir = SolutionExplorerExtensions.GetPaketDirectory();
             var dependencies = Dependencies.Locate(dir);
 
             var projects = SolutionExplorerExtensions.GetAllProjects()

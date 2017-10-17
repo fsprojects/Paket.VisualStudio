@@ -47,12 +47,12 @@ namespace Paket.VisualStudio.Commands
                     var guid = Guid.Parse(projectGuid);
                     DteHelper.ExecuteCommand("File.SaveAll");
                     SolutionExplorerExtensions.UnloadProject(guid);
-                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "add " + result.PackageName + " --project " + selectedFileName,
+                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "add " + result.PackageName + " --project " + selectedFileName,
                         (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
                     SolutionExplorerExtensions.ReloadProject(guid);
                 }
                 else
-                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetSolutionDirectory(), "add " + result.PackageName,
+                    PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "add " + result.PackageName,
                         (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             };
 
