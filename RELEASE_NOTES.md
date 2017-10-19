@@ -1,3 +1,6 @@
+#### 0.37.3 - 19.10.2017
+*  BUGFIX: Fixed project restore compatibility issue with older versions of Paket - https://github.com/fsprojects/Paket.VisualStudio/pull/154
+
 #### 0.37.2 - 17.10.2017
 *  BUGFIX: Try to locate the .paket folder - https://github.com/fsprojects/Paket.VisualStudio/issues/152
 
