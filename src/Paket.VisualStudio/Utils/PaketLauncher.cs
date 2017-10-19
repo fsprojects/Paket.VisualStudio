@@ -53,7 +53,8 @@ namespace Paket.VisualStudio.Utils
             /* At this point, all is well .paket\paket.exe exists or .paket\paket.bootstrapper.exe downloaded it successfully.
              * Now issue the original command to .paket\paket.exe
              */
-            LaunchProcess(SolutionDirectory, PAKET_EXE, PaketSubCommand, PaketDataReceivedHandler);
+            if (LaunchProcess(SolutionDirectory, PAKET_EXE, PaketSubCommand, PaketDataReceivedHandler) != 0)
+                throw new System.Exception($"{PAKET_EXE} {PaketSubCommand} failed");
         }
     }
 }
