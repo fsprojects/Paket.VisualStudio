@@ -222,6 +222,10 @@ Target "UploadToGallery" (fun _ ->
     
     sleep 15
 
+    
+    let filename = DateTime.Now.ToString("MMM-d_HH-mm-ss-fff")
+    screenshot tempDir filename
+
     click "#uploadButton"
 
     sleep 15
