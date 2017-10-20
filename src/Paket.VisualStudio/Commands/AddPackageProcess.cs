@@ -21,8 +21,7 @@ namespace Paket.VisualStudio.Commands
             }
             catch (Exception)
             {
-                var dir = new System.IO.FileInfo(SolutionExplorerExtensions.GetSolutionFileName()).Directory.FullName;
-                PaketLauncher.LaunchPaket(dir, "init",
+                PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), "init",
                      (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
                 dependenciesFile = Dependencies.Locate(selectedFileName);
             }

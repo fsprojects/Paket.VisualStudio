@@ -34,10 +34,13 @@ namespace Paket.VisualStudio.Utils
 
         public static void LaunchPaket(string SolutionDirectory, string PaketSubCommand, DataReceivedEventHandler PaketDataReceivedHandler)
         {
-            if (!File.Exists(SolutionDirectory + PAKET_EXE))
+            var paketLocation = Path.Combine(SolutionDirectory, PAKET_EXE);
+            var paketBootstrapLocation = Path.Combine(SolutionDirectory, PAKET_BOOTSTRAPPER_EXE);
+
+            if (!File.Exists(paketLocation))
             {
                 //If .paket\paket.exe is not found under the solution dir, try launching paket.bootstrapper.exe
-                if (File.Exists(SolutionDirectory + PAKET_BOOTSTRAPPER_EXE))
+                if (File.Exists(paketBootstrapLocation))
                 {
                     int ExitCode = LaunchProcess(SolutionDirectory, PAKET_BOOTSTRAPPER_EXE, "", PaketDataReceivedHandler);
                     if (ExitCode != 0)
