@@ -17,7 +17,7 @@ namespace Paket.VisualStudio.Restore
                 PaketLauncher.LaunchPaket(SolutionExplorerExtensions.GetPaketDirectory(), PaketSubCommand,
                                         (send, args) => PaketOutputPane.OutputPane.OutputStringThreadSafe(args.Data + "\n"));
             }
-            catch (System.Exception ex)
+            catch (PaketRuntimeException ex)
             {
                 /* One of the known reasons for this block to get executed is that if the paket.exe is old then it is likely
                  * that --references-file is not supported and --references-files is supported instead. paket-4.8.4 for instance

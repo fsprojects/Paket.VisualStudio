@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Paket.VisualStudio.Utils
 {
+
     public static class PaketLauncher
     {
         const string PAKET_EXE = ".paket\\paket.exe";
@@ -42,7 +44,7 @@ namespace Paket.VisualStudio.Utils
                         /* If something went wrong with paket.bootstrapper.exe e.g. couldn't download paket.exe due to proxy auth error
                          * then we should not execute the command that was originally issued for paket.exe.
                          */
-                        throw new System.Exception("paket.bootstrapper.exe terminated abnormally.");
+                        throw new PaketRuntimeException("paket.bootstrapper.exe terminated abnormally.");
                 }
                 else
                     throw new FileNotFoundException(
@@ -54,7 +56,25 @@ namespace Paket.VisualStudio.Utils
              * Now issue the original command to .paket\paket.exe
              */
             if (LaunchProcess(SolutionDirectory, PAKET_EXE, PaketSubCommand, PaketDataReceivedHandler) != 0)
-                throw new System.Exception($"{PAKET_EXE} {PaketSubCommand} failed");
+                throw new PaketRuntimeException($"{PAKET_EXE} {PaketSubCommand} failed");
+        }
+    }
+
+    public class PaketRuntimeException : Exception
+    {
+        public PaketRuntimeException()
+            : base()
+        {
+        }
+
+        public PaketRuntimeException(string message)
+            : base(message)
+        {
+        }
+
+        public PaketRuntimeException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
     }
 }
