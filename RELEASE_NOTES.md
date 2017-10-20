@@ -1,3 +1,6 @@
+#### 0.37.7 - 20.10.2017
+*  BUGFIX: Custom exception class for Paket failures so that we catch what is intended to be caugh - https://github.com/fsprojects/Paket.VisualStudio/pull/155
+
 #### 0.37.6 - 19.10.2017
 *  BUGFIX: Fixed project restore compatibility issue with older versions of Paket - https://github.com/fsprojects/Paket.VisualStudio/pull/154
 
