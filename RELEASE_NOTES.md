@@ -1,4 +1,5 @@
-#### 0.37.8 - 23.10.2017
+#### 0.37.9 - 24.10.2017
+*  BUGFIX: Could not locate .paket folder- https://github.com/fsprojects/Paket.VisualStudio/pull/157
 *  BUGFIX: Could not locate .paket folder- https://github.com/fsprojects/Paket.VisualStudio/pull/156
 
 #### 0.37.7 - 20.10.2017
