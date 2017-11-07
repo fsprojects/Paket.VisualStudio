@@ -10,7 +10,7 @@ namespace Paket.VisualStudio.Restore
         {
             string PaketSubCommand = "restore";
             foreach (RestoringProject p in project)
-                PaketSubCommand += $" --references-file {p.ReferenceFile} ";
+                PaketSubCommand += $" --references-file \"{p.ReferenceFile}\" ";
 
             try
             {
