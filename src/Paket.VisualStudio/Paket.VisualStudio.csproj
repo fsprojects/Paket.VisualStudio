@@ -199,23 +199,11 @@
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(SolutionDir)\.paket\paket.targets" />
   <ItemGroup>
-    <Content Include="..\..\docs\files\img\logo.png">
-      <Link>logo.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="..\..\LICENSE.txt">
-      <Link>LICENSE.txt</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <VSCTCompile Include="Commands\CommandTable.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
     </VSCTCompile>
     <EmbeddedResource Include="Resources\NuGet.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\docs\files\img\logo.png">
       <Link>logo.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
