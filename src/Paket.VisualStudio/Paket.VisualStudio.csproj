@@ -159,6 +159,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="Resources\paket.bootstrapper.exe" />
     <Resource Include="Commands\PackageGui\Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>

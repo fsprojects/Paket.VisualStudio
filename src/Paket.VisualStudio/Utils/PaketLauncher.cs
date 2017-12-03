@@ -42,18 +42,17 @@ namespace Paket.VisualStudio.Utils
         public static void LaunchPaket(string SolutionDirectory, string PaketSubCommand, DataReceivedEventHandler PaketDataReceivedHandler)
         {
             //No error handling, let errors from LaunchProcess bubble!
-            var PaketLocation = Path.Combine(SolutionDirectory, ".paket", "paket.exe");
-            var PaketBootstrapLocation = Path.Combine(SolutionDirectory, ".paket", "paket.bootstrapper.exe");
+            var PaketFolder = Path.Combine(SolutionDirectory, ".paket");
+            var PaketLocation = Path.Combine(PaketFolder, "paket.exe");
+            var PaketBootstrapLocation = Path.Combine(PaketFolder, "paket.bootstrapper.exe");
 
             if (!File.Exists(PaketLocation))
             {
                 if (!File.Exists(PaketBootstrapLocation))
                 {
-                    //Don't have .paket\paket.exe or paket.bootstrapper.exe
-                    throw new FileNotFoundException(
-                        $@"Could not locate .paket\paket.exe and .paket\paket.bootstrapper.exe under the folder '{SolutionDirectory}'"
-                        + $"\nTo download the binaries, visit https://github.com/fsprojects/Paket/releases"
-                        + $"\nTo know more about Paket, visit https://fsprojects.github.io/Paket/getting-started.html\n");
+                    //Don't have .paket\paket.exe or paket.bootstrapper.exe, so copy it form resource
+                    Directory.CreateDirectory(PaketFolder);
+                    File.WriteAllBytes(PaketBootstrapLocation, Resources.paket_bootstrapper);
                 }
 
                 //Try and get the .paket\paket.exe using paket.bootstrapper.exe
