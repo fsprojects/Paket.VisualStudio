@@ -1,4 +1,4 @@
-#### 0.38.0 - 04.12.2017
+#### 0.38.1 - 04.12.2017
 *  BUGFIX: Add fallback paket.bootstrap.exe to resources - https://github.com/fsprojects/Paket.VisualStudio/pull/162
 
 #### 0.37.9 - 24.10.2017
