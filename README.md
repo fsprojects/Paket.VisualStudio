@@ -17,7 +17,7 @@ Features
 
 ### Build [![Build status](https://ci.appveyor.com/api/projects/status/do913wfhcmnit5ps/branch/master?svg=true)](https://ci.appveyor.com/project/SteffenForkmann/paket-visualstudio/branch/master)
 
-Require Visual Studio 2013 and Visual Studio 2013 SDK. 
+Require Visual Studio 2013 and Visual Studio 2013 SDK (or later). 
 Run the `build.cmd` script or `Paket.VisualStudio.sln` to build the solution.
 
 Installation
