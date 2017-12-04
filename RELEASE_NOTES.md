@@ -1,6 +1,9 @@
+#### 0.38.0 - 04.12.2017
+*  BUGFIX: Add fallback paket.bootstrap.exe to resources - https://github.com/fsprojects/Paket.VisualStudio/pull/162
+
 #### 0.37.9 - 24.10.2017
-*  BUGFIX: Could not locate .paket folder- https://github.com/fsprojects/Paket.VisualStudio/pull/157
-*  BUGFIX: Could not locate .paket folder- https://github.com/fsprojects/Paket.VisualStudio/pull/156
+*  BUGFIX: Could not locate .paket folder - https://github.com/fsprojects/Paket.VisualStudio/pull/157
+*  BUGFIX: Could not locate .paket folder - https://github.com/fsprojects/Paket.VisualStudio/pull/156
 
 #### 0.37.7 - 20.10.2017
 *  BUGFIX: Custom exception class for Paket failures so that we catch what is intended to be caugh - https://github.com/fsprojects/Paket.VisualStudio/pull/155
