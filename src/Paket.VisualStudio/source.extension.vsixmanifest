@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="Paket.VisualStudio" Publisher="Igal Tabachnik, Steffen Forkmann" Version="0.38.1" Language="en" />
+    <Identity Id="Paket.VisualStudio" Publisher="Igal Tabachnik, Steffen Forkmann" Version="0.38.2" Language="en" />
     <DisplayName>Paket for Visual Studio</DisplayName>
     <Description xml:space="preserve">Manage your Paket dependencies from Visual Studio!</Description>
     <MoreInfo>https://fsprojects.github.io/Paket/</MoreInfo>
