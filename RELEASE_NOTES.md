@@ -1,3 +1,6 @@
+#### 0.38.2 - 11.12.2017
+*  BUGFIX: Support file paths with spaces - https://github.com/fsprojects/Paket.VisualStudio/pull/160
+
 #### 0.38.1 - 04.12.2017
 *  BUGFIX: Add fallback paket.bootstrap.exe to resources - https://github.com/fsprojects/Paket.VisualStudio/pull/162
 
