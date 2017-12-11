@@ -1,4 +1,4 @@
-#### 0.38.2 - 11.12.2017
+#### 0.38.3 - 11.12.2017
 *  BUGFIX: Support file paths with spaces - https://github.com/fsprojects/Paket.VisualStudio/pull/160
 
 #### 0.38.1 - 04.12.2017
