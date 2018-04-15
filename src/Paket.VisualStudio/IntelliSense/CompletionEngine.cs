@@ -35,7 +35,35 @@ namespace Paket.VisualStudio.IntelliSense
             new PaketKeywordCompletionListProvider(ExportProvider.GetExport<IGlyphService>().Value),
             new NuGetNameCompletionListProvider(),
             new SourceCompletionListProvider(),
-            new SimpleOptionCompletionListProvider(CompletionContextType.Strategy, "min", "max")
+            new SimpleOptionCompletionListProvider(CompletionContextType.Strategy, "min", "max"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.Framework,
+                "auto-detect",
+                "net35",
+                "net40",
+                "net45",
+                "net451",
+                "net452",
+                "net46",
+                "net461",
+                "net462",
+                "net47",
+                "netstandard1.0",
+                "netstandard1.1",
+                "netstandard1.2",
+                "netstandard1.3",
+                "netstandard1.4",
+                "netstandard1.5",
+                "netstandard1.6",
+                "netstandard2.0",
+                "netcoreapp1.0",
+                "netcoreapp1.1",
+                "netcoreapp2.0",
+                "uap",
+                "wp7",
+                "wp75",
+                "wp8",
+                "wp81",
+                "wpa81"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -70,7 +98,7 @@ namespace Paket.VisualStudio.IntelliSense
         {
             TextExtent endPosition = navigator.GetExtentOfWord(position - 1);
             TextExtent startPosition = endPosition;
-            
+
             // try to extend the span over .
             while (!String.IsNullOrWhiteSpace(paketDocument.GetCharAt(startPosition.Span.Start.Position - 1)))
             {
@@ -89,6 +117,7 @@ namespace Paket.VisualStudio.IntelliSense
                 pos = startPosition.Span.Start - 1;
 
             TextExtent previous = navigator.GetExtentOfWord(pos);
+
             // try to extend the span over blanks
             while (paketDocument.GetCharAt(previous.Span.Start.Position) == " ")
             {
@@ -105,6 +134,8 @@ namespace Paket.VisualStudio.IntelliSense
                 case "nuget": context.ContextType = CompletionContextType.NuGet; break;
                 case "source": context.ContextType = CompletionContextType.Source; break;
                 case "strategy": context.ContextType = CompletionContextType.Strategy; break;
+                case "framework": context.ContextType = CompletionContextType.Framework; break;
+                case "version": context.ContextType = CompletionContextType.Version; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
