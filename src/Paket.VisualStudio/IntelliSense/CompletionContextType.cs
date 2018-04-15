@@ -10,6 +10,7 @@ namespace Paket.VisualStudio.IntelliSense
         Framework,
         Version,
         Storage,
-        Content
+        Content,
+        CopyToOutputDirectory
     }
 }
