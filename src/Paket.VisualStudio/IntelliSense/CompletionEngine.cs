@@ -149,6 +149,7 @@ namespace Paket.VisualStudio.IntelliSense
                 case "copy_local": context.ContextType = CompletionContextType.CopyLocal; break;
                 case "import_targets": context.ContextType = CompletionContextType.ImportTargets; break;
                 case "download_license": context.ContextType = CompletionContextType.DownloadLicense; break;
+                case "redirects": context.ContextType = CompletionContextType.Redirects; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
