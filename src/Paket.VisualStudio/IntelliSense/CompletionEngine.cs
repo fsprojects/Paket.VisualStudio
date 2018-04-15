@@ -68,6 +68,7 @@ namespace Paket.VisualStudio.IntelliSense
             new SimpleOptionCompletionListProvider(CompletionContextType.Storage, "none", "packages", "symlink"),
             new SimpleOptionCompletionListProvider(CompletionContextType.Content, "none", "once"),
             new SimpleOptionCompletionListProvider(CompletionContextType.CopyToOutputDirectory, "always", "never", "preserve_newest"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.CopyLocal, "copy_local", "true", "false"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -143,6 +144,7 @@ namespace Paket.VisualStudio.IntelliSense
                 case "storage": context.ContextType = CompletionContextType.Storage; break;
                 case "content": context.ContextType = CompletionContextType.Content; break;
                 case "copy_content_to_output_dir": context.ContextType = CompletionContextType.CopyToOutputDirectory; break;
+                case "copy_local": context.ContextType = CompletionContextType.CopyLocal; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 

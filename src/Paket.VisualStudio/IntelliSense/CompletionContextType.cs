@@ -11,6 +11,7 @@ namespace Paket.VisualStudio.IntelliSense
         Version,
         Storage,
         Content,
-        CopyToOutputDirectory
+        CopyToOutputDirectory,
+        CopyLocal
     }
 }
