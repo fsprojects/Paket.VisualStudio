@@ -16,6 +16,7 @@ namespace Paket.VisualStudio.IntelliSense
         ImportTargets,
         DownloadLicense,
         Redirects,
-        LowestMatching
+        LowestMatching,
+        GenerateLoadScripts
     }
 }

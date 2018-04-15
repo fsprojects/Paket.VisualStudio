@@ -72,6 +72,7 @@ namespace Paket.VisualStudio.IntelliSense
             new SimpleOptionCompletionListProvider(CompletionContextType.ImportTargets, "import_targets", "true", "false"),
             new SimpleOptionCompletionListProvider(CompletionContextType.DownloadLicense, "download_license", "true", "false"),
             new SimpleOptionCompletionListProvider(CompletionContextType.LowestMatching, "lowest_matching", "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.GenerateLoadScripts, "generate_load_scripts", "true", "false"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -152,6 +153,7 @@ namespace Paket.VisualStudio.IntelliSense
                 case "download_license": context.ContextType = CompletionContextType.DownloadLicense; break;
                 case "redirects": context.ContextType = CompletionContextType.Redirects; break;
                 case "lowest_matching": context.ContextType = CompletionContextType.LowestMatching; break;
+                case "generate_load_scripts": context.ContextType = CompletionContextType.GenerateLoadScripts; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
