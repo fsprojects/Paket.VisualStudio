@@ -12,6 +12,7 @@ namespace Paket.VisualStudio.IntelliSense
         Storage,
         Content,
         CopyToOutputDirectory,
-        CopyLocal
+        CopyLocal,
+        ImportTargets
     }
 }
