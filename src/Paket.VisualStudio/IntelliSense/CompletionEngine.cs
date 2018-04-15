@@ -64,6 +64,7 @@ namespace Paket.VisualStudio.IntelliSense
                 "wp8",
                 "wp81",
                 "wpa81"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.Version, "<any_paket_version>", "--prefer-nuget")
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)

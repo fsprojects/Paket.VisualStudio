@@ -7,6 +7,7 @@ namespace Paket.VisualStudio.IntelliSense
         Source,
         Keyword,
         Strategy,
-        Framework
+        Framework,
+        Version
     }
 }

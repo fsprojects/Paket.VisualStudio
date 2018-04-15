@@ -15,7 +15,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         {
             "source", "nuget", "github", "gist", "http",
             "content", "references", "redirects", "group",
-            "strategy", "framework"
+            "strategy", "framework", "version"
         };
 
         public static IEnumerable<string> ValidKeywords
