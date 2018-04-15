@@ -17,7 +17,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             "content", "references", "redirects", "group",
             "strategy", "framework", "version", "storage", "content",
             "copy_content_to_output_dir", "copy_local", "import_targets",
-            "download_license"
+            "download_license", "lowest_matching"
         };
 
         public static IEnumerable<string> ValidKeywords

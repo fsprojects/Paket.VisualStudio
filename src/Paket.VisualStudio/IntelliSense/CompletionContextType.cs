@@ -15,6 +15,7 @@ namespace Paket.VisualStudio.IntelliSense
         CopyLocal,
         ImportTargets,
         DownloadLicense,
-        Redirects
+        Redirects,
+        LowestMatching
     }
 }
