@@ -13,6 +13,7 @@ namespace Paket.VisualStudio.IntelliSense
         Content,
         CopyToOutputDirectory,
         CopyLocal,
-        ImportTargets
+        ImportTargets,
+        DownloadLicense
     }
 }
