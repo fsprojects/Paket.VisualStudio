@@ -46,7 +46,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             {
                 var trimmed = text.TrimStart();
                 var offset = text.Length - trimmed.Length;
-                string[] args = trimmed.Split(' ');
+                string[] args = trimmed.Split(' ', ':');
 
                 if (args.Length >= 2 && ValidKeywords.Contains(args[0].Trim().ToLowerInvariant()))
                 {
