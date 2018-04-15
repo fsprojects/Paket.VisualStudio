@@ -64,7 +64,8 @@ namespace Paket.VisualStudio.IntelliSense
                 "wp8",
                 "wp81",
                 "wpa81"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.Version, "<any_paket_version>", "--prefer-nuget")
+            new SimpleOptionCompletionListProvider(CompletionContextType.Version, "<any_paket_version>", "--prefer-nuget"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.Storage, "none", "packages", "symlink"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -137,6 +138,7 @@ namespace Paket.VisualStudio.IntelliSense
                 case "strategy": context.ContextType = CompletionContextType.Strategy; break;
                 case "framework": context.ContextType = CompletionContextType.Framework; break;
                 case "version": context.ContextType = CompletionContextType.Version; break;
+                case "storage": context.ContextType = CompletionContextType.Storage; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
