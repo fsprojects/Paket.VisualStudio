@@ -68,11 +68,12 @@ namespace Paket.VisualStudio.IntelliSense
             new SimpleOptionCompletionListProvider(CompletionContextType.Storage, "none", "packages", "symlink"),
             new SimpleOptionCompletionListProvider(CompletionContextType.Content, "none", "once"),
             new SimpleOptionCompletionListProvider(CompletionContextType.CopyToOutputDirectory, "always", "never", "preserve_newest"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.CopyLocal, "copy_local", "true", "false"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.ImportTargets, "import_targets", "true", "false"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.DownloadLicense, "download_license", "true", "false"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.LowestMatching, "lowest_matching", "true", "false"),
-            new SimpleOptionCompletionListProvider(CompletionContextType.GenerateLoadScripts, "generate_load_scripts", "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.CopyLocal, "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.ImportTargets, "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.DownloadLicense, "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.Redirects, "off", "on", "force"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.LowestMatching, "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.GenerateLoadScripts, "true", "false"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
