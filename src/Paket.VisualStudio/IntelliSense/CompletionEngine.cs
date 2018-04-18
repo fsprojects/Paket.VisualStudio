@@ -74,6 +74,7 @@ namespace Paket.VisualStudio.IntelliSense
             new SimpleOptionCompletionListProvider(CompletionContextType.Redirects, "off", "on", "force"),
             new SimpleOptionCompletionListProvider(CompletionContextType.LowestMatching, "true", "false"),
             new SimpleOptionCompletionListProvider(CompletionContextType.GenerateLoadScripts, "true", "false"),
+            new SimpleOptionCompletionListProvider(CompletionContextType.References, "strict"),
         };
 
         public static IEnumerable<ICompletionListProvider> GetCompletionProviders(IIntellisenseSession session, ITextBuffer textBuffer, SnapshotPoint position, ITextStructureNavigator navigator, out CompletionContext context)
@@ -155,6 +156,7 @@ namespace Paket.VisualStudio.IntelliSense
                 case "redirects": context.ContextType = CompletionContextType.Redirects; break;
                 case "lowest_matching": context.ContextType = CompletionContextType.LowestMatching; break;
                 case "generate_load_scripts": context.ContextType = CompletionContextType.GenerateLoadScripts; break;
+                case "references": context.ContextType = CompletionContextType.References; break;
                 default: context.ContextType = CompletionContextType.Keyword; break;
             }
 
