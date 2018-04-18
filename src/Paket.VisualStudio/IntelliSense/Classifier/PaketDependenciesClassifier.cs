@@ -15,7 +15,9 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
         {
             "source", "nuget", "github", "gist", "http",
             "content", "references", "redirects", "group",
-            "strategy"
+            "strategy", "framework", "version", "storage", "content",
+            "copy_content_to_output_dir", "copy_local", "import_targets",
+            "download_license", "lowest_matching", "generate_load_scripts"
         };
 
         public static IEnumerable<string> ValidKeywords
@@ -46,7 +48,7 @@ namespace Paket.VisualStudio.IntelliSense.Classifier
             {
                 var trimmed = text.TrimStart();
                 var offset = text.Length - trimmed.Length;
-                string[] args = trimmed.Split(' ');
+                string[] args = trimmed.Split(' ', ':');
 
                 if (args.Length >= 2 && ValidKeywords.Contains(args[0].Trim().ToLowerInvariant()))
                 {

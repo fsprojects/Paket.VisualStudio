@@ -6,6 +6,18 @@ namespace Paket.VisualStudio.IntelliSense
         InstalledNuGet,
         Source,
         Keyword,
-        Strategy
+        Strategy,
+        Framework,
+        Version,
+        Storage,
+        Content,
+        CopyToOutputDirectory,
+        CopyLocal,
+        ImportTargets,
+        DownloadLicense,
+        Redirects,
+        LowestMatching,
+        GenerateLoadScripts,
+        References
     }
 }
