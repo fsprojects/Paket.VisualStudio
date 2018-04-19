@@ -107,6 +107,7 @@
     <Compile Include="Restore\PaketRestorer.cs" />
     <Compile Include="Restore\RestoringProject.cs" />
     <Compile Include="Restore\WaitDialogRestorer.cs" />
+    <Compile Include="SolutionExplorer\SolutionEventsProxy.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\DisposableHelpers.cs" />
     <Compile Include="EditorExtensions\CommandTargetBase.cs" />

@@ -84,6 +84,27 @@ namespace Paket.VisualStudio.SolutionExplorer
             ErrorHandler.ThrowOnFailure(hr);
         }
 
+        public static IEnumerable<string> OpenFiles(IEnumerable<string> filesname)
+        {
+            return DteUtils.DTE.Solution.Projects
+                               .OfType<Project>()
+                               .SelectMany(GetProjects)
+                               .SelectMany(p =>
+                               {
+                                   var projectPath = Path.GetDirectoryName(GetProjectFullName(p));
+                                   var items = p.ProjectItems?.Cast<ProjectItem>();
+                                   return items?.Select(item => new Tuple<ProjectItem, string>(item, Path.Combine(projectPath, item.Name)))
+                                          ?? Enumerable.Empty<Tuple<ProjectItem, string>>();
+                               })
+                               .Where(item => item != null && item.Item1 != null && filesname.Contains(item.Item2))
+                               .Select(item => new Tuple<string, Window>(item.Item2, item.Item1.Open()))
+                               .Select(item =>
+                               {
+                                   item.Item2.Visible = true;
+                                   return item.Item1;
+                               });
+        }
+
         public static void ReloadProject(Guid projectGuid)
         {
             if (projectGuid == Guid.Empty)
@@ -115,6 +136,12 @@ namespace Paket.VisualStudio.SolutionExplorer
                 }
             }
             return projectGuids;
+        }
+
+        private static string GetProjectFullName(Project project)
+        {
+            var solutionFolder = Path.GetDirectoryName(DteUtils.DTE.Solution.FullName);
+            return Path.Combine(solutionFolder, project.UniqueName);
         }
 
         public static IEnumerable<Project> GetAllProjects()
