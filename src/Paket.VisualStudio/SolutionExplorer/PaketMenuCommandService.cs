@@ -6,6 +6,8 @@ using Paket.VisualStudio.Commands;
 using Paket.VisualStudio.Utils;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.VisualStudio.Shell.Interop;
+using System.Collections.Generic;
 
 namespace Paket.VisualStudio.SolutionExplorer
 {
@@ -30,12 +32,14 @@ namespace Paket.VisualStudio.SolutionExplorer
         private readonly IServiceProvider serviceProvider;
         private readonly OleMenuCommandService menuCommandService;
         private readonly ActiveGraphNodeTracker tracker;
+        private readonly SolutionEventsProxy solutionEventsProxy;
 
         public PaketMenuCommandService(IServiceProvider serviceProvider, OleMenuCommandService menuCommandService, ActiveGraphNodeTracker tracker)
         {
             this.serviceProvider = serviceProvider;
             this.menuCommandService = menuCommandService;
             this.tracker = tracker;
+            this.solutionEventsProxy = new SolutionEventsProxy(serviceProvider);
         }
 
 
@@ -189,6 +193,9 @@ namespace Paket.VisualStudio.SolutionExplorer
                         .ToArray();
 
             SolutionExplorerExtensions.SaveSolution();
+
+            solutionEventsProxy.TrackOpenedDocuments();
+
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
 
@@ -231,6 +238,8 @@ namespace Paket.VisualStudio.SolutionExplorer
             {
                 project.Save();
             }
+
+            solutionEventsProxy.TrackOpenedDocuments();
 
             foreach (var projectGuid in projectGuids)
                 SolutionExplorerExtensions.UnloadProject(projectGuid);
