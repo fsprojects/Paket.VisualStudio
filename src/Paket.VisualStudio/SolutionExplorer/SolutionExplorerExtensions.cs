@@ -105,7 +105,7 @@ namespace Paket.VisualStudio.SolutionExplorer
 
             foreach (Project project in GetAllProjects())
             {
-                solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
+                solution.GetProjectOfUniqueName(GetProjectFullName(project), out hierarchy);
 
                 if (hierarchy != null)
                 {
@@ -117,12 +117,18 @@ namespace Paket.VisualStudio.SolutionExplorer
             return projectGuids;
         }
 
+        private static string GetProjectFullName(Project project)
+        {
+            var solutionFolder = Path.GetDirectoryName(DteUtils.DTE.Solution.FullName);
+            return Path.Combine(solutionFolder, project.UniqueName);
+        }
+
         public static IEnumerable<Project> GetAllProjects()
         {
             return DteUtils.DTE.Solution.Projects
                 .OfType<Project>()
                 .SelectMany(GetProjects)
-                .Where(p => File.Exists(p.FullName));
+                .Where(p => File.Exists(GetProjectFullName(p)));
         }
 
         private static IEnumerable<Project> GetProjects(Project project)
